@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Community Health and Hospitals: Consultation Note</title>
+  <id>8891d389-04cf-464c-ad3d-0d5924b4cfb2</id>
+  <updated>2013-10-22T18:46:51.641+11:00</updated>
+  <entry>
+    <title>Document</title>
+    <id>033a494e-2a9c-4525-bf3f-e8d08daf9d81</id>
+    <updated>2013-10-22T18:46:51.710+11:00</updated>
+    <content type="text/xml">
+      <Document xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.19.5.99999.19"/>
+          <value value="sTT988"/>
+        </identifier>
+        <versionIdentifier>
+          <system value="urn:oid:2.16.840.1.113883.19.5.99999.1"/>
+          <value value="TT988"/>
+        </versionIdentifier>
+        <created value="2012-09-17T09:07:00+10:00"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="11488-4"/>
+            <display value="Consult note"/>
+          </coding>
+        </type>
+        <title value="Community Health and Hospitals: Consultation Note"/>
+        <confidentiality>
+          <system value="urn:oid:2.16.840.1.113883.5.25"/>
+          <code value="N"/>
+        </confidentiality>
+        <subject>
+          <reference value="ee8ebe24-02ef-4b2f-9fd4-9729102c8fda"/>
+        </subject>
+        <author>
+          <reference value="56f83108-4f18-40e0-b587-fbe20e1b3cd9"/>
+        </author>
+        <attester>
+          <mode value="legal"/>
+          <time value="2009-02-27T19:00:00+11:00"/>
+          <party>
+            <reference value="5e3e25e8-f7bf-431e-b77e-7767e6ba0cff"/>
+          </party>
+        </attester>
+        <attester>
+          <mode value="professional"/>
+          <time value="2009-02-27T19:00:00+11:00"/>
+          <party>
+            <reference value="c5d54395-b187-45bc-8cd9-f76a8870249f"/>
+          </party>
+        </attester>
+        <custodian>
+          <reference value="bc9a3d37-fe4c-4761-91df-2ec4b206540f"/>
+        </custodian>
+        <event>
+          <code>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.6.12"/>
+              <code value="99213"/>
+              <display value="Evaluation and Management"/>
+            </coding>
+          </code>
+          <period>
+            <start value="2009-02-27T19:00:00+11:00"/>
+            <end value="2009-02-27T19:00:00+11:00"/>
+          </period>
+          <detail>
+            <reference value="51d56701-bead-46c8-b23a-8fb8dcf30aaf"/>
+          </detail>
+        </event>
+        <section>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="48765-2"/>
+            </coding>
+          </code>
+          <content>
+            <reference value="1d2596ab-6941-4e11-9713-91a24153a533"/>
+          </content>
+        </section>
+      </Document>
+    </content>
+  </entry>
+  <entry>
+    <title>Encounter</title>
+    <id>51d56701-bead-46c8-b23a-8fb8dcf30aaf</id>
+    <updated>2013-10-22T18:46:51.727+11:00</updated>
+    <content type="text/xml">
+      <Encounter xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.19"/>
+          <value value="9937012"/>
+        </identifier>
+        <hospitalization>
+          <period>
+            <start value="2009-02-27T19:00:00+11:00"/>
+            <end value="2009-02-27T19:00:00+11:00"/>
+          </period>
+        </hospitalization>
+      </Encounter>
+    </content>
+  </entry>
+  <entry>
+    <title>Provider</title>
+    <id>25451d05-4c06-4cbb-9e01-6519a628ad63</id>
+    <updated>2013-10-22T18:46:51.732+11:00</updated>
+    <content type="text/xml">
+      <Organization xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:ietf:rfc:3986"/>
+          <value value="urn:oid:2.16.840.1.113883.19.5.9999.1393"/>
+        </identifier>
+        <name value="Community Health and Hospitals"/>
+        <telecom>
+          <system value="phone"/>
+          <value value="555-555-5000"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="1001 Village Avenue"/>
+          <city value="Portland"/>
+          <state value="OR"/>
+          <zip value="99123"/>
+          <country value="US"/>
+        </address>
+      </Organization>
+    </content>
+  </entry>
+  <entry>
+    <title>Subject</title>
+    <id>ee8ebe24-02ef-4b2f-9fd4-9729102c8fda</id>
+    <updated>2013-10-22T18:46:51.732+11:00</updated>
+    <content type="text/xml">
+      <Patient xmlns="http://hl7.org/fhir">
+        <extension>
+          <url value="http://hl7.org/ccda/religious-affiliation"/>
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.5.1076"/>
+              <code value="1013"/>
+              <display value="Christian (non-Catholic, non-specific)"/>
+            </coding>
+          </valueCodeableConcept>
+        </extension>
+        <extension>
+          <url value="http://hl7.org/ccdarace"/>
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.6.238"/>
+              <code value="1966-1"/>
+              <display value="Aleut"/>
+            </coding>
+          </valueCodeableConcept>
+        </extension>
+        <extension>
+          <url value="http://hl7.org/ccdaethnic-group"/>
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.6.238"/>
+              <code value="2186-5"/>
+              <display value="Not Hispanic or Latino"/>
+            </coding>
+          </valueCodeableConcept>
+        </extension>
+        <extension>
+          <url value="http://hl7.org/ccdabirthplace"/>
+          <valueAddress>
+            <city value="Beaverton"/>
+            <state value="OR"/>
+            <zip value="97867"/>
+            <country value="US"/>
+          </valueAddress>
+        </extension>
+        <extension>
+          <url value="http://hl7.org/ccda/religious-affiliation"/>
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.5.1076"/>
+              <code value="1013"/>
+              <display value="Christian (non-Catholic, non-specific)"/>
+            </coding>
+          </valueCodeableConcept>
+        </extension>
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.19.5.99999.2"/>
+          <value value="998991"/>
+        </identifier>
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.4.1"/>
+          <value value="111-00-2330"/>
+        </identifier>
+        <name>
+          <use value="usual"/>
+          <family value="Jones"/>
+          <given value="Isabella"/>
+          <given value="Isa"/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="(816)276-6909"/>
+          <use value="home"/>
+        </telecom>
+        <gender>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.5.1"/>
+            <code value="F"/>
+            <display value="Female"/>
+          </coding>
+        </gender>
+        <birthDate value="2005-05-01T00:00:00+10:00"/>
+        <address>
+          <use value="home"/>
+          <line value="1357 Amber Drive"/>
+          <city value="Beaverton"/>
+          <state value="OR"/>
+          <zip value="97867"/>
+          <country value="US"/>
+        </address>
+        <maritalStatus>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.5.2"/>
+            <code value="M"/>
+            <display value="Married"/>
+          </coding>
+        </maritalStatus>
+        <contact>
+          <relationship>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.5.110"/>
+              <code value="GUARD"/>
+              <display value="guardian"/>
+            </coding>
+          </relationship>
+          <name>
+            <family value="Jones"/>
+            <given value="Ralph"/>
+          </name>
+          <telecom>
+            <system value="phone"/>
+            <value value="(816)276-6909"/>
+            <use value="home"/>
+          </telecom>
+          <address>
+            <use value="home"/>
+            <line value="1357 Amber Drive"/>
+            <city value="Beaverton"/>
+            <state value="OR"/>
+            <zip value="97867"/>
+            <country value="US"/>
+          </address>
+        </contact>
+        <communication>
+          <extension>
+            <url value="http://hl7.org/ccdaproficiency-level"/>
+            <valueCodeableConcept>
+              <coding>
+                <system value="urn:oid:2.16.840.1.113883.5.60"/>
+                <code value="ESP"/>
+                <display value="Expressed spoken"/>
+              </coding>
+            </valueCodeableConcept>
+          </extension>
+          <coding>
+            <code value="en"/>
+          </coding>
+        </communication>
+        <provider>
+          <reference value="25451d05-4c06-4cbb-9e01-6519a628ad63"/>
+        </provider>
+      </Patient>
+    </content>
+  </entry>
+  <entry>
+    <title>Author</title>
+    <id>56f83108-4f18-40e0-b587-fbe20e1b3cd9</id>
+    <updated>2013-10-22T18:46:51.732+11:00</updated>
+    <content type="text/xml">
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.4.6"/>
+          <value value="99999999"/>
+        </identifier>
+        <telecom>
+          <system value="phone"/>
+          <value value="555-555-1002"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="1002 Healthcare Drive "/>
+          <city value="Portland"/>
+          <state value="OR"/>
+          <zip value="99123"/>
+          <country value="US"/>
+        </address>
+      </Practitioner>
+    </content>
+  </entry>
+  <entry>
+    <title>Custodian</title>
+    <id>bc9a3d37-fe4c-4761-91df-2ec4b206540f</id>
+    <updated>2013-10-22T18:46:51.732+11:00</updated>
+    <content type="text/xml">
+      <Organization xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.4.6"/>
+          <value value="99999999"/>
+        </identifier>
+        <name value="Community Health and Hospitals"/>
+        <telecom>
+          <system value="phone"/>
+          <value value="555-555-1002"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <use value="work"/>
+          <line value="1002 Healthcare Drive "/>
+          <city value="Portland"/>
+          <state value="OR"/>
+          <zip value="99123"/>
+          <country value="US"/>
+        </address>
+      </Organization>
+    </content>
+  </entry>
+  <entry>
+    <title>Legal Authenticator</title>
+    <id>5e3e25e8-f7bf-431e-b77e-7767e6ba0cff</id>
+    <updated>2013-10-22T18:46:51.734+11:00</updated>
+    <content type="text/xml">
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.4.6"/>
+          <value value="999999999"/>
+        </identifier>
+        <name>
+          <family value="Seven"/>
+          <given value="Henry"/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="555-555-1002"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="1001 Village Avenue"/>
+          <city value="Portland"/>
+          <state value="OR"/>
+          <zip value="99123"/>
+          <country value="US"/>
+        </address>
+      </Practitioner>
+    </content>
+  </entry>
+  <entry>
+    <title>Authenticator</title>
+    <id>c5d54395-b187-45bc-8cd9-f76a8870249f</id>
+    <updated>2013-10-22T18:46:51.734+11:00</updated>
+    <content type="text/xml">
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.4.6"/>
+          <value value="999999999"/>
+        </identifier>
+        <name>
+          <family value="Seven"/>
+          <given value="Henry"/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="555-555-1002"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="1001 Village Avenue"/>
+          <city value="Portland"/>
+          <state value="OR"/>
+          <zip value="99123"/>
+          <country value="US"/>
+        </address>
+      </Practitioner>
+    </content>
+  </entry>
+  <entry>
+    <title>Allergies, Adverse Reactions, Alerts</title>
+    <id>1d2596ab-6941-4e11-9713-91a24153a533</id>
+    <updated>2013-10-22T18:46:51.742+11:00</updated>
+    <content type="text/xml">
+      <List xmlns="http://hl7.org/fhir">
+        <contained>
+          <AllergyIntolerance id="a1">
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-period"/>
+              <valuePeriod>
+                <start value="2007-05-01T00:00:00+10:00"/>
+                <end value="2009-02-27T19:00:00+11:00"/>
+              </valuePeriod>
+            </extension>
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-category"/>
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="419511003"/>
+                  <display value="Propensity to adverse reactions to drug"/>
+                </coding>
+              </valueCodeableConcept>
+            </extension>
+            <contained>
+              <Substance id="s1">
+                <type>
+                  <coding>
+                    <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+                    <code value="314422"/>
+                    <display value="ALLERGENIC EXTRACT, PENICILLIN"/>
+                  </coding>
+                </type>
+              </Substance>
+            </contained>
+            <identifier>
+              <system value="urn:ietf:rfc:3986"/>
+              <value value="urn:uuid:36e3e930-7b14-11db-9fe1-0800200c9a66"/>
+            </identifier>
+            <criticality value="medium"/>
+            <sensitivityType value="unknown"/>
+            <status value="confirmed"/>
+            <substance>
+              <reference value="#s1"/>
+            </substance>
+          </AllergyIntolerance>
+        </contained>
+        <contained>
+          <AllergyIntolerance id="a2">
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-period"/>
+              <valuePeriod>
+                <start value="2006-05-01T00:00:00+10:00"/>
+                <end value="2009-02-27T19:00:00+11:00"/>
+              </valuePeriod>
+            </extension>
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-category"/>
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="419511003"/>
+                  <display value="Propensity to adverse reactions to drug"/>
+                </coding>
+              </valueCodeableConcept>
+            </extension>
+            <contained>
+              <Substance id="s1">
+                <type>
+                  <coding>
+                    <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+                    <code value="2670"/>
+                    <display value="Codeine"/>
+                  </coding>
+                </type>
+              </Substance>
+            </contained>
+            <identifier>
+              <system value="urn:ietf:rfc:3986"/>
+              <value value="urn:uuid:36e3e930-7b14-11db-9fe1-0800200c9a66"/>
+            </identifier>
+            <criticality value="medium"/>
+            <sensitivityType value="unknown"/>
+            <status value="confirmed"/>
+            <substance>
+              <reference value="#s1"/>
+            </substance>
+          </AllergyIntolerance>
+        </contained>
+        <contained>
+          <AllergyIntolerance id="a3">
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-period"/>
+              <valuePeriod>
+                <start value="2008-05-01T00:00:00+10:00"/>
+                <end value="2009-02-27T19:00:00+11:00"/>
+              </valuePeriod>
+            </extension>
+            <extension>
+              <url value="http://www.healthintersections.com.au/fhir/extensions/allergy-category"/>
+              <valueCodeableConcept>
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="419511003"/>
+                  <display value="Propensity to adverse reactions to drug"/>
+                </coding>
+              </valueCodeableConcept>
+            </extension>
+            <contained>
+              <Substance id="s1">
+                <type>
+                  <coding>
+                    <system value="http://www.nlm.nih.gov/research/umls/rxnorm"/>
+                    <code value="1191"/>
+                    <display value="Aspirin"/>
+                  </coding>
+                </type>
+              </Substance>
+            </contained>
+            <identifier>
+              <system value="urn:ietf:rfc:3986"/>
+              <value value="urn:uuid:36e3e930-7b14-11db-9fe1-0800200c9a66"/>
+            </identifier>
+            <criticality value="low"/>
+            <sensitivityType value="unknown"/>
+            <status value="confirmed"/>
+            <substance>
+              <reference value="#s1"/>
+            </substance>
+          </AllergyIntolerance>
+        </contained>
+        <entry>
+          <item>
+            <reference value="#a1"/>
+          </item>
+        </entry>
+        <entry>
+          <item>
+            <reference value="#a2"/>
+          </item>
+        </entry>
+        <entry>
+          <item>
+            <reference value="#a3"/>
+          </item>
+        </entry>
+      </List>
+    </content>
+  </entry>
+</feed>
