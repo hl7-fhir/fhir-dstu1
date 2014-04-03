@@ -159,10 +159,7 @@ public class NarrativeGenerator {
             if (p.getValues().size() > 0 && child != null) {
               if (isPrimitive(child)) {
                 XhtmlNode para = x.addTag("p");
-                String name = p.getName();
-                if (name.endsWith("[x]"))
-                  name = name.substring(0, name.length() - 3);
-                para.addTag("b").addText(name);
+                para.addTag("b").addText(p.getName());
                 para.addText(": ");
                 if (renderAsList(child) && p.getValues().size() > 1) {
                   XhtmlNode list = x.addTag("ul");
