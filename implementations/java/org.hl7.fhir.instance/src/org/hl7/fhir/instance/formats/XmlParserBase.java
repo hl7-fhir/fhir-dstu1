@@ -41,6 +41,7 @@ import org.hl7.fhir.instance.model.Resource;
 import org.hl7.fhir.instance.model.Type;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 import org.hl7.fhir.utilities.xhtml.XhtmlParser;
+import org.hl7.fhir.utilities.xhtml.XhtmlParser.ParserSecurityPolicy;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -180,6 +181,7 @@ public abstract class XmlParserBase extends ParserBase implements Parser {
   
   protected XhtmlNode parseXhtml(XmlPullParser xpp) throws Exception {
     XhtmlParser prsr = new XhtmlParser();
+    prsr.setPolicy(ParserSecurityPolicy.Reject);
     return prsr.parseHtmlNode(xpp);
   }
 
