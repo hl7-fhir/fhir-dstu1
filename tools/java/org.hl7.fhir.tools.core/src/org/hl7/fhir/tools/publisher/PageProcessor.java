@@ -385,6 +385,8 @@ public class PageProcessor implements Logger  {
         src = s1 + genDataTypeUsage(com[1]) + s3;
       }  else if (com[0].equals("v3xref")) {
         src = s1 + xreferencesForV3(name, com[1].equals("true")) + s3;      
+      }  else if (com[0].equals("reflink")) {
+        src = s1 + reflink(com[1]) + s3;      
       } else if (com[0].equals("setlevel")) {
         level = Integer.parseInt(com[1]);
         src = s1+s3;
@@ -554,6 +556,13 @@ public class PageProcessor implements Logger  {
         throw new Exception("Instruction <%"+s2+"%> not understood parsing page "+file);
     }
     return src;
+  }
+
+  private String reflink(String name) {
+    for (PlatformGenerator t : referenceImplementations) 
+      if (t.getName().equals(name))
+        return t.getReference(version);
+    return "??";
   }
 
   private String conceptmaplist(String id, String level) {
@@ -2265,6 +2274,8 @@ public class PageProcessor implements Logger  {
       } else if (com[0].equals("settitle")) {
         workingTitle = s2.substring(9).replace("{", "<%").replace("}", "%>");
         src = s1+s3;
+      }  else if (com[0].equals("reflink")) {
+        src = s1 + reflink(com[1]) + s3;      
       } else if (com[0].equals("setlevel")) {
         level = Integer.parseInt(com[1]);
         src = s1+s3;

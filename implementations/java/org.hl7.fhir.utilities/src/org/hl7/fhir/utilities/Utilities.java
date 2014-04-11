@@ -531,4 +531,10 @@ public class Utilities {
     }
     return text; 
   }
+
+
+  public static void copyFileToDirectory(File source, File destDir) throws IOException {
+	copyFile(source, new File(path(destDir.getAbsolutePath(), source.getName())));
+	
+  }
 }
