@@ -34,8 +34,6 @@ import org.hl7.fhir.definitions.model.Definitions;
 import org.hl7.fhir.utilities.Logger;
 
 public interface PlatformGenerator {
-
-	
 	
   /**
    * @return The name of the generator - used to show progress in log reports - must be a valid java token, and a filename, all lowercase    
@@ -53,6 +51,15 @@ public interface PlatformGenerator {
    */
   public String getDescription();
 
+  /**
+   * @return the URL for the download. In principle, the URL should be a link to a generated file with the format fhir-[version]-[title]-[reference impl version]
+   */
+  public String getReference(String version);
+  
+  /**
+   * @return the version of the reference implementation
+   */
+  public String getVersion();
   
   /**
    * @return returns true if this generator uses eCore for the FHIR definitions, false if it uses ElementDefn

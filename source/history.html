@@ -27,7 +27,7 @@ ongoing releases to the FHIR version. Subsequent releases:
    <ul>
      <li>All: Change the way version number works - the reference implementations have their own version now, in addition to the FHIR version</li>
      <li>Java: Fix major bug in reading/writing JSON bundles. The specification changed so that there was 
-       "resourceType" : "Bundle" instead of a surrounding "feed" object, but the java implementation hadn't been changed. 
+       "resourceType" : "Bundle" instead of a surrounding "feed" object, but the Java implementation hadn't been changed. 
        This meant that the java implementation wasn't consistent with the specification or the other reference implementations,
        <b>and it meant that the example JSON bundles in the specification were wrong</b>; these have also been fixed</li>
      <li>Java: Enforce FHIR rules about narrative (no active content)</li>
