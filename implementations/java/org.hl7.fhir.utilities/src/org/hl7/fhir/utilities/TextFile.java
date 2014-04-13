@@ -83,6 +83,14 @@ public class TextFile {
 		sw.close();
 	}
 
+  public static void stringToFileNoPrefix(String content, String path) throws Exception {
+    File file = new CSFile(path);
+    OutputStreamWriter sw = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+    sw.write(content);
+    sw.flush();
+    sw.close();
+  }
+
   public static String fileToString(String src) throws Exception {
     return streamToString(new FileInputStream(new CSFile(src)));
 	}
