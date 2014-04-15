@@ -173,8 +173,21 @@ public class CSharpModelGenerator extends GenBlock
 			
 			generateMembers(composite);
 			
-      // Generate Validate() routine			
+			// Generate Validate() routine			
 			//generateValidationMethod(composite);
+
+			// Put in the NotifyPropertyChanged bits
+			String derivation = composite.getName();
+			if(	derivation.compareTo("Element") == 0 || derivation.compareTo("Resource") == 0 )
+			{
+				ln("public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;");
+				ln("protected void OnPropertyChanged(String property)");
+				bs("{");
+				ln("if (PropertyChanged != null)");
+				ln("	PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));");
+				es("}");
+			}
+
 		es("}");
 		ln();
 		
@@ -316,17 +329,35 @@ public class CSharpModelGenerator extends GenBlock
     if(member.getXmlFormatHint() != XmlFormatHint.ELEMENT)
 	      nl(", XmlSerialization=XmlSerializationHint." + member.getXmlFormatHint().getName());
     
+    if(member.isSummaryItem())
+        nl(", InSummary=true");
+    
     if(order != 0)
       nl(", Order=" + Integer.toString(order));
 
     if(choiceType!=null) // None
       nl(", Choice=ChoiceType." + choiceType);
-    nl(")]");
-    
+    nl(")]");    
+          
     if(choices.length() > 0)
     {
       ln("[AllowedTypes(");
       nl(choices);
+      nl(")]");
+    }
+    
+    if(!member.isPolymorph() && member.getType().get(0).getName().equals("ResourceReference"))
+    {
+      ln("[References(");
+      boolean isNext = false;
+      
+      for(String resParam : member.getType().get(0).getResourceParams() )
+      {
+        if(isNext) nl(",");
+        nl("\"" + resParam + "\"");
+        isNext =true;
+      }
+      
       nl(")]");
     }
     
@@ -377,7 +408,11 @@ public class CSharpModelGenerator extends GenBlock
 	
 		nl( memberCsType + " " + memberName  );
 		
-		nl(" { get; set; }");
+		bs("{");
+		ln("get { return _"+memberName+"; }");
+		ln("set { _"+memberName+" = value; OnPropertyChanged(\""+memberName+"\"); }");
+		es("}");
+		ln( "private " + memberCsType + " _" + memberName + ";" );
 		ln();
 		
 		if(hasBothPrimitiveAndElementProperty)
@@ -450,7 +485,7 @@ public class CSharpModelGenerator extends GenBlock
 	        nl("(value.Select(elem=>new ");
 	        nl(singleElementCsType + "(elem)));");
 	      }
-	      
+	      ln("OnPropertyChanged(\""+simpleMemberName+"\");");
 	    es("}");
 
 //	    Some new constructs for in-place editing of array. Not too sure whether
@@ -513,6 +548,11 @@ public class CSharpModelGenerator extends GenBlock
 		{
 			nl( " : " ); 						
 		  nl(GeneratorUtils.buildFullyScopedTypeName(composite.getBaseType()));
+			nl(", System.ComponentModel.INotifyPropertyChanged");
+		}
+		else
+		{
+			nl(" : System.ComponentModel.INotifyPropertyChanged");
 		}
 	}
 	

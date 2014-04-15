@@ -74,6 +74,7 @@
     <Compile Include="Introspection\FhirElementAttribute.cs" />
     <Compile Include="Introspection\FhirTypeAttribute.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
+    <Compile Include="Introspection\ReferencesAttribute.cs" />
     <Compile Include="Validation\CardinalityAttribute.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
     <Compile Include="Validation\CodePatternAttribute.cs" />
