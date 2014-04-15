@@ -201,6 +201,8 @@ public class NarrativeGenerator {
   }
   
   private boolean exemptFromRendering(ElementComponent child) {
+	if (child == null)
+		return true;
     if ("Composition.subject".equals(child.getPathSimple()))
       return true;
     if ("Composition.section".equals(child.getPathSimple()))

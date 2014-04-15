@@ -68,8 +68,9 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
     JsonObject json = loadJson(input);
     ResourceOrFeed r = new ResourceOrFeed();
     
-    if (json.has("feed"))
-      r.feed = parseAtom(json.getAsJsonObject("feed"));
+    String rt = json.get("resourceType").getAsString();
+		if ("Bundle".equals(rt))
+      r.feed = parseAtom(json);
     else  
       r.resource = parseResource(json);
     return r;    

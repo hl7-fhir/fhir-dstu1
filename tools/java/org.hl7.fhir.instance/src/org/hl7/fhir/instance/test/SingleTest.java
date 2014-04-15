@@ -36,14 +36,14 @@ public class SingleTest {
    * @param args
    */
   public static void main(String[] args) {
-/*    try {
+    try {
       ResourceTest r = new ResourceTest();
-      r.setSource(new File("C:\\work\\org.hl7.fhir\\build\\publish\\group-example.xml"));
+      r.setSource(new File("C:\\work\\org.hl7.fhir.dstu\\build\\publish\\procedure-example-f003-abscess.xml"));
       r.test();
       System.out.println("Completed OK");
     } catch (Exception e) {
       e.printStackTrace();
-    }*/
+    }
 
   }
 

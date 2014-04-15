@@ -45,6 +45,7 @@ import org.hl7.fhir.instance.formats.XmlComposer;
 import org.hl7.fhir.instance.formats.JsonParser;
 import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.formats.ParserBase.ResourceOrFeed;
+import org.hl7.fhir.instance.model.Constants;
 import org.hl7.fhir.utilities.CSFile;
 import org.hl7.fhir.utilities.CSFileInputStream;
 import org.hl7.fhir.utilities.TextFile;
@@ -68,6 +69,8 @@ public class ToolsHelper {
         self.executeRoundTrip(args);
       else if (args[0].equals("json")) 
         self.executeJson(args);
+      else if (args[0].equals("version")) 
+        self.executeVersion(args);
       else if (args[0].equals("fragments")) 
           self.executeFragments(args);
       else 
@@ -191,6 +194,9 @@ public class ToolsHelper {
       new JsonComposer().compose(new FileOutputStream(destt), rf.getResource(), true);
     }
     return TextFile.fileToString(destt.getAbsolutePath());
+  }
+  private void executeVersion(String[] args) throws Exception {
+    TextFile.stringToFile(org.hl7.fhir.instance.utils.Version.VERSION+":"+Constants.VERSION, args[1]);
   }
 
 }
