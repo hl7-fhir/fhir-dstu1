@@ -60,6 +60,7 @@
     <pathelement location="../imports/svnkit-javahl16-1.7.9.jar"/>
     <pathelement location="../imports/antlr-runtime-3.4.jar"/>
     <pathelement location="../imports/gson-2.2.4.jar"/>
+    <pathelement location="../imports/ST-4.0.7.jar"/>
   </path>
   <target name="init">
     <mkdir dir="bin"/>
@@ -265,6 +266,7 @@
       <zipfileset excludes="META-INF/*.SF" src="../imports/commons-io-1.2.jar"/>
       <zipfileset excludes="META-INF/*.SF" src="../imports/commons-lang3-3.1.jar"/>
       <zipfileset excludes="META-INF/*.SF" src="../imports/gson-2.2.4.jar"/>
+      <zipfileset excludes="META-INF/*.SF" src="../imports/ST-4.0.7.jar"/>
       <fileset dir="../org.hl7.fhir.definitions.ecore/bin"/>
       <zipfileset excludes="META-INF/*.SF" src="../imports/sequence-library-1.0.2.jar"/>
       <zipfileset excludes="META-INF/*.SF" src="../imports/sqljet-1.1.7.jar"/>
