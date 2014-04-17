@@ -11,7 +11,7 @@ using System.Reflection;
 namespace Hl7.Fhir.Introspection
 {
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class ReferencesAttribute : ValidationAttribute
+    public class ReferencesAttribute : Attribute
     {
         [CLSCompliant(false)]
         public ReferencesAttribute(params string[] resources)
