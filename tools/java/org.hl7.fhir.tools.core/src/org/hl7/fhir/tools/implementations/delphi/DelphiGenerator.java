@@ -2686,7 +2686,7 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
     con.append("\r\n  PLURAL_CODES_TFhirResourceType : Array[TFhirResourceType] of String = (");
     con.append("'', ");
     for (String s : types) {
-      con.append("'"+Utilities.pluralizeMe(s.toLowerCase())+"',\r\n     ");
+      con.append("'"+Utilities.pluralizeMe(s)+"',\r\n     ");
       cmp.append("(''");
       Compartment c = definitions.getCompartmentByName(s.toLowerCase());
       if (c == null) {
@@ -2701,7 +2701,7 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
       }
       cmp.append(", ''),\r\n     ");
     }
-    con.append("'binaries');");
+    con.append("'Binaries');");
     cmp.append("(''");
     for (String s : types) {
       cmp.append(", ''");
@@ -2715,6 +2715,13 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
     }
     con.append("'binary');");
 
+    con.append("\r\n  LOWERCASE_PLURAL_CODES_TFhirResourceType : Array[TFhirResourceType] of String = (");
+    con.append("'', ");
+    for (String s : types) {
+      con.append("'"+Utilities.pluralizeMe(s.toLowerCase())+"',\r\n     ");
+    }
+    con.append("'binaries');");
+    
     con.append("\r\n  CLASSES_TFhirResourceType : Array[TFhirResourceType] of TFhirResourceClass = (");
     con.append("nil, ");
     for (String s : types) {

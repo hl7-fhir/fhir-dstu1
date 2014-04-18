@@ -60,8 +60,8 @@ function GetEmailAddress(contacts : TFhirContactList):String;
 Function RecogniseFHIRResourceName(Const sName : String; out aType : TFhirResourceType): boolean;
 Function RecogniseFHIRResourceManagerName(Const sName : String; out aType : TFhirResourceType): boolean;
 Function RecogniseFHIRFormat(Const sName : String): TFHIRFormat;
-function MakeParser(lang : String; aFormat: TFHIRFormat; oContent: TStream): TFHIRParser; overload;
-function MakeParser(lang : String; aFormat: TFHIRFormat; content: TBytes): TFHIRParser; overload;
+function MakeParser(lang : String; aFormat: TFHIRFormat; oContent: TStream; policy : TFHIRXhtmlParserPolicy): TFHIRParser; overload;
+function MakeParser(lang : String; aFormat: TFHIRFormat; content: TBytes; policy : TFHIRXhtmlParserPolicy): TFHIRParser; overload;
 Function FhirGUIDToString(aGuid : TGuid):String;
 function ParseXhtml(lang : String; content : String; policy : TFHIRXhtmlParserPolicy):TFhirXHtmlNode;
 function geTFhirResourceNarrativeAsText(resource : TFhirResource) : String;
@@ -151,19 +151,19 @@ begin
 
 end;
 
-function MakeParser(lang : String; aFormat: TFHIRFormat; content: TBytes): TFHIRParser;
+function MakeParser(lang : String; aFormat: TFHIRFormat; content: TBytes; policy : TFHIRXhtmlParserPolicy): TFHIRParser;
 var
   mem : TBytesStream;
 begin
   mem := TBytesStream.Create(content);
   try
-    result := MakeParser(lang, aformat, mem);
+    result := MakeParser(lang, aformat, mem, policy);
   finally
     mem.Free;
   end;
 end;
 
-function MakeParser(lang : String; aFormat: TFHIRFormat; oContent: TStream): TFHIRParser;
+function MakeParser(lang : String; aFormat: TFHIRFormat; oContent: TStream; policy : TFHIRXhtmlParserPolicy): TFHIRParser;
 begin
   if aFormat = ffJSON Then
     result := TFHIRJsonParser.Create(lang)
@@ -173,6 +173,7 @@ begin
     result := TFHIRXmlParser.Create(lang);
   try
     result.source := oContent;
+    result.ParserPolicy := policy;
     result.Parse;
     result.Link;
   finally

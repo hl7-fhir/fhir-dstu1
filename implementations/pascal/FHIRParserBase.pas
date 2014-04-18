@@ -101,7 +101,7 @@ Type
     procedure SeTFhirElement(const Value: IXmlDomElement);
 
     function CheckHtmlElementOk(elem : IXMLDOMElement) : boolean;
-    function CheckHtmlAttributeOk(elem, attr: String): boolean;
+    function CheckHtmlAttributeOk(elem, attr, value: String): boolean;
     function ParseAtomBase(child : IXmlDomElement; base : TFHIRAtomBase; path : String) : boolean;
     function ParseFeed(element : IXmlDomElement) : TFHIRAtomFeed;
     function ParseEntry(element : IXmlDomElement) : TFHIRAtomEntry;
@@ -125,6 +125,7 @@ Type
     Function ParseContained(element: IXmlDomElement; path : String) : TFhirResource;
     Function ParseResource(element : IXmlDomElement; path : String) : TFhirResource; Virtual;
     function parseBinary(element : IXmlDomElement; path : String) : TFhirBinary;
+    Procedure checkOtherAttributes(value : IXmlDomElement; path : String);
   Public
     procedure Parse; Override;
     property Element : IXmlDomElement read FElement write SeTFhirElement;
@@ -439,7 +440,7 @@ begin
       if checkHtmlELementOk(elem) then
       begin
       for i := 0 to elem.attributes.length - 1 Do
-          if CheckHtmlAttributeOk(elem.nodeName, elem.attributes.item[i].baseName) then
+          if CheckHtmlAttributeOk(elem.nodeName, elem.attributes.item[i].baseName, elem.attributes.item[i].text) then
         res.Attributes.Add(TFHIRAttribute.create(elem.attributes.item[i].baseName, elem.attributes.item[i].text));
       res.Name := node.baseName;
       child := node.firstChild;
@@ -2115,7 +2116,7 @@ begin
       begin
         result := result + '<a href="'+FBaseUrl+CODES_TFhirResourceType[aType]+'/_search?tag='+tags[i].term+'" class="'+clss+'" title="'+typ+tags[i].term+'">'+lbl+'</a>';
         if (target <> '') then
-          result := result + '<a href="javascript:deleteTag('''+target+''', '''+tags[i].scheme+''', '''+tags[i].term+''')" class="tag-delete" title="Delete '+tags[i].term+'">-</a>'
+          result := result + '<a href="javascript:deleteTag('''+target+'/_delete'', '''+tags[i].scheme+''', '''+tags[i].term+''')" class="tag-delete" title="Delete '+tags[i].term+'">-</a>'
       end;
       result := result + '&nbsp;';
     end;
@@ -2314,9 +2315,9 @@ var
   bOk : boolean;
 begin
   bOk := StringArrayExistsInsensitive(['p', 'br', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'span', 'b', 'em', 'i', 'strong',
-    'small', 'big', 'tt', 'small', 'dfn', 'q', 'var', 'abbr', 'acronym', 'cite', 'blockquote', 'hr',
-    'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'pre', 'table', 'caption', 'colgroup', 'col', 'thead', 'tr', 'tfoot', 'th', 'td',
-    'code', 'samp'], elem.nodeName);
+    'small', 'big', 'tt', 'small', 'dfn', 'q', 'var', 'abbr', 'acronym', 'cite', 'blockquote', 'hr', 'address', 'bdo', 'kbd', 'q', 'sub', 'sup',
+    'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'pre', 'table', 'caption', 'colgroup', 'col', 'thead', 'tr', 'tfoot', 'tbody', 'th', 'td',
+    'code', 'samp', 'img', 'map', 'area'], elem.nodeName);
   if bOk then
     result := true
   else case FParserPolicy of
@@ -2327,12 +2328,18 @@ begin
 //  attributes: a.href, a.name,  *.title, *.style, *.class, *.id, *.span,
 end;
 
-function TFHIRXmlParserBase.CheckHtmlAttributeOk(elem, attr : String): boolean;
+function TFHIRXmlParserBase.CheckHtmlAttributeOk(elem, attr, value : String): boolean;
 var
   bOk : boolean;
 begin
-  bOk := StringArrayExistsInsensitive(['title', 'style', 'class', 'id', 'span'], attr) or
-         StringArrayExistsInsensitive(['a.href', 'a.name', 'div.xmlns'], elem+'.'+attr);
+  bOk := StringArrayExistsInsensitive(['title', 'style', 'class', 'id', 'lang', 'xml:lang', 'dir', 'accesskey', 'tabindex',
+                    // tables
+                   'span', 'width', 'align', 'valign', 'char', 'charoff', 'abbr', 'axis', 'headers', 'scope', 'rowspan', 'colspan'], attr) or
+         StringArrayExistsInsensitive(['a.href', 'a.name', 'img.src', 'img.border', 'div.xmlns', 'blockquote.cite', 'q.cite',
+             'a.charset', 'a.type', 'a.name', 'a.href', 'a.hreflang', 'a.rel', 'a.rev', 'a.shape', 'a.coords', 'img.src',
+             'img.alt', 'img.longdesc', 'img.height', 'img.width', 'img.usemap', 'img.ismap', 'map.name', 'area.shape',
+             'area.coords', 'area.href', 'area.nohref', 'area.alt', 'table.summary', 'table.width', 'table.border',
+             'table.frame', 'table.rules', 'table.cellspacing', 'table.cellpadding'], elem+'.'+attr);
   if bOk then
     result := true
   else case FParserPolicy of
@@ -2340,7 +2347,35 @@ begin
     xppDrop: result := false;
     xppReject: raise Exception.Create('Illegal HTML attribute '+elem+'.'+attr);
   end;
-//  attributes: a.href, a.name,  *.title, *.style, *.class, *.id, *.span,
+
+  if (elem+'.'+attr = 'img.src') and not (StringStartsWith(value, '#') or StringStartsWith(value, 'http:') or StringStartsWith(value, 'https:')) then
+    case FParserPolicy of
+      xppAllow: result := true;
+      xppDrop: result := false;
+      xppReject: raise Exception.Create('Illegal Image Reference '+value);
+  end;
+
+end;
+
+procedure TFHIRXmlParserBase.checkOtherAttributes(value: IXmlDomElement; path : String);
+var
+  i : integer;
+  name : String;
+begin
+  if not AllowUnknownContent then
+  begin
+    for i := 0 to value.attributes.length - 1 do
+    begin
+      name := value.attributes.item[i].nodeName;
+      if (name <> 'id') and // always ok
+         (name <> 'value') and // value is ok (todo: only on primitives)
+         ((name <> 'url') or (value.nodeName <> 'extension')) and // url is ok on extensions
+         ((name <> 'url') or (value.nodeName <> 'modifierExtension')) and // url is ok on extensions
+         (name <> 'xmlns') and // namespaces are ok
+         (not name.StartsWith('xmlns:')) then // namespaces are ok
+        XmlError(path+'/@'+name, StringFormat(GetFhirMessage('MSG_UNKNOWN_CONTENT', lang), [name, path]));
+    end;
+  end;
 end;
 
 procedure TFHIRXmlParserBase.closeOutElement(result: TFhirElement; element: IXmlDomElement);
