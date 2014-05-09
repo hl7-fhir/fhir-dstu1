@@ -290,7 +290,7 @@ public class Publisher {
     if (hasParam(args, "-name"))
       pub.page.setPublicationType(getNamedParam(args, "-name"));
     if (pub.web) {
-      pub.page.setPublicationType("DSTU Version");
+      pub.page.setPublicationType("DSTU Release 1.1");
       pub.page.setPublicationNotice(PageProcessor.PUB_NOTICE);
     }
     try {
@@ -367,7 +367,7 @@ public class Publisher {
     registerReferencePlatforms();
 
     if (initialize(folder)) {
-      page.log("Version " + page.getVersion() + "-" + page.getSvnRevision(), LogMessageType.Hint);
+      page.log("Version " + page.getVersion() + "." + page.getSvnRevision(), LogMessageType.Hint);
 
       cache = new IniFile(page.getFolders().rootDir + "temp" + File.separator + "build.cache");
       loadSuppressedMessages(page.getFolders().rootDir);
@@ -480,7 +480,7 @@ public class Publisher {
   private void generateConformanceStatement(boolean full, String name) throws Exception {
     Conformance conf = new Conformance();
     conf.setIdentifierSimple("http://hl7.org/fhir/conformance-" + name);
-    conf.setVersionSimple(page.getVersion() + "-" + page.getSvnRevision());
+    conf.setVersionSimple(page.getVersion() + "." + page.getSvnRevision());
     conf.setNameSimple("Base FHIR Conformance Statement " + (full ? "(Full)" : "(Empty)"));
     conf.setPublisherSimple("FHIR Project Team");
     conf.getTelecom().add(Factory.newContact(ContactSystem.url, "http://hl7.org/fhir"));
@@ -2101,8 +2101,8 @@ public class Publisher {
     if (f.exists())
       f.delete();
     ZipGenerator zip = new ZipGenerator(page.getFolders().tmpResDir + "fhir-spec.zip");
-    zip.addFiles(page.getFolders().dstDir, "site\\", null, ".zip");
-    zip.addFolder(Utilities.path(page.getFolders().rootDir, "tools", "html", ""), "site\\", true);
+    zip.addFiles(page.getFolders().dstDir, "site/", null, ".zip");
+    zip.addFolder(Utilities.path(page.getFolders().rootDir, "tools", "html", ""), "site/", true);
     zip.addFileName("index.html", page.getFolders().srcDir + "redirect.html", false);
     zip.close();
     Utilities.copyFile(new CSFile(page.getFolders().tmpResDir + "fhir-spec.zip"), f);

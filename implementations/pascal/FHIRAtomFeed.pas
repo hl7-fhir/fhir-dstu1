@@ -134,6 +134,10 @@ type
       Remove the indexth item. The first item is index 0.
     }
     Procedure Remove(index : Integer);
+    {@deleteRel
+      Remove item by relationship type
+    }
+    Procedure deleteRel(rel : String);
     {@member ClearItems
       Remove All Items from the list
     }
@@ -330,12 +334,13 @@ type
   {!.Net HL7Connect.Fhir.AtomEntry}
   TFHIRAtomEntry = class (TFHIRAtomBase)
   private
-    ForiginalId : String;
     Fresource: TFhirResource;
     Fsummary: TFhirXHtmlNode;
     FDeleted: boolean;
     procedure SetResource(const Value: TFhirResource);
     procedure Setsummary(const Value: TFHIRXhtmlNode);
+    function getOriginalId: String;
+    procedure setOriginalId(const Value: String);
   public
     constructor Create; Override;
     destructor Destroy; override;
@@ -350,7 +355,7 @@ type
     {@member originalId
       - the original id if this was first received from a batch update that identified it differently
     }
-    property originalId : String read ForiginalId write ForiginalId;
+    property originalId : String read getOriginalId write setOriginalId;
 
     {@member resource
       actual resource for the entry
@@ -543,7 +548,6 @@ end;
 procedure TFHIRAtomEntry.Assign(oSource: TAdvObject);
 begin
   inherited;
-  ForiginalId := TFHIRAtomEntry(oSource).ForiginalId;
   summary  := TFHIRAtomEntry(oSource).summary.clone;
   resource  := TFHIRAtomEntry(oSource).resource.clone;
   Deleted := TFHIRAtomEntry(oSource).deleted;
@@ -566,9 +570,22 @@ begin
   inherited;
 end;
 
+function TFHIRAtomEntry.getOriginalId: String;
+begin
+  result := links['original'];
+end;
+
 function TFHIRAtomEntry.Link: TFHIRAtomEntry;
 begin
   result := TFHIRAtomEntry(inherited Link);
+end;
+
+procedure TFHIRAtomEntry.setOriginalId(const Value: String);
+begin
+  if (Value <> '') then
+    links['original'] := Value
+  else
+    links.deleteRel('original');
 end;
 
 procedure TFHIRAtomEntry.SetResource(const Value: TFhirResource);
@@ -791,6 +808,15 @@ end;
 function TFHIRAtomLinkList.Count: Integer;
 begin
   result := Inherited Count;
+end;
+
+procedure TFHIRAtomLinkList.deleteRel(rel: String);
+var
+  i : integer;
+begin
+  for i := Count - 1 downto 0 do
+    if GetItemN(i).Rel = Rel then
+      Remove(i);
 end;
 
 function TFHIRAtomLinkList.GetItemN(index: Integer): TFHIRAtomLink;

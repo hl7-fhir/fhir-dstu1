@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE HTML>
 
 
       
@@ -239,13 +239,13 @@ See <a href="security-labels.html">Security Labels</a>.
 FHIR resources include an XHTML narrative, so that applications can display the contents of the resource to users
 without having to fully and correctly process the data in the resource. However displaying HTML is associated 
 with several known security issues that have been observed in production systems in other contexts (e.g. 
-<a href="http://smartplatforms.org/2014/04/security-vulnerabilities-in-ccda-display/">with CDA</a>). For
+<a href="http://wiki.hl7.org/index.php?title=CDA_Security_Issue_Description">with CDA</a>). For
 this reason, the <a href="narrative.html#security">FHIR narrative is not allowed to contain active content</a>.
 However, care is still needed when displaying the narrative:
 </p>
 <ul>
  <li>Validate the narrative (the standard FHIR schemas do not allow active content, and the reference implementations won't handle it). Note, though, that external references could still be included in CSS, and these are outside the scope of schemas and reference implementations.</li>
- <li>Ensure that any external references to images or anchors (e.g. outside the resource) do not cause the display software to <a href="http://smartplatforms.org/2014/04/security-vulnerabilities-in-ccda-display/">leak sensitive information in headers</a></li>
+ <li>Ensure that any external references to images or anchors (e.g. outside the resource) do not cause the display software to <a href="http://wiki.hl7.org/index.php?title=CDA_Security_Issue_Description">leak sensitive information in headers</a></li>
  <li>Do not allow external links to run in a privileged context such as the EHR unless you are sure they can be trusted</li>
 </ul>
 <p>

@@ -2,7 +2,7 @@ package org.hl7.fhir.instance.model;
 
 public class Constants {
 
-  public final static String VERSION = "0.80";
-  public final static String REVISION = "2379";
-  public final static String DATE = "Thu Apr 17 22:34:54 EST 2014";
+  public final static String VERSION = "0.0.81";
+  public final static String REVISION = "2382";
+  public final static String DATE = "Wed May 07 22:41:59 EST 2014";
 }
