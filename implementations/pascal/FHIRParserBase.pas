@@ -734,7 +734,7 @@ end;
 
 function TFHIRXmlComposerBase.MimeType: String;
 begin
-  result := 'text/xml+fhir; charset=UTF-8';
+  result := 'application/xml+fhir; charset=UTF-8';
 end;
 
 procedure TFHIRXmlComposerBase.commentsStart(xml: TXmlBuilder; value: TFhirBase);
@@ -820,7 +820,7 @@ begin
       raise exception.create('not done yet')
     else
     begin
-  //    json.IsPretty := isPretty;
+      json.HasWhitespace := isPretty;
       ComposeResource(json, id, ver, oResource);
     end;
     json.Finish;
@@ -1994,9 +1994,14 @@ begin
   '  &nbsp;|&nbsp;'#13#10+
   '  <a href="/index.htm" style="color: gold">FHIR '+GetFhirMessage('NAME_VERSION', lang)+' '+FHIR_GENERATED_VERSION+'-'+FHIR_GENERATED_REVISION+'</a>'#13#10;
 
-  if session <> nil then
+  if (session <> nil)  then
   begin
-    result := result +'&nbsp;|&nbsp;User: '+FormatTextToXml(Session.Name);
+    result := result +'&nbsp;|&nbsp;';
+    if session.rights.indexof('user') > -1 then
+      result := result +'User: '+FormatTextToXml(Session.Name)
+    else
+      result := result +'User: ??';
+    result := result +'&nbsp; <a href="'+base+'/logout" title="Log Out"><img src="/logout.png"></a>';
   end;
 
   result := result +
@@ -2027,7 +2032,7 @@ end;
 
 function TFHIRComposer.ResourceMediaType: String;
 begin
-  result := 'text/xml+fhir; charset=UTF-8';
+  result := 'application/xml+fhir; charset=UTF-8';
 end;
 
 function URLTail(s : String):String;

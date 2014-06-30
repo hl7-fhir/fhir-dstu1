@@ -1,7 +1,7 @@
 unit FHIRBase;
 
 {
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -27,6 +27,10 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 POSSIBILITY OF SUCH DAMAGE.
 }
+
+{$IFNDEF FHIR-DSTU}
+This is the DSTU branch of the FHIR code
+{$ENDIF}
 
 {!ignore TFHIRObject}
 {!ignore TFHIRObjectList}
@@ -97,7 +101,7 @@ Type
     fhntComment, {@enum.value fhntComment The node is a comment}
     fhntDocument);{@enum.value fhntDocument The node represents a document (not used in FHIR context)}
 
-  TFHIRAuthProvider = (apNone, apCustom, apFacebook, apGoogle, apHL7);
+  TFHIRAuthProvider = (apNone, apInternal, apFacebook, apGoogle, apHL7);
 
 
   TFHIRXhtmlParserPolicy = (xppAllow, xppDrop, xppReject);

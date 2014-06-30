@@ -570,6 +570,9 @@ Begin
   Begin
     cValue := Result[iLoop];
 
+    if cValue = '+' then
+      Result[iLoop] := ' ';
+
     If (cValue = '%') Then
     Begin
       Result[iLoop] := Char(DecodeHexadecimal(AnsiChar(Result[iLoop + 1]), AnsiChar(Result[iLoop + 2])));

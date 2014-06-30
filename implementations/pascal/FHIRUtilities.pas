@@ -62,6 +62,7 @@ Function RecogniseFHIRResourceManagerName(Const sName : String; out aType : TFhi
 Function RecogniseFHIRFormat(Const sName : String): TFHIRFormat;
 function MakeParser(lang : String; aFormat: TFHIRFormat; oContent: TStream; policy : TFHIRXhtmlParserPolicy): TFHIRParser; overload;
 function MakeParser(lang : String; aFormat: TFHIRFormat; content: TBytes; policy : TFHIRXhtmlParserPolicy): TFHIRParser; overload;
+function MakeComposer(lang : string; mimetype : String) : TFHIRComposer;
 Function FhirGUIDToString(aGuid : TGuid):String;
 function ParseXhtml(lang : String; content : String; policy : TFHIRXhtmlParserPolicy):TFhirXHtmlNode;
 function geTFhirResourceNarrativeAsText(resource : TFhirResource) : String;
@@ -129,8 +130,34 @@ type
     function hint(source, typeCode, path : string; test : boolean; msg : string) : boolean;
   end;
 
+  {$IFNDEF FHIR-DSTU}
+  TFhirConceptMapElementHelper = class helper (TFhirElementHelper) for TFhirConceptMapElement
+  public
+    function system : TFhirUri;
+    function systemST : String;
+  end;
+
+  TFhirConceptMapElementDependsOnHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementDependsOn
+  public
+    function concept : TFhirUri;
+    function conceptST : String;
+  end;
+
+  TFhirConceptMapHelper = class helper (TFhirElementHelper) for TFhirConceptMap
+  public
+    function conceptList : TFhirConceptMapElementList;
+  end;
+
+  TFhirConceptMapElementMapHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementMap
+  public
+    function system : TFhirUri;
+    function systemST : String;
+  end;
+  {$ENDIF}
+
 function ZCompressBytes(const s: TBytes): TBytes;
 function ZDecompressBytes(const s: TBytes): TBytes;
+function TryZDecompressBytes(const s: TBytes): TBytes;
 
 implementation
 
@@ -179,6 +206,18 @@ begin
   finally
     result.free;
   end;
+end;
+
+function MakeComposer(lang : string; mimetype : String) : TFHIRComposer;
+begin
+  if mimeType.StartsWith('text/xml') or mimeType.StartsWith('application/xml') or mimeType.StartsWith('application/fhir+xml') or (mimetype = 'xml') then
+    result := TFHIRXmlComposer.Create(lang)
+  else if mimeType.StartsWith('text/json') or mimeType.StartsWith('application/json') or mimeType.StartsWith('application/fhir+json') or (mimetype = 'xml') then
+    result := TFHIRJsonComposer.Create(lang)
+  else if mimeType.StartsWith('text/html') or mimeType.StartsWith('text/xhtml') or mimeType.StartsWith('application/fhir+xhtml') or (mimetype = 'xhtml') then
+    result := TFHIRXhtmlComposer.Create(lang)
+  else
+    raise Exception.Create('Format '+mimetype+' not recognised');
 end;
 
 Function FhirGUIDToString(aGuid : TGuid):String;
@@ -1185,6 +1224,15 @@ begin
   ZCompress(s, result);
 end;
 
+function TryZDecompressBytes(const s: TBytes): TBytes;
+begin
+  try
+    result := ZDecompressBytes(s);
+  except
+    result := s;
+  end;
+end;
+
 function ZDecompressBytes(const s: TBytes): TBytes;
 var
   buffer: Pointer;
@@ -1202,6 +1250,50 @@ begin
   {$ENDIF}
 end;
 
+{$IFNDEF FHIR-DSTU}
+{ TFhirConceptMapElementHelper }
+
+function TFhirConceptMapElementHelper.system: TFhirUri;
+begin
+  result := codeSystem;
+end;
+
+function TFhirConceptMapElementHelper.systemST: String;
+begin
+  result := codeSystemST;
+end;
+
+{ TFhirConceptMapElementMapHelper }
+
+function TFhirConceptMapElementMapHelper.system: TFhirUri;
+begin
+  result := codeSystem;
+end;
+
+function TFhirConceptMapElementMapHelper.systemST: String;
+begin
+  result := codeSystemST;
+end;
+
+{ TFhirConceptMapHelper }
+
+function TFhirConceptMapHelper.conceptList: TFhirConceptMapElementList;
+begin
+  result := elementList;
+end;
+
+{ TFhirConceptMapElementDependsOnHelper }
+
+function TFhirConceptMapElementDependsOnHelper.concept: TFhirUri;
+begin
+  result := element;
+end;
+
+function TFhirConceptMapElementDependsOnHelper.conceptST: String;
+begin
+  result := elementST;
+end;
+{$ENDIF}
 
 end.
 
