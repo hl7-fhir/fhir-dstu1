@@ -58,6 +58,21 @@ namespace Hl7.Fhir.Model
         public const string SEARCH_PARAM_SORT = "_sort";
         public const string SEARCH_PARAM_SUMMARY = "_summary";
 
+        /// <summary>
+        /// List of all the search parameter that have some special meaning.
+        /// Primarily used to filter to the non-special parameters.
+        /// Notice that _id, _text, _content, _tag, _profile and _security are predefined in the standard,
+        /// but not can still be parsed as regular criteria. So they are not in the RESERVED_PARAMETERS.
+        /// </summary>
+        public static readonly string[] RESERVED_PARAMETERS = new string[] {
+            SEARCH_PARAM_QUERY,
+            SEARCH_PARAM_TYPE,
+
+            SEARCH_PARAM_COUNT,
+            SEARCH_PARAM_INCLUDE,
+            SEARCH_PARAM_SORT,
+            SEARCH_PARAM_SUMMARY
+            };
 
         /// <summary>
         /// List of additional core search criteria that are
@@ -82,7 +97,7 @@ namespace Hl7.Fhir.Model
 
         public Query()
         {
-            Identifier = new Uri("urn:uuid:" + Guid.NewGuid());
+            Identifier = "urn:uuid:" + Guid.NewGuid();
             Parameter = new List<Extension>();
         }
 
@@ -141,13 +156,14 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var count = GetSingleValue(Query.SEARCH_PARAM_COUNT);                
+                var count = GetSingleValue(Query.SEARCH_PARAM_COUNT);
                 return count != null ? Int32.Parse(count) : (int?)null;
             }
             set
             {
                 RemoveParameter(Query.SEARCH_PARAM_COUNT);
-                AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
+                if (value.HasValue)
+                    AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
             }
         }
 
@@ -163,7 +179,7 @@ namespace Hl7.Fhir.Model
         {
             get
             {
-                var val = GetSingleValue(Query.SEARCH_PARAM_SUMMARY); 
+                var val = GetSingleValue(Query.SEARCH_PARAM_SUMMARY);
                 return val == "true";
             }
             set
@@ -179,7 +195,7 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Tuple<string,SortOrder> Sort
+        public Tuple<string, SortOrder> Sort
         {
             get
             {
@@ -196,7 +212,7 @@ namespace Hl7.Fhir.Model
             {
                 RemoveParameter(Query.SEARCH_PARAM_SORT);
 
-                var modif = value.Item2 == SortOrder.Ascending? 
+                var modif = value.Item2 == SortOrder.Ascending ?
                     Query.SEARCH_MODIF_ASCENDING : Query.SEARCH_MODIF_DESCENDING;
                 var name = value.Item1;
 
@@ -220,6 +236,21 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
+        /// Returns a modifiable collection of all the parameters that are not reserved parameters.
+        /// These are the parameters that can be parsed as <see cref="Hl7.Fhir.Search.Criterium"/>.
+        /// These include the resource-independent parameters _id, _text, _content, _tag, _profile and _security.
+        /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public ICollection<Extension> Criteria
+        {
+            get
+            {
+                return new List<Extension>(this.Parameter.Where(p => !p.IsReserved()));
+            }
+        }
+
+        /// <summary>
         /// Add a parameter with a given key and value.
         /// </summary>
         /// <param name="key">The name of the parameter, possibly including the modifier</param>
@@ -232,7 +263,7 @@ namespace Hl7.Fhir.Model
 
             if (Parameter == null) Parameter = new List<Extension>();
 
-            Parameter.Add(BuildParamExtension(key,value));
+            Parameter.Add(BuildParamExtension(key, value));
 
             return this;
         }
@@ -250,7 +281,7 @@ namespace Hl7.Fhir.Model
             if (key == null) throw new ArgumentNullException("key");
 
             if (Parameter == null) return;
-            Parameter.RemoveAll( ParamsExtensions.MatchParam(key) );
+            Parameter.RemoveAll(ParamsExtensions.MatchParam(key));
         }
 
         /// <summary>
@@ -318,11 +349,11 @@ namespace Hl7.Fhir.Model
         /// </summary>
         /// <param name="paramKey"></param>
         /// <returns></returns>
-        public static Uri BuildParamUri(string paramKey)
+        public static string BuildParamUri(string paramKey)
         {
             if (paramKey == null) throw new ArgumentNullException("paramName");
 
-            return new Uri(PARAMETERURL + "#" + paramKey, UriKind.Absolute);
+            return PARAMETERURL + "#" + paramKey;
         }
 
         private const string PARAMETERURLANDFRAGMENT = PARAMETERURL + "#";
@@ -341,7 +372,7 @@ namespace Hl7.Fhir.Model
             var uriString = paramExt.Url.ToString();
 
             if (uriString.StartsWith(PARAMETERURLANDFRAGMENT))
-                return uriString.Remove(0,PARAMETERURLANDFRAGMENT.Length);
+                return uriString.Remove(0, PARAMETERURLANDFRAGMENT.Length);
             else
                 return null;
         }
@@ -399,8 +430,8 @@ namespace Hl7.Fhir.Model
 
         public bool Remove(string item)
         {
-            var found = Wrapped.FirstOrDefault( ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
-            if(found == null) return false;
+            var found = Wrapped.FirstOrDefault(ext => _matcher(ext) && Query.ExtractParamValue(ext) == item);
+            if (found == null) return false;
 
             return Wrapped.Remove(found);
         }
@@ -423,7 +454,7 @@ namespace Hl7.Fhir.Model
         public static IEnumerable<Extension> WithName(this IEnumerable<Extension> pars, string key)
         {
             var match = MatchParam(key);
-            return pars.Where( par => match(par) );
+            return pars.Where(par => match(par));
         }
 
         public static Extension SingleWithName(this IEnumerable<Extension> pars, string key)
@@ -436,8 +467,9 @@ namespace Hl7.Fhir.Model
         {
             var param = Query.BuildParamUri(key).ToString();
 
-            if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR))
-            {
+			// PCL does not have an overload on this routine that takes a char, only string
+			if (key.Contains(Query.SEARCH_MODIFIERSEPARATOR.ToString()))
+			{
                 return (Extension ext) => ext.Url.ToString() == param;
             }
             else
@@ -449,6 +481,12 @@ namespace Hl7.Fhir.Model
                 return (Extension ext) => ext.Url.ToString().StartsWith(paramWithSep) ||
                                 (ext.Url.ToString() == param);
             }
+        }
+
+        internal static bool IsReserved(this Extension parameter)
+        {
+            string key = Query.ExtractParamKey(parameter).Split(new char[] { Query.SEARCH_MODIFIERSEPARATOR }).First();
+            return Query.RESERVED_PARAMETERS.Contains(key);
         }
     }
 }
