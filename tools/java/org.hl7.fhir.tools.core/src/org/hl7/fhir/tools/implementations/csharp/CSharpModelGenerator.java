@@ -714,6 +714,18 @@ public class CSharpModelGenerator extends GenBlock
         	nl("(" + csharpPrimitive + ")"); // Avoid ambiguous this() calls by specifying type of null
         	nl("null) {}");
         ln();
+  
+      // Generate the DeepCopy()
+        ln("public override IDeepCopyable DeepCopy()");
+        bs("{");
+          ln("var copy = ");
+            nl("(" + className + ")");
+            nl("base.DeepCopy();");
+          ln("copy.Value = this.Value;");
+          ln();
+          ln("return copy;");
+        es("}");
+        ln();
         
         // Generate the cast from a C# primitive to the Fhir primitive
 //        ln("public static implicit operator ");
