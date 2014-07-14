@@ -36,6 +36,7 @@ import org.hl7.fhir.definitions.ecore.fhir.CompositeTypeDefn;
 import org.hl7.fhir.definitions.ecore.fhir.ConstrainedTypeDefn;
 import org.hl7.fhir.definitions.ecore.fhir.ResourceDefn;
 import org.hl7.fhir.definitions.model.Definitions;
+import org.hl7.fhir.instance.utils.Version;
 import org.hl7.fhir.tools.implementations.BaseGenerator;
 import org.hl7.fhir.tools.implementations.GeneratorUtils;
 import org.hl7.fhir.tools.publisher.DotNetFramework;
@@ -71,13 +72,13 @@ public class CSharpGenerator extends BaseGenerator implements PlatformGenerator 
 
 	@Override
 	public String getTitle() {
-		return ".NET (C#)";
+		return "csharp";
 	}
 
 	
 	@Override
   public String getVersion() {
-    return "0.9.5";
+    return Version.VERSION;
   }
 
   @Override
@@ -85,6 +86,10 @@ public class CSharpGenerator extends BaseGenerator implements PlatformGenerator 
     return "http://www.nuget.org/packages/Hl7.Fhir";
   }
 
+  public String getZipFilename(String version) {
+    return super.getReference(version);
+  }
+ 
   @Override
 	public boolean isECoreGenerator() {
 		return true;
@@ -92,9 +97,9 @@ public class CSharpGenerator extends BaseGenerator implements PlatformGenerator 
 
   private Logger logger = null;
   
+  
 	@Override
-	public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir,
-			String implDir, Logger logger, String svnRevision) throws Exception {
+	public void generate(org.hl7.fhir.definitions.ecore.fhir.Definitions definitions, String destDir, String implDir, String version, Date genDate, Logger logger, String svnRevision) throws Exception {
 
 	  this.logger = logger;
   
@@ -154,8 +159,9 @@ public class CSharpGenerator extends BaseGenerator implements PlatformGenerator 
     CSharpProjectGenerator.buildProjectFile(projectDir, generatedFilenames);
     CSharpProjectGenerator.setAssemblyVersionInProperties(projectDir + propertiesDir, definitions.getVersion(), svnRevision);
 
-    
-		ZipGenerator zip = new ZipGenerator(destDir + CSHARP_FILENAME);
+    ZipFilename = getZipFilename(version);
+    ZipGenerator zip = new ZipGenerator(destDir+ZipFilename);
+		//ZipGenerator zip = new ZipGenerator(destDir + CSHARP_FILENAME);
 		
 	  // Zip Hl7.Fhir.Model directory	
     zip.addFolder(projectDir+generationDir, modelProjectDir + generationDir, false);
@@ -188,7 +194,7 @@ public boolean doesCompile() {
   }
 
   
-  private static final String CSHARP_FILENAME = "CSharp.zip";
+  private String ZipFilename;
   
   @Override
   public boolean compile(String rootDir, List<String> errors, Logger logger) 
@@ -208,12 +214,12 @@ public boolean doesCompile() {
       return false;
     }
    
-    return addCompiledAssemblyToCsharpZip(rootDir, solutionDirectory);    
+    return addCompiledAssemblyToCsharpZip(rootDir, solutionDirectory, ZipFilename);    
   }
 
-  private boolean addCompiledAssemblyToCsharpZip(String rootDir, String solutionDirectory) {
+  private boolean addCompiledAssemblyToCsharpZip(String rootDir, String solutionDirectory, String zipFilename) {
     // Try to add the newly compiled assembly to the distribution zip
-    String csharpZip = Utilities.path(rootDir, "publish", CSHARP_FILENAME );
+    String csharpZip = Utilities.path(rootDir, "publish", zipFilename );
     String assemblyDirectory = Utilities.path(solutionDirectory,"Hl7.Fhir.Model","bin","Release","Net40");
     String tempZip = csharpZip + "_temp";
     
