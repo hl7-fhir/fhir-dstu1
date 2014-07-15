@@ -62,6 +62,26 @@ namespace Hl7.Fhir.Model
                 throw new ArgumentException("T must be an enumerated type");
 #endif
             Value = value;
-        }       
+        }
+
+
+        public override IDeepCopyable CopyTo(IDeepCopyable other)
+        {
+            var dest = other as Code<T>;
+
+            if (dest != null)
+            {
+                base.CopyTo(dest);
+                if (Value != null) dest.Value = Value;
+                return dest;
+            }
+            else
+                throw new ArgumentException("Can only copy to an object of the same type", "other");
+        }
+
+        public override IDeepCopyable DeepCopy()
+        {
+            return CopyTo(new Code<T>());
+        }
     }
 }

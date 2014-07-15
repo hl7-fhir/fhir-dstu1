@@ -43,10 +43,7 @@ namespace Hl7.Fhir.Model
     [InvokeIValidatableObject]
     public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable
     {
-        public virtual IDeepCopyable DeepCopy()
-        {
-            return this;
-        }
+        public abstract IDeepCopyable DeepCopy();
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

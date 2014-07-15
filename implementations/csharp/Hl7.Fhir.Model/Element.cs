@@ -37,10 +37,7 @@ namespace Hl7.Fhir.Model
 {
     public abstract partial class Element : IExtendable, IDeepCopyable
     {
-        public virtual IDeepCopyable DeepCopy()
-        {
-            return this;
-        }
+        public abstract IDeepCopyable DeepCopy();
     }
 }
 

@@ -149,16 +149,31 @@ namespace Hl7.Fhir.Tests
         }
 
         [TestMethod]
-        public void TestListDeepCopy()
+        public void TestDeepCopy()
         {
-            var x = new List<Patient>();
-            x.Add(new Patient());
-            x.Add(new Patient());
+            var p = new Patient();
 
-            var y = new List<Patient>(x.DeepCopy());
-            Assert.IsTrue(x[0] is Patient);
-            Assert.AreNotEqual(x[0], y[0]);
-            Assert.AreNotEqual(x[1], y[1]);
+            p.Name = new List<HumanName>();
+            p.Name.Add(HumanName.ForFamily("Kramer").WithGiven("Ewout"));
+            p.Name.Add(HumanName.ForFamily("Kramer").WithGiven("Wouter"));
+            p.SetExtension("http://test.nl/test", new FhirString("Hello, world"));
+ 
+            var p2 = (Patient)p.DeepCopy();
+
+            Assert.IsTrue(p2 is Patient);
+            Assert.AreNotEqual(p,p2);
+            Assert.IsNotNull(p2.Name);
+            Assert.AreNotEqual(p.Name, p2.Name);
+            Assert.AreEqual(p.Name[0].Family.First(), p2.Name[0].Family.First());
+            Assert.AreEqual(p.Name[0].Given.First(), p2.Name[0].Given.First());
+            Assert.AreEqual(p.Name[1].Family.First(), p2.Name[1].Family.First());
+            Assert.AreEqual(p.Name[1].Given.First(), p2.Name[1].Given.First());
+
+            var ext = p.GetExtension("http://test.nl/test");
+            var ext2 = p2.GetExtension("http://test.nl/test");
+            Assert.AreNotEqual(ext, ext2);
+            Assert.AreNotEqual(ext.Value, ext2.Value);
+            Assert.AreEqual(((FhirString)ext.Value).Value, ((FhirString)ext2.Value).Value);
         }
 
         [TestMethod]
