@@ -81,6 +81,7 @@ Type
     Destructor Destroy; Override;
     property source : TStream read FSource write FSource;
     procedure Parse; Virtual; abstract;
+    function ParseDT(rootName : String; type_ : TFHIRTypeClass) : TFHIRType; Virtual; abstract;
     property resource : TFhirResource read Fresource write SeTFhirResource;
     property feed : TFHIRAtomFeed read Ffeed write Setfeed;
     Property Tags : TFHIRAtomCategoryList read FTags;
@@ -126,8 +127,10 @@ Type
     Function ParseResource(element : IXmlDomElement; path : String) : TFhirResource; Virtual;
     function parseBinary(element : IXmlDomElement; path : String) : TFhirBinary;
     Procedure checkOtherAttributes(value : IXmlDomElement; path : String);
+    function ParseDataType(element : IXmlDomElement; name : String; type_ : TFHIRTypeClass) : TFHIRType; virtual;
   Public
     procedure Parse; Override;
+    function ParseDT(rootName : String; type_ : TFHIRTypeClass) : TFHIRType; Override;
     property Element : IXmlDomElement read FElement write SeTFhirElement;
     Function ParseHtml(element : IXmlDomElement) : TFhirXHtmlNode; Overload;
     Function ParseHtml() : TFhirXHtmlNode; Overload;
@@ -151,6 +154,7 @@ Type
     Function ParseFeed(jsn : TJsonObject) : TFHIRAtomFeed;
     function parseBinary(jsn : TJsonObject) : TFhirBinary;
     procedure ParseComments(base : TFHIRBase; jsn : TJsonObject);
+    function ParseDataType(jsn : TJsonObject; name : String; type_ : TFHIRTypeClass) : TFHIRType; virtual;
 
     procedure iterateArray(arr : TJsonArray; ctxt : TFHIRObjectList; handler : TJsonObjectHandler);
     procedure iteratePrimitiveArray(arr1, arr2 : TJsonArray; ctxt : TFHIRObjectList; handler : TJsonObjectPrimitiveHandler);
@@ -163,6 +167,7 @@ Type
     procedure ParseContained(jsn : TJsonObject; ctxt : TFHIRObjectList);
   Public
     procedure Parse; Override;
+    function ParseDT(rootName : String; type_ : TFHIRTypeClass) : TFHIRType; Override;
     class function ParseFragment(fragment, type_, lang : String) : TFHIRElement; overload;
   End;
 
@@ -271,7 +276,7 @@ Type
     class function ResourceLinks(a : TFhirResourceType; lang, base : String; count : integer; bTable, bPrefixLinks : boolean): String;
     class function PageLinks : String;
     class function Header(Session : TFhirSession; base, lang : String) : String;
-    class function Footer(base : String) : string;
+    class function Footer(base, lang : String) : string;
   end;
 
 Implementation
@@ -630,6 +635,24 @@ begin
   ctxt.add(ParseResource(jsn));
 end;
 
+function TFHIRJsonParserBase.ParseDataType(jsn : TJsonObject; name : String; type_ : TFHIRTypeClass) : TFHIRType;
+begin
+  raise exception.create('don''t use TFHIRJsonParserBase directly - use TFHIRJsonParser');
+end;
+
+function TFHIRJsonParserBase.ParseDT(rootName: String; type_: TFHIRTypeClass): TFHIRType;
+var
+  obj : TJsonObject;
+  s : string;
+begin
+  obj := TJSONParser.Parse(source);
+  try
+    result := ParseDataType(obj, rootName, type_);
+  finally
+    obj.Free;
+  end;
+end;
+
 procedure TFHIRJsonParserBase.iterateArray(arr : TJsonArray; ctxt : TFHIRObjectList; handler : TJsonObjectHandler);
 var
   i : integer;
@@ -871,7 +894,7 @@ begin
       xml.IsPretty := false;
       xml.CharEncoding := '';
       xml.Namespace := XHTML_NS;
-
+      xml.NoHeader := true;
       {
       xml.StartFragment;
       ComposeXHtmlNode(xml, value, true);
@@ -1334,6 +1357,11 @@ begin
   TakeCommentsStart(base);
 end;
 
+function TFHIRXmlParserBase.ParseDataType(element: IXmlDomElement; name: String; type_: TFHIRTypeClass): TFHIRType;
+begin
+  raise exception.create('don''t use TFHIRXmlParserBase directly - use TFHIRXmlParser');
+end;
+
 function TFHIRXmlParserBase.ParseDeletedEntry(element: IXmlDomElement): TFHIRAtomEntry;
 var
   child : IXMLDOMElement;
@@ -1371,6 +1399,30 @@ begin
     result.link;
   finally
     result.free;
+  end;
+end;
+
+function TFHIRXmlParserBase.ParseDT(rootName: String; type_: TFHIRTypeClass): TFHIRType;
+var
+  xml : IXmlDomDocument2;
+  root : IXmlDomElement;
+begin
+  FComments := TAdvStringList.create;
+  try
+    if (Element = nil) then
+    begin
+      xml := LoadXml(Source);
+      root := xml.documenTElement;
+    end
+    else
+      root := element;
+
+    if root.namespaceURI <> FHIR_NS Then
+      XmlError('/', StringFormat(GetFhirMessage('MSG_WRONG_NS', lang), [root.namespaceURI]));
+
+    result := ParseDataType(root, rootName, type_);
+  finally
+    FComments.Free;
   end;
 end;
 
@@ -1650,7 +1702,7 @@ Header(Session, FBaseURL, lang)+
     end;
     s.append(
 '<p><br/>'+
-Footer(FBaseURL)
+Footer(FBaseURL, lang)
     );
     s.WriteToStream(stream);
   finally
@@ -1679,6 +1731,7 @@ var
   ss : TStringStream;
   xml : TFHIRXmlComposer;
   link, text : String;
+  u : string;
 begin
   a := oFeed.authorUri;
   s := TAdvStringBuilder.create;
@@ -1698,31 +1751,36 @@ FHIR_JS+#13#10+
 '<body>'+#13#10+
 ''+#13#10+
 Header(Session, FBaseURL, lang)+
-'<h1>'+FormatTextToXml(oFeed.title)+'</h1>'+#13#10+
-'<p><a href="?_format=xml"><img src="/rss.png"> Atom (XML)</a> or <a href="?_format=json">JSON</a> '+GetFhirMessage('NAME_REPRESENTATION', lang)+'</p>'+#13#10
-    );
+'<h1>'+FormatTextToXml(oFeed.title)+'</h1>'+#13#10);
+
+  u := ofeed.links.getrel('self');
+  if not u.contains('?') then
+    u := u + '?'
+  else
+    u := u + '&';
+  s.append('<p><a href="'+u+'_format=xml"><img src="/rss.png"> Atom (XML)</a> '+GetFhirMessage('OR', lang)+' <a href="'+u+'_format=json">JSON</a> '+GetFhirMessage('NAME_REPRESENTATION', lang)+'</p>'+#13#10);
 
     if (ofeed.isSearch) then
     begin
-      s.append('<p>Search Links:&nbsp;');
+      s.append('<p>'+GetFhirMessage('NAME_LINKS', lang)+':&nbsp;');
       if (ofeed.links.getrel('first') <> '') then
         s.append('<a href="'+ofeed.links.getrel('first')+'">'+GetFhirMessage('NAME_FIRST', lang)+'</a>&nbsp;')
       else
-        s.append('<span style="color: grey">First</span>&nbsp;');
+        s.append('<span style="color: grey">'+GetFhirMessage('NAME_FIRST', lang)+'</span>&nbsp;');
       if (ofeed.links.getrel('previous') <> '') then
         s.append('<a href="'+ofeed.links.getrel('previous')+'">'+GetFhirMessage('NAME_PREVIOUS', lang)+'</a>&nbsp;')
       else
-        s.append('<span style="color: grey">Previous</span>&nbsp;');
+        s.append('<span style="color: grey">'+GetFhirMessage('NAME_PREVIOUS', lang)+'</span>&nbsp;');
       if (ofeed.links.getrel('next') <> '') then
         s.append('<a href="'+ofeed.links.getrel('next')+'">'+GetFhirMessage('NAME_NEXT', lang)+'</a>&nbsp;')
       else
-        s.append('<span style="color: grey">Next</span>&nbsp;');
+        s.append('<span style="color: grey">'+GetFhirMessage('NAME_NEXT', lang)+'</span>&nbsp;');
       if (ofeed.links.getrel('last') <> '') then
         s.append('<a href="'+ofeed.links.getrel('last')+'">'+GetFhirMessage('NAME_LAST', lang)+'</a>&nbsp;')
       else
-        s.append('<span style="color: grey">Last</span>&nbsp;');
+        s.append('<span style="color: grey">'+GetFhirMessage('NAME_LAST', lang)+'</span>&nbsp;');
       if oFeed.SearchTotal <> 0 then
-        s.append(' ('+inttostr(oFeed.SearchTotal)+' found). ');
+        s.append(' ('+inttostr(oFeed.SearchTotal)+' '+GetFhirMessage('FOUND', lang)+'). ');
       s.append('<span style="color: grey">'+GetFhirMessage('NAME_SEARCH', lang)+': '+ofeed.links.getrel('self')+'</span>&nbsp;</p>');
       s.append('<p>SQL: <span style="color: maroon">'+FormatTextToXML(oFeed.sql)+'</span></p>');
     end;
@@ -1733,14 +1791,17 @@ Header(Session, FBaseURL, lang)+
       s.append('<h2>'+FormatTextToXml(e.title)+'</h2>'+#13#10);
       if (e.categories <> nil) and (e.Resource <> nil) then
         s.append('<p><a href="'+e.id+'/_tags">'+GetFhirMessage('NAME_TAGS', lang)+'</a>: '+PresentTags(e.resource.ResourceType, e.links.GetRel('self')+'/_tags', e.categories, i+1        )+'</p>'+#13#10);
-
-      s.append('<p><a href="'+e.Links.rel['self']+'">this resource</a> ');
+      u := e.Links.rel['self'];
+      if (u <> '')  then
+      begin
+        s.append('<p><a href="'+e.Links.rel['self']+'">'+GetFhirMessage('THIS_RESOURCE', lang)+'</a> ');
       if not (e.resource is TFhirBinary) then
+        begin
         s.append(
-        ', <a href="'+e.Links.rel['self']+'?_format=xml">XML</a> or '+
+          ', <a href="'+e.Links.rel['self']+'?_format=xml">XML</a> '+GetFhirMessage('OR', lang)+' '+
         '<a href="'+e.Links.rel['self']+'?_format=json">JSON</a> '+GetFhirMessage('NAME_REPRESENTATION', lang));
         s.append(
-        ', or <a href="'+e.id+'/_history">'+GetFhirMessage('NAME_HISTORY', lang)+'</a>.');
+          ', '+GetFhirMessage('OR', lang)+' <a href="'+e.id+'/_history">'+GetFhirMessage('NAME_HISTORY', lang)+'</a>.');
         if assigned(FOnGetLink) then
         begin
           FOnGetLink(e.resource, BaseURL, tail(e.id), tail(e.Links.rel['self']), link, text);
@@ -1748,6 +1809,8 @@ Header(Session, FBaseURL, lang)+
             s.append(' <a href="'+link+'">'+FormatTextToHTML(text)+'</a>');
         end;
         s.append('</br> Updated: '+e.updated.AsXML+'; Author: '+Author(e, a)+'</p>'+#13#10);
+        end;
+      end;
 
       if e.deleted then
         s.append('<p>'+GetFhirMessage('MSG_DELETED', lang)+'</p>')
@@ -1777,7 +1840,7 @@ Header(Session, FBaseURL, lang)+
     end;
     s.append(
 '<p><br/>'
-+footer(FBaseUrl)
++footer(FBaseUrl, lang)
     );
     s.WriteToStream(stream);
   finally
@@ -1848,7 +1911,7 @@ Header(Session, FBaseURL, Lang));
 
    s.append('<p></p>'+#13#10);
    if (oTags.Count = 0) then
-     s.append('<p>(No tags defined)</p>'+#13#10)
+     s.append('<p>'+GetFhirMessage('NO_TAGS', lang)+'</p>'+#13#10)
    else
    begin
      s.append('<table>'+#13#10);
@@ -1867,7 +1930,7 @@ Header(Session, FBaseURL, Lang));
    s.append('<p></p>'+#13#10);
 
     s.append(
-'<p><br/>'+Footer(FBaseURL)
+'<p><br/>'+Footer(FBaseURL, lang)
     );
     s.WriteToStream(stream);
   finally
@@ -1885,7 +1948,7 @@ begin
   oHtml := TFhirXHtmlNode.create;
   try
     oHtml.NodeType := fhntDocument;
-    oHtml.AddComment('Generated by HL7Connect automatically');
+    oHtml.AddComment('Generated by Server automatically');
     oDoc := oHtml.AddChild('html');
     oHead := oDoc.AddChild('head');
     oWork := oHead.AddChild('title');
@@ -1921,7 +1984,7 @@ begin
   inherited;
 end;
 
-class function TFHIRXhtmlComposer.Footer(base : String): string;
+class function TFHIRXhtmlComposer.Footer(base, lang : String): string;
 begin
   result :=
 '</div>'+#13#10+
@@ -1937,7 +2000,7 @@ begin
 '		<div class="container">  <!-- container -->'+#13#10+
 '			<div class="inner-wrapper">'+#13#10+
 '				<p>'+#13#10+
-'        <a href="'+base+'" style="color: gold">Server Home</a>.&nbsp;|&nbsp;FHIR &copy; HL7.org 2011 - 2013. &nbsp;|&nbsp; This server based on version <a href="/index.htm" style="color: gold">'+FHIR_GENERATED_VERSION+'-'+FHIR_GENERATED_REVISION+'</a>'+#13#10+
+'        <a href="'+base+'" style="color: gold">'+GetFhirMessage('SERVER_HOME', lang)+'</a>.&nbsp;|&nbsp;FHIR &copy; HL7.org 2011 - 2013. &nbsp;|&nbsp; FHIR '+GetFhirMessage('NAME_VERSION', lang)+' <a href="/index.htm" style="color: gold">'+FHIR_GENERATED_VERSION+'-'+FHIR_GENERATED_REVISION+'</a>'+#13#10+
 '        </span>'+#13#10+
 '        </p>'+#13#10+
 '			</div>  <!-- /inner-wrapper -->'+#13#10+
@@ -1988,7 +2051,7 @@ begin
   ''#13#10+
   '  &copy; HL7.org'#13#10+
   '  &nbsp;|&nbsp;'#13#10+
-  '  <a href="'+base+'" style="color: gold">Server Home</a> '+
+  '  <a href="'+base+'" style="color: gold">'+GetFhirMessage('SERVER_HOME', lang)+'</a> '+
   '  &nbsp;|&nbsp;'#13#10+
   '  <a href="http://www.healthintersections.com.au" style="color: gold">Health Intersections</a> '+GetFhirMessage('NAME_SERVER', lang)+''#13#10+
   '  &nbsp;|&nbsp;'#13#10+
@@ -2351,7 +2414,7 @@ begin
     xppReject: raise Exception.Create('Illegal HTML attribute '+elem+'.'+attr);
   end;
 
-  if (elem+'.'+attr = 'img.src') and not (StringStartsWith(value, '#') or StringStartsWith(value, 'http:') or StringStartsWith(value, 'https:')) then
+  if (elem+'.'+attr = 'img.src') and not (StringStartsWith(value, '#') or StringStartsWith(value, 'data:') or StringStartsWith(value, 'http:') or StringStartsWith(value, 'https:')) then
     case FParserPolicy of
       xppAllow: result := true;
       xppDrop: result := false;

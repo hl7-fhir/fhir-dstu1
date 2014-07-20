@@ -36,22 +36,13 @@ interface
 
 uses
   Classes,
-  AdvObjects,
-  AdvBuffers,
-  AdvStringLists,
   SysUtils,
-  IdGlobal,
-  DateAndTime,
-  StringSupport,
-  DecimalSupport,
-  Parsemap,
-  FHirBase,
-  FHirResources,
-  FHIRConstants,
-  FHIRComponents,
-  FHIRTypes,
-  FHIRAtomFeed,
-  GuidSupport;
+  IdGlobal, IdSoapMime,
+  Parsemap, TextUtilities,
+  StringSupport, DecimalSupport, GuidSupport,
+  AdvObjects, AdvBuffers, AdvStringLists,
+  DateAndTime, JWT,
+  FHirBase, FHirResources, FHIRConstants, FHIRComponents, FHIRTypes, FHIRAtomFeed;
 
 Const
    HTTP_OK_200 = 200;
@@ -138,7 +129,10 @@ Type
     FUseCount: integer;
     FRights: TStringList;
     FFirstCreated: TDateTime;
+    FJwt : TJWT;
+    FJwtPacked : String;
     procedure SetUser(const Value: TFhirUserStructure);
+    procedure SetJwt(const Value: TJWT);
   public
     Constructor Create; Override;
     destructor Destroy; Override;
@@ -207,8 +201,19 @@ Type
     }
     Property User : TFhirUserStructure read FUser write SetUser;
 
+    {@member JWT
+      The JWT token (Open ID Connect token) associated with this session
+    }
+    Property JWT : TJWT read FJwt write SetJwt;
+
+    {@member JWTPacked
+      The JWT packed and signed using RSA
+    }
+    Property JWTPacked : string read FJWTPacked write FJWTPacked;
+
     Property useCount : integer read FUseCount write FUseCount;
     Property rights : TStringList read FRights;
+    function HasRight(code : String):boolean;
   end;
 
   {@Class TFHIRRequest
@@ -247,6 +252,8 @@ Type
     FIp: string;
     FCompartments: String;
     FCompartmentId: String;
+    FForm: TIdSoapMimeMessage;
+    FOperationName: String;
     procedure SeTFhirResource(const Value: TFhirResource);
     procedure SetFeed(const Value: TFHIRAtomFeed);
     procedure SetSource(const Value: TAdvBuffer);
@@ -258,13 +265,15 @@ Type
 
     {!Script Hide}
     Function Compose : String;
-    procedure LoadParams(s : String);
+    procedure LoadParams(s : String); overload;
+    procedure LoadParams(form : TIdSoapMimeMessage); overload;
     Function LogSummary : String;
     function XMLSummary : String;
     Procedure CopyPost(stream : TStream);
     Property Source : TAdvBuffer read FSource write SetSource;
     Property Session : TFhirSession read FSession write SetSession;
     Property ip : string read FIp write FIp;
+    Property form : TIdSoapMimeMessage read FForm write FForm;
 
     Property DefaultSearch : boolean read FDefaultSearch write FDefaultSearch;
 
@@ -313,6 +322,11 @@ Type
       A secondary id associated with the request (only used for the version id in a version specific request)
     }
     Property SubId : String Read FSubId write FSubId;
+
+    {@member OperationName
+      The name of an operation, if an operation was invoked
+    }
+    Property OperationName : String read FOperationName write FOperationName;
 
     {@member PostFormat
       The format of the request, if known and identified (xml, json, or xhtml). Derived
@@ -784,6 +798,25 @@ end;
 procedure TFHIRRequest.LoadParams(s: String);
 begin
   FParams := TParseMap.createSmart(s);
+end;
+
+procedure TFHIRRequest.LoadParams(form: TIdSoapMimeMessage);
+var
+  i : integer;
+  p : TIdSoapMimePart;
+  s, n : String;
+begin
+  for i := 0 to form.Parts.Count - 1 do
+  begin
+    p := form.Parts.PartByIndex[i];
+    if (p.MediaType = '') then
+    begin
+      n := p.ParamName;
+      s := UTF8StreamToString(p.Content).trimRight([#13, #10]);
+      if (n <> '') and (not s.Contains(#10)) then
+        FParams.addItem(n, s);
+    end;
+  end;
 end;
 
 function TFHIRRequest.LogSummary: String;
@@ -1262,9 +1295,15 @@ end;
 
 destructor TFhirSession.Destroy;
 begin
+  FJwt.free;
   FRights.Free;
   FUser.Free;
   inherited;
+end;
+
+function TFhirSession.HasRight(code: String): boolean;
+begin
+  result :=  Rights.IndexOf(code) > -1;
 end;
 
 function TFhirSession.Link: TFhirSession;
@@ -1272,6 +1311,12 @@ begin
   result := TFhirSession(inherited Link);
 end;
 
+
+procedure TFhirSession.SetJwt(const Value: TJWT);
+begin
+  FJwt.free;
+  FJwt := Value;
+end;
 
 procedure TFhirSession.SetUser(const Value: TFhirUserStructure);
 begin
