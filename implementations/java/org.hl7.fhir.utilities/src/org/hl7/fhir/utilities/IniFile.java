@@ -55,13 +55,14 @@ public final class IniFile
     private String mstrTimeStampFmt = "yyyy-MM-dd HH:mm:ss";
 
     /** Variable to denote the successful load operation. */
+    @SuppressWarnings("unused")
     private boolean mblnLoaded = false;
 
     /** Variable to hold the ini file name and full path */
     private String mstrFile;
 
     /** Variable to hold the sections in an ini file. */
-    private LinkedHashMap mhmapSections;
+    private LinkedHashMap<String, INISection> mhmapSections;
 
     /** Variable to hold environment variables **/
     private Properties mpropEnv;
@@ -73,7 +74,7 @@ public final class IniFile
     public IniFile(String pstrPathAndName)
     {
         this.mpropEnv = getEnvVars();
-        this.mhmapSections = new LinkedHashMap();
+        this.mhmapSections = new LinkedHashMap<String, INISection>();
         this.mstrFile = pstrPathAndName;
         // Load the specified INI file.
         if (checkFile(pstrPathAndName)) loadFile();
@@ -561,7 +562,7 @@ public final class IniFile
     public String[] getAllSectionNames()
     {
         int        iCntr  = 0;
-        Iterator   iter   = null;
+        Iterator<String>   iter   = null;
         String[]   arrRet = null;
 
         try
@@ -610,9 +611,9 @@ public final class IniFile
      * @param pstrSection the name of the section for which properties are to be retrieved.
      * @return the map of properties.
      */
-    public Map getProperties(String pstrSection)
+    public Map<String, INIProperty> getProperties(String pstrSection)
     {
-        Map        hmRet = null;
+        Map<String, INIProperty>        hmRet = null;
         INISection objSec = null;
 
         objSec = (INISection) this.mhmapSections.get(pstrSection);
@@ -663,7 +664,7 @@ public final class IniFile
         File       objFile   = null;
         String     strName   = null;
         String     strTemp   = null;
-        Iterator   itrSec    = null;
+        Iterator<String>   itrSec    = null;
         INISection objSec    = null;
         FileWriter objWriter = null;
 
@@ -1119,7 +1120,7 @@ public final class IniFile
         private String mstrName;
         
         /** Variable to hold the properties falling under this section. */
-        private LinkedHashMap mhmapProps;
+        private LinkedHashMap<String, INIProperty> mhmapProps;
 
         /**
          * Construct a new section object identified by the name specified in 
@@ -1129,7 +1130,7 @@ public final class IniFile
         public INISection(String pstrSection)
         {
             this.mstrName =  pstrSection;
-            this.mhmapProps = new LinkedHashMap();
+            this.mhmapProps = new LinkedHashMap<String, INIProperty>();
         }
 
         /**
@@ -1142,25 +1143,7 @@ public final class IniFile
         {
             this.mstrName =  pstrSection;
             this.mstrComment = delRemChars(pstrComments);
-            this.mhmapProps = new LinkedHashMap();
-        }
-        
-        /**
-         * Returns any comments associated with this section
-         * @return the comments
-         */
-        public String getSecComments()
-        {
-            return this.mstrComment;
-        }
-
-        /**
-         * Returns name of the section.
-         * @return Name of the section.
-         */
-        public String getSecName()
-        {
-            return this.mstrName;
+            this.mhmapProps = new LinkedHashMap<String, INIProperty>();
         }
 
         /**
@@ -1170,15 +1153,6 @@ public final class IniFile
         public void setSecComments(String pstrComments)
         {
             this.mstrComment = delRemChars(pstrComments);
-        }
-
-        /**
-         * Sets the section name.
-         * @param pstrName the section name.
-         */
-        public void setSecName(String pstrName)
-        {
-            this.mstrName = pstrName;
         }
 
         /**
@@ -1206,7 +1180,7 @@ public final class IniFile
          * Returns a map of all properties.
          * @return a map of all properties
          */
-        public Map getProperties()
+        public Map<String, INIProperty> getProperties()
         {
             return Collections.unmodifiableMap(this.mhmapProps);
         }
@@ -1220,7 +1194,7 @@ public final class IniFile
         {
             int      iCntr  = 0;
             String[] arrRet = null;
-            Iterator iter   = null;
+            Iterator<String> iter   = null;
 
             try
             {
@@ -1261,9 +1235,9 @@ public final class IniFile
         @Override
 		public String toString()
         {
-            Set          colKeys = null;
+            Set<String>          colKeys = null;
             String       strRet  = "";
-            Iterator     iter    = null;
+            Iterator<String>     iter    = null;
             INIProperty  objProp = null;
             StringBuffer objBuf  = new StringBuffer();
 
@@ -1316,17 +1290,6 @@ public final class IniFile
          * Constructor
          * @param pstrName the name of this property.
          * @param pstrValue the value of this property.
-         */
-        public INIProperty(String pstrName, String pstrValue)
-        {
-            this.mstrName = pstrName;
-            this.mstrValue = pstrValue;
-        }
-
-        /**
-         * Constructor
-         * @param pstrName the name of this property.
-         * @param pstrValue the value of this property.
          * @param pstrComments the comments associated with this property.
          */
         public INIProperty(String pstrName, String pstrValue, String pstrComments)
@@ -1334,15 +1297,6 @@ public final class IniFile
             this.mstrName = pstrName;
             this.mstrValue = pstrValue;
             this.mstrComments = delRemChars(pstrComments);
-        }
-
-        /**
-         * Returns the string identifier (key part) of this property.
-         * @return the string identifier of this property.
-         */
-        public String getPropName()
-        {
-            return this.mstrName;
         }
 
         /**
@@ -1373,42 +1327,6 @@ public final class IniFile
                 }
             }
             return strRet;
-        }
-
-        /**
-         * Returns comments associated with this property.
-         * @return the associated comments if any.
-         */
-        public String getPropComments()
-        {
-            return this.mstrComments;
-        }
-
-        /**
-         * Sets the string identifier (key part) of a property
-         * @param pstrName the string identifier of a property
-         */
-        public void setPropName(String pstrName)
-        {
-            this.mstrName = pstrName;
-        }
-
-        /**
-         * Sets the property value
-         * @param pstrValue the value for the property
-         */
-        public void setPropValue(String pstrValue)
-        {
-            this.mstrValue = pstrValue;
-        }
-
-        /**
-         * Sets the comments for a property
-         * @param pstrComments the comments
-         */
-        public void setPropComments(String pstrComments)
-        {
-            this.mstrComments = delRemChars(pstrComments);
         }
 
         /* (non-Javadoc)

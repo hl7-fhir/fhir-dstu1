@@ -1,13 +1,8 @@
 package org.hl7.fhir.instance.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hl7.fhir.instance.model.OperationOutcome;
-import org.hl7.fhir.utilities.xhtml.XhtmlComposer;
 
 /*
-Copyright (c) 2011-2013, HL7, Inc
+  Copyright (c) 2011-2014, HL7, Inc.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -34,6 +29,10 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 */
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hl7.fhir.instance.model.OperationOutcome;
 
 /**
  * FHIR client exception.

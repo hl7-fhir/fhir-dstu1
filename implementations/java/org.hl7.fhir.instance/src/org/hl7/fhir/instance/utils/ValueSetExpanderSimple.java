@@ -1,14 +1,13 @@
 package org.hl7.fhir.instance.utils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.hl7.fhir.instance.model.Code;
+import org.hl7.fhir.instance.model.CodeType;
 import org.hl7.fhir.instance.model.DateAndTime;
-import org.hl7.fhir.instance.model.Uri;
+import org.hl7.fhir.instance.model.UriType;
 import org.hl7.fhir.instance.model.ValueSet;
 import org.hl7.fhir.instance.model.ValueSet.ConceptSetComponent;
 import org.hl7.fhir.instance.model.ValueSet.ConceptSetFilterComponent;
@@ -61,7 +60,7 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
   }
 
 	private void handleCompose(ValueSetComposeComponent compose) throws Exception {
-  	for (Uri imp : compose.getImport()) 
+  	for (UriType imp : compose.getImport()) 
   		importValueSet(imp.getValue());
   	for (ConceptSetComponent inc : compose.getInclude()) 
   		includeCodes(inc);
@@ -106,7 +105,7 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
 	    }
 	  }
 	    
-	  for (Code c : inc.getCode()) {
+	  for (CodeType c : inc.getCode()) {
 	  	addCode(inc.getSystemSimple(), c.getValue(), getCodeDisplay(cs, c.getValue()));
 	  }
 	  if (inc.getFilter().size() > 1)
@@ -153,7 +152,7 @@ public class ValueSetExpanderSimple implements ValueSetExpander {
     }
       
 
-	  for (Code c : inc.getCode()) {
+	  for (CodeType c : inc.getCode()) {
 	  	// we don't need to check whether the codes are valid here- they can't have gotten into this list if they aren't valid
 	  	map.remove(key(inc.getSystemSimple(), c.getValue()));
 	  }

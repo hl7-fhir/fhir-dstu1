@@ -1,7 +1,7 @@
 package org.hl7.fhir.instance.formats;
 
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -54,7 +54,7 @@ import com.google.gson.stream.JsonWriter;
  * The two classes are separated to keep generated and manually maintained code apart.
  */
 
-public abstract class JsonComposerBase extends FormatUtilities implements Composer {
+public abstract class JsonComposerBase extends ComposerBase {
 
 	protected JsonWriter json;
 	private boolean htmlPretty;
@@ -326,9 +326,13 @@ public abstract class JsonComposerBase extends FormatUtilities implements Compos
 //	}
 //	
 	protected void composeXhtml(String name, XhtmlNode html) throws Exception {
+		if (!Utilities.noString(xhtmlMessage)) {
+      prop(name, "<div>!-- "+xhtmlMessage+" --></div>");
+		} else {
 		XhtmlComposer comp = new XhtmlComposer();
 		comp.setPretty(htmlPretty);
 		prop(name, comp.compose(html));
+		}
 	}
 
 //	protected void composeBytes(String name, byte[] content) throws Exception {

@@ -30,7 +30,6 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A resource that is defined in the FHIR specification
@@ -51,7 +50,7 @@ public abstract class Resource extends BackboneElement {
   /**
    * The primary/base human language of the content. The value can be any valid value for xml:lang
    */
-  private Code language;
+  private CodeType language;
 
   /**
    * Any resources contained in this one (see speification for further details)
@@ -75,14 +74,14 @@ public abstract class Resource extends BackboneElement {
 	/**
 	 * @return The primary/base human language of the content. The value can be any valid value for xml:lang
 	 */
-  public Code getLanguage() { 
+  public CodeType getLanguage() { 
     return this.language;
   }
 
   /**
    * @param value The primary/base human language of the content. The value can be any valid value for xml:lang
    */
-  public void setLanguage(Code value) { 
+  public void setLanguage(CodeType value) { 
     this.language = value;
   }
 
@@ -102,7 +101,7 @@ public abstract class Resource extends BackboneElement {
       this.language = null;
     else {
       if (this.language == null)
-        this.language = new Code();
+        this.language = new CodeType();
       this.language.setValue(value);
     }
   }

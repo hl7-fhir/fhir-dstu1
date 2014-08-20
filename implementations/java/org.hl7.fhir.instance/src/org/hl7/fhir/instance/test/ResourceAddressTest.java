@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,6 @@ import org.junit.Test;
 
 public class ResourceAddressTest {
 	
-	private ResourceAddress resource;
 	private String basePath = "http://fhir.healthintersections.com.au/open";
 	private String fullNonVersionedPath = "http://fhir.healthintersections.com.au/open/Patient/318";
 	private String fullVersionedPath = "http://fhir.healthintersections.com.au/open/Patient/318/_history/1";
@@ -36,7 +34,6 @@ public class ResourceAddressTest {
 
 	@Before
 	public void setUp() throws Exception {
-		resource = new ResourceAddress("http://fhir.healthintersections.com.au/open");
 	}
 
 	@After
@@ -45,7 +42,7 @@ public class ResourceAddressTest {
 
 	@Test
 	public void testParseCreateLocation() {
-		ResourceAddress.ResourceVersionedIdentifier versionedIdentifier = resource.parseCreateLocation(fullVersionedPath);
+		ResourceAddress.ResourceVersionedIdentifier versionedIdentifier = ResourceAddress.parseCreateLocation(fullVersionedPath);
 		assertEquals(basePath, versionedIdentifier.getServiceRoot());
 		assertEquals("Patient", versionedIdentifier.getResourceType());
 		assertEquals("318",versionedIdentifier.getId());

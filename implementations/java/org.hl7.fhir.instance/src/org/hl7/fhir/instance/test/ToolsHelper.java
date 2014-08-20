@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -33,24 +33,19 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.hl7.fhir.instance.formats.JsonComposer;
-import org.hl7.fhir.instance.formats.XmlComposer;
 import org.hl7.fhir.instance.formats.JsonParser;
-import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.formats.ParserBase.ResourceOrFeed;
+import org.hl7.fhir.instance.formats.XmlComposer;
+import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.model.Constants;
 import org.hl7.fhir.utilities.CSFile;
 import org.hl7.fhir.utilities.CSFileInputStream;
 import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
-import org.w3c.dom.Document;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -58,11 +53,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 public class ToolsHelper {
 
   public static void main(String[] args) {
-//    StringBuilder b = new StringBuilder();
-//    for (String a : args)
-//      b.append(", "+a);
-//    System.err.print("Tool Helper: "+b.toString().substring(2));
-    
     try {
       ToolsHelper self = new ToolsHelper();
       if (args[0].equals("round")) 
@@ -105,7 +95,6 @@ public class ToolsHelper {
   public void executeFragments(String[] args) throws Exception {
     try {
       File source = new CSFile(args[1]);
-      File dest = new CSFile(args[2]);
       if (!source.exists())        
         throw new Exception("Source File \""+source.getAbsolutePath()+"\" not found");
       XmlPullParser xpp = loadXml(new FileInputStream(source));
@@ -186,15 +175,17 @@ public class ToolsHelper {
     in = new CSFileInputStream(source);
     XmlParser p = new XmlParser();
     ResourceOrFeed rf = p.parseGeneral(in);
+    JsonComposer json = new JsonComposer();
     if (rf.getFeed() != null) {
-      new JsonComposer().compose(new FileOutputStream(dest), rf.getFeed(), false);
-      new JsonComposer().compose(new FileOutputStream(destt), rf.getFeed(), true);
+      json.compose(new FileOutputStream(dest), rf.getFeed(), false);
+       json.compose(new FileOutputStream(destt), rf.getFeed(), true);
     } else {
-      new JsonComposer().compose(new FileOutputStream(dest), rf.getResource(), false);
-      new JsonComposer().compose(new FileOutputStream(destt), rf.getResource(), true);
+      json.compose(new FileOutputStream(dest), rf.getResource(), false);
+      json.compose(new FileOutputStream(destt), rf.getResource(), true);
     }
     return TextFile.fileToString(destt.getAbsolutePath());
   }
+
   private void executeVersion(String[] args) throws Exception {
     TextFile.stringToFile(org.hl7.fhir.instance.utils.Version.VERSION+":"+Constants.VERSION, args[1]);
   }

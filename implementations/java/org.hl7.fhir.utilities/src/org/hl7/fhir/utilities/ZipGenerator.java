@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -124,8 +124,7 @@ public class ZipGenerator {
 	}
 
 	public void addFileSource(String path, String cnt, boolean omitIfExists) throws Exception {
-		File tmp = File.createTempFile("tmp", ".tmp");
-		tmp.deleteOnExit();
+		File tmp = Utilities.createTempFile("tmp", ".tmp");
 		TextFile.stringToFile(cnt, tmp.getAbsolutePath());
 		addFileName(path, tmp.getAbsolutePath(), omitIfExists);
 		tmp.delete();

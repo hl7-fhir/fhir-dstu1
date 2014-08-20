@@ -151,6 +151,7 @@ public class WebMaker {
 
     for (String n : definitions.sortedResourceNames()) {
       buildRedirect(n, n.toLowerCase()+".profile.xml.html", folders.rootDir+"temp"+File.separator+"hl7"+File.separator+"web"+File.separator+"profiles"+File.separator+n);
+      buildRedirect(n, n.toLowerCase()+".profile.xml.html", folders.rootDir+"temp"+File.separator+"hl7"+File.separator+"web"+File.separator+"Profile"+File.separator+n);
       buildRedirect(n, n.toLowerCase()+".html", folders.rootDir+"temp"+File.separator+"hl7"+File.separator+"web"+File.separator+n);
     }
     
@@ -174,10 +175,11 @@ public class WebMaker {
 
   private void buildRedirect(String n, String d, String dn) throws Exception {
     Utilities.createDirectory(dn);
-    String p = "<html>\r\n<head>\r\n<title>Redirect Page</title>\r\n<meta http-equiv=\"REFRESH\" content=\"0;url=http://hl7.org/implement/standards/fhir/"+
-       d+
-       "\"></HEAD>\r\n</head>\r\n<body>\r\nThis page is a redirect to http://hl7.org/implement/standards/fhir/"+
-       d+
+    if (!d.startsWith("http"))
+      d = "http://hl7.org/implement/standards/fhir/"+d;
+    
+    String p = "<html>\r\n<head>\r\n<title>Redirect Page</title>\r\n<meta http-equiv=\"REFRESH\" content=\"0;url="+d+
+       "\"></HEAD>\r\n</head>\r\n<body>\r\nThis page is a redirect to "+d+
        "\r\n</body>\r\n</html>\r\n";
     TextFile.stringToFile(p, dn+File.separator+"index.html");
   }

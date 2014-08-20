@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -27,8 +27,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 package org.hl7.fhir.utilities;
-
-import org.hl7.fhir.utilities.Logger.LogMessageType;
 
 public interface Logger {
   public enum LogMessageType {

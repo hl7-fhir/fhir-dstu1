@@ -82,6 +82,10 @@ public class DelphiCodeGenerator extends OutputStreamWriter {
     write("unit "+name+";\r\n");
     write("\r\n");
     write("{\r\n"+Config.FULL_LICENSE_CODE+"}\r\n\r\n");
+    write("\r\n");
+    write("{$IFNDEF FHIR-DSTU}\r\n");
+    write("This is the dstu branch of the FHIR code\r\n");
+    write("{$ENDIF}\r\n");
     write("interface\r\n");
     write("\r\n");
 

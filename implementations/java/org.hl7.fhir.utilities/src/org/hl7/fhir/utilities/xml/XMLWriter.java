@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -822,6 +822,12 @@ public class XMLWriter extends OutputStreamWriter implements IXMLWriter {
 			 i--;
 		write(content.substring(0, i));
 	}
+
+  public void processingInstruction(String value) throws IOException {
+    write("<?"+value+"?>");
+    if (isPrettyHeader())
+      write("\r\n");
+  }
 	
 	
 }

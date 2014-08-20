@@ -196,7 +196,9 @@ public class JavaParserJsonGenerator extends JavaBaseGenerator {
 
   private String getPrimitiveTypeModelName(String code) {
     if (code.equals("string"))
-      return "String_";
+      return "StringType";
+    if (definitions.hasPrimitiveType(code))
+      return upFirst(code)+"Type";
     return upFirst(code);
   }
 

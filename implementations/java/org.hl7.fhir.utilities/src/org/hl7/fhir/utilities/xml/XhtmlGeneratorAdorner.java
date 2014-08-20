@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -28,6 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 */
 package org.hl7.fhir.utilities.xml;
 
+import org.hl7.fhir.utilities.Utilities;
 import org.w3c.dom.Element;
 
 public interface XhtmlGeneratorAdorner {
@@ -35,16 +36,30 @@ public interface XhtmlGeneratorAdorner {
   public class XhtmlGeneratorAdornerState {
     private String prefix;
     private String suffix;
+    private String supressionMessage;
+    
     public XhtmlGeneratorAdornerState(String prefix, String suffix) {
       super();
       this.prefix = prefix;
       this.suffix = suffix;
     }
+    
+    public XhtmlGeneratorAdornerState(String supressionMessage) {
+      super();
+      this.supressionMessage = supressionMessage;
+    }
+
     public String getPrefix() {
       return prefix;
     }
     public String getSuffix() {
       return suffix;
+    }
+    public boolean isSuppress() {
+      return !Utilities.noString(supressionMessage);
+    }
+    public String getSupressionMessage() {
+      return supressionMessage;
     }
   }
   

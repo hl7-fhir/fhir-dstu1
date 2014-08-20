@@ -364,7 +364,6 @@ public class Publisher {
 
     if (isGenerate)
       page.setSvnRevision(checkSubversion(folder));
-    registerReferencePlatforms();
 
     if (initialize(folder)) {
       page.log("Version " + page.getVersion() + "." + page.getSvnRevision(), LogMessageType.Hint);
@@ -663,7 +662,7 @@ public class Publisher {
   }
 
   private void registerReferencePlatforms() {
-    javaReferencePlatform = new JavaGenerator();
+    javaReferencePlatform = new JavaGenerator(page.getFolders());
     page.getReferenceImplementations().add(javaReferencePlatform);
     page.getReferenceImplementations().add(new CSharpGenerator());
     page.getReferenceImplementations().add(new DelphiGenerator());
@@ -691,6 +690,7 @@ public class Publisher {
   private boolean initialize(String folder) throws Exception {
     page.setDefinitions(new Definitions());
     page.setFolders(new FolderManager(folder));
+    registerReferencePlatforms();
 
     page.log("Checking Source for " + folder, LogMessageType.Process);
 

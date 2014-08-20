@@ -2,10 +2,11 @@ package org.hl7.fhir.instance.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -54,6 +55,10 @@ public abstract class Element implements Serializable {
 	 */
   private List<Extension> extensions = new ArrayList<Extension>();
   
+  /** extensions for convenience **/
+  
+  private List<String> xmlComments; // used to allow rough round-tripping of content
+  private Map<String, String> tags; // allow users to add extra information to the class
  
   /**
    * @return xml:id (or "id" in json) - the target id for internal references
@@ -144,5 +149,21 @@ public abstract class Element implements Serializable {
     return null;
   }  
   
+  public List<String> getXmlComments() {
+    if (xmlComments == null)
+      xmlComments = new ArrayList<String>();
+    return xmlComments;
+  }  
   
+  public String getTag(String name) {
+    if (tags == null)
+      return null;
+    return tags.get(name);
+  }
+  
+  public void setTag(String name, String value) {
+    if (tags == null)
+      tags = new HashMap<String, String>();
+    tags.put(name, value);
+  }
 }

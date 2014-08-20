@@ -1,15 +1,10 @@
 package org.hl7.fhir.instance.validation;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.hl7.fhir.instance.model.Code;
 import org.hl7.fhir.instance.model.Coding;
-import org.hl7.fhir.instance.model.Extension;
 import org.hl7.fhir.instance.model.OperationOutcome;
 import org.hl7.fhir.instance.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.instance.model.OperationOutcome.OperationOutcomeIssueComponent;
-import org.hl7.fhir.instance.model.String_;
+import org.hl7.fhir.instance.model.StringType;
 import org.hl7.fhir.instance.utils.ToolingExtensions;
 
 public class ValidationMessage 
@@ -88,7 +83,7 @@ public class ValidationMessage
       issue.getType().setCodeSimple(type);
     }
     if (location != null) {
-      String_ s = new String_();
+      StringType s = new StringType();
       s.setValue(location);
       issue.getLocation().add(s);
     }

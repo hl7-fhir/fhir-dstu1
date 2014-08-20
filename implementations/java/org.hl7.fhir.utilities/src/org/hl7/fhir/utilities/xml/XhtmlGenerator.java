@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011-2014, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -222,11 +222,15 @@ public class XhtmlGenerator {
 		if (node.hasChildNodes()) {
 			out.write("<span class=\"xmltag\">&gt;</span>");
 			XhtmlGeneratorAdornerState newstate = adorner == null ? new XhtmlGeneratorAdornerState("", "") : adorner.getState(this, state, node);
+      if (newstate.isSuppress())
+        out.write("<span class=\"xmlcomment\">&lt;!-- "+escapeHtml(newstate.getSupressionMessage(), level)+" --&gt;</span>");
+      else {
 			out.write(newstate.getPrefix());
 			for (int i = 0; i < node.getChildNodes().getLength(); i++)
 				writeNode(out, node.getChildNodes().item(i), newstate, level+2);
 			
       out.write(newstate.getSuffix());
+      }
 			out.write("<span class=\"xmltag\">&lt;/"+node.getNodeName()+"&gt;</span>");
 		}
 		else 

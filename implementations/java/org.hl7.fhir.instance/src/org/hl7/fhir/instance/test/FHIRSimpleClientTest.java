@@ -8,7 +8,6 @@ import static org.junit.Assert.fail;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +22,14 @@ import org.hl7.fhir.instance.model.AdverseReaction;
 import org.hl7.fhir.instance.model.AtomCategory;
 import org.hl7.fhir.instance.model.AtomEntry;
 import org.hl7.fhir.instance.model.AtomFeed;
-import org.hl7.fhir.instance.model.Code;
+import org.hl7.fhir.instance.model.CodeType;
 import org.hl7.fhir.instance.model.CodeableConcept;
 import org.hl7.fhir.instance.model.Coding;
 import org.hl7.fhir.instance.model.Condition;
 import org.hl7.fhir.instance.model.Condition.ConditionStatus;
 import org.hl7.fhir.instance.model.Conformance;
 import org.hl7.fhir.instance.model.DateAndTime;
-import org.hl7.fhir.instance.model.DateTime;
+import org.hl7.fhir.instance.model.DateTimeType;
 import org.hl7.fhir.instance.model.HumanName;
 import org.hl7.fhir.instance.model.OperationOutcome;
 import org.hl7.fhir.instance.model.OperationOutcome.OperationOutcomeIssueComponent;
@@ -55,6 +54,7 @@ public class FHIRSimpleClientTest {
 	private boolean logResource = true;
 	private boolean useProxy = true;
 	
+	@SuppressWarnings("unused")
 	private static void configureForFurore() {
 		connectUrl = "http://spark.furore.com/fhir/";
 		//connectUrl = "http://fhirlab.furore.com/fhir";
@@ -71,8 +71,8 @@ public class FHIRSimpleClientTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		//configureForHealthIntersection();
-		configureForFurore();
+		configureForHealthIntersection();
+		//configureForFurore();
 		testDateAndTime = new DateAndTime("2008-08-08");
 	}
 
@@ -164,7 +164,7 @@ public class FHIRSimpleClientTest {
 			testClient.setPreferredResourceFormat(ResourceFormat.RESOURCE_JSON);
 			Conformance stmt = testClient.getConformanceStatement(false);
 			assertEquals(userAgent, stmt.getSoftware().getName().getValue());
-			printResourceToSystemOut(stmt, false);
+			printResourceToSystemOut(stmt, true);
 		} catch(Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -206,7 +206,7 @@ public class FHIRSimpleClientTest {
 			loadPatientResource();
 			AtomEntry<Patient> originalPatientEntry = testClient.read(Patient.class, testPatientId);
 			String originalEntryVersion = getEntryVersion(originalPatientEntry);
-			DateTime modifiedBirthday = new DateTime();
+			DateTimeType modifiedBirthday = new DateTimeType();
 			modifiedBirthday.setValue(new DateAndTime("2002-09-09"));
 			originalPatientEntry.getResource().setBirthDate(modifiedBirthday);
 			AtomEntry<Patient> updatedResult = testClient.update(Patient.class, originalPatientEntry.getResource(), testPatientId);
@@ -240,6 +240,7 @@ public class FHIRSimpleClientTest {
 		String entryVersion = getEntryVersion(result);
 		assertEquals("Patient", resourceType);
 		assertNotNull(resourceId);
+		assertNotNull(entryVersion);
 	}
 	
 	@Test
@@ -251,32 +252,11 @@ public class FHIRSimpleClientTest {
 	}
 	
 	@Test
-	public void testCreateWithErrors() {
-		try {
-			AdverseReaction adverseReaction = new AdverseReaction();
-			adverseReaction.setDateSimple(new DateAndTime("2013-01-10"));
-			AtomEntry<OperationOutcome> result = null;
-			try {
-				result = testClient.create(AdverseReaction.class, adverseReaction);
-			} catch (EFhirClientException e) {
-				assertEquals(1, e.getServerErrors().size());
-				e.printStackTrace();
-			}
-			if(result.getResource() != null && result.getResource().getIssue().size() == 0) {
-				fail();
-			}
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail();
-		}
-	}
-	
-	@Test
 	public void testValidate() {
 		try {
 			loadPatientResource();
 			Patient patient = testClient.read(Patient.class, testPatientId).getResource();
-			DateTime modifiedBirthday = new DateTime();
+			DateTimeType modifiedBirthday = new DateTimeType();
 			modifiedBirthday.setValue(new DateAndTime("2009-08-08"));
 			patient.setBirthDate(modifiedBirthday);
 			AtomEntry<OperationOutcome> validate = testClient.validate(Patient.class, patient, testPatientId);
@@ -304,7 +284,7 @@ public class FHIRSimpleClientTest {
 	@Test
 	public void testGetHistoryForResourcesOfTypeSinceCalendarDate() {
 		try {
-			Calendar testDate = GregorianCalendar.getInstance();
+			Calendar testDate = Calendar.getInstance();
 			testDate.add(Calendar.MINUTE, -10);
 			Patient patient = buildPatient();
 			AtomEntry<OperationOutcome> createdEntry = testClient.create(Patient.class, patient);
@@ -320,17 +300,33 @@ public class FHIRSimpleClientTest {
 	}
 
 	@Test
-	public void testHistoryForAllResourceTypes() {
+	public void testHistoryForAllResourceTypes() throws Exception {
 		DateAndTime testDate = DateAndTime.now();
-		testDate.add(Calendar.MINUTE, -30);
+		//testDate.add(Calendar.HOUR, -24);
+		Calendar cal = testDate.toCalendar();
+		cal.add(Calendar.HOUR, -24);
+		testDate = new DateAndTime(cal);
 		AtomFeed feed = testClient.history(testDate);
 		assertNotNull(feed);
+		assertTrue(feed.getEntryList().size() > 1);
+	}
+	
+	@Test
+	public void testHistoryForAllResourceTypesWithCount() throws Exception {
+		DateAndTime testDate = DateAndTime.now();
+		testClient.setMaximumRecordCount(5);
+		Calendar cal = testDate.toCalendar();
+		cal.add(Calendar.HOUR, -24);
+		testDate = new DateAndTime(cal);
+		AtomFeed feed = testClient.history(testDate);
+		assertNotNull(feed);
+		System.out.println(feed.getEntryList().size());
 		assertTrue(feed.getEntryList().size() > 1);
 	}
 
 	@Test
 	public void testGetHistoryForResourceWithIdSinceCalendarDate() {
-		Calendar testDate = GregorianCalendar.getInstance();
+		Calendar testDate = Calendar.getInstance();
 		testDate.add(Calendar.MINUTE, -10);
 		Patient patient = buildPatient();
 		AtomEntry<OperationOutcome> entry = testClient.create(Patient.class, buildPatient());
@@ -403,6 +399,7 @@ public class FHIRSimpleClientTest {
 			assertNotNull(responseFeed);
 			assert(responseFeed.getEntryList().get(0).getResource() instanceof Patient);
 		}catch(Exception e) {
+			e.printStackTrace();
 			fail();
 		}
 	}
@@ -667,6 +664,7 @@ public class FHIRSimpleClientTest {
 		return conditionCode;
 	}
 	
+	@SuppressWarnings("unused")
 	private Condition buildCondition(AtomEntry<Patient> patientEntry) {
 		CodeableConcept conditionCode = createCodeableConcept("29530003", "http://snomed.info/id", "Fungal granuloma (disorder)");
 		return buildCondition(patientEntry, conditionCode);
@@ -698,10 +696,10 @@ public class FHIRSimpleClientTest {
 			name.setTextSimple(fullName);
 			name.addGivenSimple(givenName);
 			name.addFamilySimple(familyName);
-			DateTime birthday = new DateTime();
+			DateTimeType birthday = new DateTimeType();
 			birthday.setValue(new DateAndTime("2008-08-08"));
 			patient.setBirthDate(birthday);
-			Code genderCode = new Code();
+			CodeType genderCode = new CodeType();
 			genderCode.setValue("F");
 			Coding genderCoding = new Coding();
 			genderCoding.setCode(genderCode);
@@ -759,6 +757,7 @@ public class FHIRSimpleClientTest {
 		return getAtomEntrySelfLink(entry).getResourcePath();
 	}
 	
+	@SuppressWarnings("unused")
 	private <T extends Resource> String getResourceId(AtomEntry<T> entry) {
 		return getAtomEntrySelfLink(entry).getId();
 	}
