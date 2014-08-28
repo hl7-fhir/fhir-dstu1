@@ -140,7 +140,7 @@ public class PageProcessor implements Logger  {
   
   public final static String PUB_NOTICE =
       "<p style=\"background-color: gold; border:1px solid maroon; padding: 5px;\">\r\n"+
-          "This is the 1st DSTU version (Release 1.1) of FHIR. There's also a <a href=\"http://hl7.org/fhir-develop\">developmental version</a>, and a <a href=\"http://latest.fhir.me/\">Nightly Build</a>.\r\n"+
+          "This is the 1st DSTU version (Release 1.1) of FHIR. There's also a <a href=\"http://hl7.org/fhir-develop\">Developmental Version</a>, and a <a href=\"http://latest.fhir.me/\">Continuous Integration Build</a>.\r\n"+
           "</p>\r\n";
   
 //  private boolean notime;

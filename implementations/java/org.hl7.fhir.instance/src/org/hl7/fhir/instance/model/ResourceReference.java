@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Tue, Jul 15, 2014 16:49+0200 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -47,6 +47,8 @@ public class ResourceReference extends Type {
      * Plain text narrative that identifies the resource in addition to the resource reference.
      */
     protected StringType display;
+
+    private static final long serialVersionUID = 22777321L;
 
     public ResourceReference() {
       super();

@@ -72,9 +72,9 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
     
     String rt = json.get("resourceType").getAsString();
 		if ("Bundle".equals(rt))
-      r.feed = parseAtom(json);
+      r.setFeed(parseAtom(json));
     else  
-      r.resource = parseResource(json);
+      r.setResource(parseResource(json));
     return r;    
   }
 
@@ -96,8 +96,11 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
   }
 
   protected void parseElementProperties(JsonObject json, Element e) throws Exception {
+    if (json != null && json.has("id"))
+      e.setXmlId(json.get("id").getAsString());
+    // work around for past issue when we used _id wrongly instead of id
     if (json != null && json.has("_id"))
-      e.setXmlId(json.get("_id").getAsString());
+        e.setXmlId(json.get("_id").getAsString());
     if (!Utilities.noString(e.getXmlId()))
       idMap.put(e.getXmlId(), e);
   }

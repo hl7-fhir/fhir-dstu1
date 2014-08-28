@@ -42,7 +42,7 @@ public class JsonComposer extends JsonComposerBase {
 
   private void composeElement(Element element) throws Exception {
     if (element.getXmlId() != null)
-      prop("_id", element.getXmlId());
+      prop("id", element.getXmlId());
     if (element.getExtensions().size() > 0) {
       openArray("extension");
       for (Extension ex : element.getExtensions())

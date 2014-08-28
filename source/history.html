@@ -23,8 +23,17 @@ on Feb-3 2014. The date at the foot of the pages is more recent because of
 ongoing releases to the FHIR version. Subsequent releases:
 </p>
 <ul>
- <li>Aug X, 2014: Minor update to the <a href="license.html">license</a> and trademark terms, and updated reference implementations. There are no other changes, so only the revision number changes (to X)</li>
- <li>May-8 2014: Change version to 0.0.81 (from 0.80) to align with <a href="http://hl7.org/implement/standards/FHIR-Develop/history.html#rules">new versioning policy</a>, <a href="security.html#narrative">security alert</a> about Narrative, clarify <a href="dstu.html">rules around the status of content</a>, and reference implementation updates
+ <li><a name="h20140828">Aug 28, 2014</a>: Fix error in JSON examples, update to the <a href="license.html">license and trademark terms</a>, and updated reference implementations. 
+   <ul>
+     <li>The license has been changed to a Creative Commons license (instead of the one adapted from OMG). There is no change in the intent of the license. The use of the FHIR related trademarks has been clarified</li>
+     <li>Java Reference Implementation: Fix major bug in reading/writing JSON instances. The json equivalent for xml:id is specified as "id" but the java reference implementation had been using "_id". 
+       <b>This is a breaking changed for users of the JSON representation using the Java reference implementation.</b>. Note also that this means that 
+       <b>all the example JSON instances in the specification were wrong</b>; these have also been fixed. </li>
+     <li>Java Reference Implementation: rename primitive types from X to XType (or String_ to StringType). Fix bug in parser related to xml whitespace parsing. Add UCUM support</li>
+     <li>Pascal Reference Implementation: many minor fixes to supporting code</li>
+   </ul>
+ </li>
+ <li><a name="h20140508">May-8 2014</a>: Change version to 0.0.81 (from 0.80) to align with <a href="http://hl7.org/implement/standards/FHIR-Develop/history.html#rules">new versioning policy</a>, <a href="security.html#narrative">security alert</a> about Narrative, clarify <a href="dstu.html">rules around the status of content</a>, and reference implementation updates
    <ul>
      <li><a href="dstu.html">DSTU note</a>: Add clarification about what content is formally part of the specification, and the status of examples</li>
      <li>Schema: tighten the schema to enforce the rules about narrative in the specification. Also, reorganize the schema constraint groups for DotNet compatibility</li>

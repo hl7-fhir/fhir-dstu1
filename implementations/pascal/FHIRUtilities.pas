@@ -51,6 +51,9 @@ uses
   FHIRResources,
   FHIRConstants;
 
+Type
+  ETooCostly = class (Exception);
+
 const
   MIN_DATE = DATETIME_MIN;
   MAX_DATE = DATETIME_MAX;
@@ -885,6 +888,7 @@ var
 begin
   parser := nil;
   try
+    part.content.position := 0;
     // first, figure out the format
     ct := part.Headers.Values['Content-Type'];
     if ct <> '' then
