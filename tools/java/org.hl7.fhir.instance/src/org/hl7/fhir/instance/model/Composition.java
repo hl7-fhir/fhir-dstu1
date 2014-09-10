@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -171,12 +171,19 @@ public class Composition extends Resource {
         /**
          * When composition was attested by the party.
          */
-        protected DateTime time;
+        protected DateTimeType time;
 
         /**
          * Who attested the composition in the specified way.
          */
         protected ResourceReference party;
+
+        /**
+         * The actual object that is the target of the reference (Who attested the composition in the specified way.)
+         */
+        protected Resource partyTarget;
+
+        private static final long serialVersionUID = 2056316894L;
 
       public CompositionAttesterComponent() {
         super();
@@ -210,16 +217,26 @@ public class Composition extends Resource {
         }
 
         /**
+         * @param value {@link #mode} (The type of attestation the authenticator offers.)
+         */
+        public boolean hasModeSimple(CompositionAttestationMode value) { 
+          for (Enumeration<CompositionAttestationMode> v : this.mode)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
+        }
+
+        /**
          * @return {@link #time} (When composition was attested by the party.)
          */
-        public DateTime getTime() { 
+        public DateTimeType getTime() { 
           return this.time;
         }
 
         /**
          * @param value {@link #time} (When composition was attested by the party.)
          */
-        public CompositionAttesterComponent setTime(DateTime value) { 
+        public CompositionAttesterComponent setTime(DateTimeType value) { 
           this.time = value;
           return this;
         }
@@ -239,7 +256,7 @@ public class Composition extends Resource {
             this.time = null;
           else {
             if (this.time == null)
-              this.time = new DateTime();
+              this.time = new DateTimeType();
             this.time.setValue(value);
           }
           return this;
@@ -260,6 +277,21 @@ public class Composition extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #party} (The actual object that is the target of the reference. Who attested the composition in the specified way.)
+         */
+        public Resource getPartyTarget() { 
+          return this.partyTarget;
+        }
+
+        /**
+         * @param value {@link #party} (The actual object that is the target of the reference. Who attested the composition in the specified way.)
+         */
+        public CompositionAttesterComponent setPartyTarget(Resource value) { 
+          this.partyTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("mode", "code", "The type of attestation the authenticator offers.", 0, java.lang.Integer.MAX_VALUE, mode));
@@ -267,7 +299,7 @@ public class Composition extends Resource {
           childrenList.add(new Property("party", "Resource(Patient|Practitioner|Organization)", "Who attested the composition in the specified way.", 0, java.lang.Integer.MAX_VALUE, party));
         }
 
-      public CompositionAttesterComponent copy(Composition e) {
+      public CompositionAttesterComponent copy() {
         CompositionAttesterComponent dst = new CompositionAttesterComponent();
         dst.mode = new ArrayList<Enumeration<CompositionAttestationMode>>();
         for (Enumeration<CompositionAttestationMode> i : mode)
@@ -294,6 +326,13 @@ public class Composition extends Resource {
          * Full details for the event(s) the composition/documentation consents.
          */
         protected List<ResourceReference> detail = new ArrayList<ResourceReference>();
+        /**
+         * The actual objects that are the target of the reference (Full details for the event(s) the composition/documentation consents.)
+         */
+        protected List<Resource> detailTarget = new ArrayList<Resource>();
+
+
+        private static final long serialVersionUID = -1713925885L;
 
       public CompositionEventComponent() {
         super();
@@ -348,6 +387,13 @@ public class Composition extends Resource {
           return t;
         }
 
+        /**
+         * @return {@link #detail} (The actual objects that are the target of the reference. Full details for the event(s) the composition/documentation consents.)
+         */
+        public List<Resource> getDetailTarget() { 
+          return this.detailTarget;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("code", "CodeableConcept", "This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the typeCode, such as a 'History and Physical Report' in which the procedure being documented is necessarily a 'History and Physical' act.", 0, java.lang.Integer.MAX_VALUE, code));
@@ -355,7 +401,7 @@ public class Composition extends Resource {
           childrenList.add(new Property("detail", "Resource(Any)", "Full details for the event(s) the composition/documentation consents.", 0, java.lang.Integer.MAX_VALUE, detail));
         }
 
-      public CompositionEventComponent copy(Composition e) {
+      public CompositionEventComponent copy() {
         CompositionEventComponent dst = new CompositionEventComponent();
         dst.code = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : code)
@@ -373,7 +419,7 @@ public class Composition extends Resource {
         /**
          * The heading for this particular section.  This will be part of the rendered content for the document.
          */
-        protected String_ title;
+        protected StringType title;
 
         /**
          * A code identifying the kind of content contained within the section.
@@ -386,14 +432,26 @@ public class Composition extends Resource {
         protected ResourceReference subject;
 
         /**
+         * The actual object that is the target of the reference (Identifies the primary subject of the section.)
+         */
+        protected Resource subjectTarget;
+
+        /**
          * Identifies the discrete data that provides the content for the section.
          */
         protected ResourceReference content;
 
         /**
+         * The actual object that is the target of the reference (Identifies the discrete data that provides the content for the section.)
+         */
+        protected Resource contentTarget;
+
+        /**
          * A nested sub-section within this section.
          */
         protected List<SectionComponent> section = new ArrayList<SectionComponent>();
+
+        private static final long serialVersionUID = -904255741L;
 
       public SectionComponent() {
         super();
@@ -402,14 +460,14 @@ public class Composition extends Resource {
         /**
          * @return {@link #title} (The heading for this particular section.  This will be part of the rendered content for the document.)
          */
-        public String_ getTitle() { 
+        public StringType getTitle() { 
           return this.title;
         }
 
         /**
          * @param value {@link #title} (The heading for this particular section.  This will be part of the rendered content for the document.)
          */
-        public SectionComponent setTitle(String_ value) { 
+        public SectionComponent setTitle(StringType value) { 
           this.title = value;
           return this;
         }
@@ -429,7 +487,7 @@ public class Composition extends Resource {
             this.title = null;
           else {
             if (this.title == null)
-              this.title = new String_();
+              this.title = new StringType();
             this.title.setValue(value);
           }
           return this;
@@ -466,6 +524,21 @@ public class Composition extends Resource {
         }
 
         /**
+         * @return {@link #subject} (The actual object that is the target of the reference. Identifies the primary subject of the section.)
+         */
+        public Resource getSubjectTarget() { 
+          return this.subjectTarget;
+        }
+
+        /**
+         * @param value {@link #subject} (The actual object that is the target of the reference. Identifies the primary subject of the section.)
+         */
+        public SectionComponent setSubjectTarget(Resource value) { 
+          this.subjectTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #content} (Identifies the discrete data that provides the content for the section.)
          */
         public ResourceReference getContent() { 
@@ -477,6 +550,21 @@ public class Composition extends Resource {
          */
         public SectionComponent setContent(ResourceReference value) { 
           this.content = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #content} (The actual object that is the target of the reference. Identifies the discrete data that provides the content for the section.)
+         */
+        public Resource getContentTarget() { 
+          return this.contentTarget;
+        }
+
+        /**
+         * @param value {@link #content} (The actual object that is the target of the reference. Identifies the discrete data that provides the content for the section.)
+         */
+        public SectionComponent setContentTarget(Resource value) { 
+          this.contentTarget = value;
           return this;
         }
 
@@ -506,7 +594,7 @@ public class Composition extends Resource {
           childrenList.add(new Property("section", "@Composition.section", "A nested sub-section within this section.", 0, java.lang.Integer.MAX_VALUE, section));
         }
 
-      public SectionComponent copy(Composition e) {
+      public SectionComponent copy() {
         SectionComponent dst = new SectionComponent();
         dst.title = title == null ? null : title.copy();
         dst.code = code == null ? null : code.copy();
@@ -514,7 +602,7 @@ public class Composition extends Resource {
         dst.content = content == null ? null : content.copy();
         dst.section = new ArrayList<SectionComponent>();
         for (SectionComponent i : section)
-          dst.section.add(i.copy(e));
+          dst.section.add(i.copy());
         return dst;
       }
 
@@ -528,7 +616,7 @@ public class Composition extends Resource {
     /**
      * The composition editing time, when the composition was last logically changed by the author.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * Specifies the particular kind of composition (e.g. History and Physical, Discharge Summary, Progress Note). This usually equates to the purpose of making the composition.
@@ -543,7 +631,7 @@ public class Composition extends Resource {
     /**
      * Official human-readable label for the composition.
      */
-    protected String_ title;
+    protected StringType title;
 
     /**
      * The workflow/clinical status of this composition. The status is a marker for the clinical standing of the document.
@@ -561,9 +649,19 @@ public class Composition extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Who or what the composition is about. The composition can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of livestock, or a set of patients that share a common exposure).)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * Identifies who is responsible for the information in the composition.  (Not necessarily who typed it in.).
      */
     protected List<ResourceReference> author = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Identifies who is responsible for the information in the composition.  (Not necessarily who typed it in.).)
+     */
+    protected List<Resource> authorTarget = new ArrayList<Resource>();
+
 
     /**
      * A participant who has attested to the accuracy of the composition/document.
@@ -576,6 +674,11 @@ public class Composition extends Resource {
     protected ResourceReference custodian;
 
     /**
+     * The actual object that is the target of the reference (Identifies the organization or group who is responsible for ongoing maintenance of and access to the composition/document information.)
+     */
+    protected Organization custodianTarget;
+
+    /**
      * The main event/act/item, such as a colonoscopy or an appendectomy, being documented.
      */
     protected CompositionEventComponent event;
@@ -586,15 +689,22 @@ public class Composition extends Resource {
     protected ResourceReference encounter;
 
     /**
+     * The actual object that is the target of the reference (Describes the clinical encounter or type of care this documentation is associated with.)
+     */
+    protected Encounter encounterTarget;
+
+    /**
      * The root of the sections that make up the composition.
      */
     protected List<SectionComponent> section = new ArrayList<SectionComponent>();
+
+    private static final long serialVersionUID = 665135617L;
 
     public Composition() {
       super();
     }
 
-    public Composition(DateTime date, CodeableConcept type, Enumeration<CompositionStatus> status, Coding confidentiality, ResourceReference subject) {
+    public Composition(DateTimeType date, CodeableConcept type, Enumeration<CompositionStatus> status, Coding confidentiality, ResourceReference subject) {
       super();
       this.date = date;
       this.type = type;
@@ -621,14 +731,14 @@ public class Composition extends Resource {
     /**
      * @return {@link #date} (The composition editing time, when the composition was last logically changed by the author.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The composition editing time, when the composition was last logically changed by the author.)
      */
-    public Composition setDate(DateTime value) { 
+    public Composition setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -645,7 +755,7 @@ public class Composition extends Resource {
      */
     public Composition setDateSimple(DateAndTime value) { 
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       return this;
     }
@@ -683,14 +793,14 @@ public class Composition extends Resource {
     /**
      * @return {@link #title} (Official human-readable label for the composition.)
      */
-    public String_ getTitle() { 
+    public StringType getTitle() { 
       return this.title;
     }
 
     /**
      * @param value {@link #title} (Official human-readable label for the composition.)
      */
-    public Composition setTitle(String_ value) { 
+    public Composition setTitle(StringType value) { 
       this.title = value;
       return this;
     }
@@ -710,7 +820,7 @@ public class Composition extends Resource {
         this.title = null;
       else {
         if (this.title == null)
-          this.title = new String_();
+          this.title = new StringType();
         this.title.setValue(value);
       }
       return this;
@@ -779,6 +889,21 @@ public class Composition extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Who or what the composition is about. The composition can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of livestock, or a set of patients that share a common exposure).)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Who or what the composition is about. The composition can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of livestock, or a set of patients that share a common exposure).)
+     */
+    public Composition setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #author} (Identifies who is responsible for the information in the composition.  (Not necessarily who typed it in.).)
      */
     public List<ResourceReference> getAuthor() { 
@@ -793,6 +918,13 @@ public class Composition extends Resource {
       ResourceReference t = new ResourceReference();
       this.author.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #author} (The actual objects that are the target of the reference. Identifies who is responsible for the information in the composition.  (Not necessarily who typed it in.).)
+     */
+    public List<Resource> getAuthorTarget() { 
+      return this.authorTarget;
     }
 
     /**
@@ -828,6 +960,21 @@ public class Composition extends Resource {
     }
 
     /**
+     * @return {@link #custodian} (The actual object that is the target of the reference. Identifies the organization or group who is responsible for ongoing maintenance of and access to the composition/document information.)
+     */
+    public Organization getCustodianTarget() { 
+      return this.custodianTarget;
+    }
+
+    /**
+     * @param value {@link #custodian} (The actual object that is the target of the reference. Identifies the organization or group who is responsible for ongoing maintenance of and access to the composition/document information.)
+     */
+    public Composition setCustodianTarget(Organization value) { 
+      this.custodianTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #event} (The main event/act/item, such as a colonoscopy or an appendectomy, being documented.)
      */
     public CompositionEventComponent getEvent() { 
@@ -854,6 +1001,21 @@ public class Composition extends Resource {
      */
     public Composition setEncounter(ResourceReference value) { 
       this.encounter = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #encounter} (The actual object that is the target of the reference. Describes the clinical encounter or type of care this documentation is associated with.)
+     */
+    public Encounter getEncounterTarget() { 
+      return this.encounterTarget;
+    }
+
+    /**
+     * @param value {@link #encounter} (The actual object that is the target of the reference. Describes the clinical encounter or type of care this documentation is associated with.)
+     */
+    public Composition setEncounterTarget(Encounter value) { 
+      this.encounterTarget = value;
       return this;
     }
 
@@ -907,13 +1069,13 @@ public class Composition extends Resource {
           dst.author.add(i.copy());
         dst.attester = new ArrayList<CompositionAttesterComponent>();
         for (CompositionAttesterComponent i : attester)
-          dst.attester.add(i.copy(dst));
+          dst.attester.add(i.copy());
         dst.custodian = custodian == null ? null : custodian.copy();
-        dst.event = event == null ? null : event.copy(dst);
+        dst.event = event == null ? null : event.copy();
         dst.encounter = encounter == null ? null : encounter.copy();
         dst.section = new ArrayList<SectionComponent>();
         for (SectionComponent i : section)
-          dst.section.add(i.copy(dst));
+          dst.section.add(i.copy());
         return dst;
       }
 

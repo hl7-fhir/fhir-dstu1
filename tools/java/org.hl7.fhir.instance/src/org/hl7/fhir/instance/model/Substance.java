@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -47,12 +47,14 @@ public class Substance extends Resource {
         /**
          * When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.
          */
-        protected DateTime expiry;
+        protected DateTimeType expiry;
 
         /**
          * The amount of the substance.
          */
         protected Quantity quantity;
+
+        private static final long serialVersionUID = -1474380480L;
 
       public SubstanceInstanceComponent() {
         super();
@@ -76,14 +78,14 @@ public class Substance extends Resource {
         /**
          * @return {@link #expiry} (When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.)
          */
-        public DateTime getExpiry() { 
+        public DateTimeType getExpiry() { 
           return this.expiry;
         }
 
         /**
          * @param value {@link #expiry} (When the substance is no longer valid to use. For some substances, a single arbitrary date is used for expiry.)
          */
-        public SubstanceInstanceComponent setExpiry(DateTime value) { 
+        public SubstanceInstanceComponent setExpiry(DateTimeType value) { 
           this.expiry = value;
           return this;
         }
@@ -103,7 +105,7 @@ public class Substance extends Resource {
             this.expiry = null;
           else {
             if (this.expiry == null)
-              this.expiry = new DateTime();
+              this.expiry = new DateTimeType();
             this.expiry.setValue(value);
           }
           return this;
@@ -131,7 +133,7 @@ public class Substance extends Resource {
           childrenList.add(new Property("quantity", "Quantity", "The amount of the substance.", 0, java.lang.Integer.MAX_VALUE, quantity));
         }
 
-      public SubstanceInstanceComponent copy(Substance e) {
+      public SubstanceInstanceComponent copy() {
         SubstanceInstanceComponent dst = new SubstanceInstanceComponent();
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.expiry = expiry == null ? null : expiry.copy();
@@ -151,6 +153,13 @@ public class Substance extends Resource {
          * Another substance that is a component of this substance.
          */
         protected ResourceReference substance;
+
+        /**
+         * The actual object that is the target of the reference (Another substance that is a component of this substance.)
+         */
+        protected Substance substanceTarget;
+
+        private static final long serialVersionUID = 1192860668L;
 
       public SubstanceIngredientComponent() {
         super();
@@ -191,13 +200,28 @@ public class Substance extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #substance} (The actual object that is the target of the reference. Another substance that is a component of this substance.)
+         */
+        public Substance getSubstanceTarget() { 
+          return this.substanceTarget;
+        }
+
+        /**
+         * @param value {@link #substance} (The actual object that is the target of the reference. Another substance that is a component of this substance.)
+         */
+        public SubstanceIngredientComponent setSubstanceTarget(Substance value) { 
+          this.substanceTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("quantity", "Ratio", "The amount of the ingredient in the substance - a concentration ratio.", 0, java.lang.Integer.MAX_VALUE, quantity));
           childrenList.add(new Property("substance", "Resource(Substance)", "Another substance that is a component of this substance.", 0, java.lang.Integer.MAX_VALUE, substance));
         }
 
-      public SubstanceIngredientComponent copy(Substance e) {
+      public SubstanceIngredientComponent copy() {
         SubstanceIngredientComponent dst = new SubstanceIngredientComponent();
         dst.quantity = quantity == null ? null : quantity.copy();
         dst.substance = substance == null ? null : substance.copy();
@@ -214,7 +238,7 @@ public class Substance extends Resource {
     /**
      * A description of the substance - its appearance, handling requirements, and other usage notes.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * Substance may be used to describe a kind of substance, or a specific package/container of the substance: an instance.
@@ -225,6 +249,8 @@ public class Substance extends Resource {
      * A substance can be composed of other substances.
      */
     protected List<SubstanceIngredientComponent> ingredient = new ArrayList<SubstanceIngredientComponent>();
+
+    private static final long serialVersionUID = -1024152127L;
 
     public Substance() {
       super();
@@ -253,14 +279,14 @@ public class Substance extends Resource {
     /**
      * @return {@link #description} (A description of the substance - its appearance, handling requirements, and other usage notes.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (A description of the substance - its appearance, handling requirements, and other usage notes.)
      */
-    public Substance setDescription(String_ value) { 
+    public Substance setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -280,7 +306,7 @@ public class Substance extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -330,10 +356,10 @@ public class Substance extends Resource {
         Substance dst = new Substance();
         dst.type = type == null ? null : type.copy();
         dst.description = description == null ? null : description.copy();
-        dst.instance = instance == null ? null : instance.copy(dst);
+        dst.instance = instance == null ? null : instance.copy();
         dst.ingredient = new ArrayList<SubstanceIngredientComponent>();
         for (SubstanceIngredientComponent i : ingredient)
-          dst.ingredient.add(i.copy(dst));
+          dst.ingredient.add(i.copy());
         return dst;
       }
 

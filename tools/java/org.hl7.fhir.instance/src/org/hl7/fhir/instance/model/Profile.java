@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -458,28 +458,30 @@ public class Profile extends Resource {
         /**
          * An Internal id that is used to identify this mapping set when specific mappings are made.
          */
-        protected Id identity;
+        protected IdType identity;
 
         /**
          * A URI that identifies the specification that this mapping is expressed to.
          */
-        protected Uri uri;
+        protected UriType uri;
 
         /**
          * A name for the specification that is being mapped to.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Comments about this mapping, including version notes, issues, scope limitations, and other important notes for usage.
          */
-        protected String_ comments;
+        protected StringType comments;
+
+        private static final long serialVersionUID = 299630820L;
 
       public ProfileMappingComponent() {
         super();
       }
 
-      public ProfileMappingComponent(Id identity) {
+      public ProfileMappingComponent(IdType identity) {
         super();
         this.identity = identity;
       }
@@ -487,14 +489,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #identity} (An Internal id that is used to identify this mapping set when specific mappings are made.)
          */
-        public Id getIdentity() { 
+        public IdType getIdentity() { 
           return this.identity;
         }
 
         /**
          * @param value {@link #identity} (An Internal id that is used to identify this mapping set when specific mappings are made.)
          */
-        public ProfileMappingComponent setIdentity(Id value) { 
+        public ProfileMappingComponent setIdentity(IdType value) { 
           this.identity = value;
           return this;
         }
@@ -511,7 +513,7 @@ public class Profile extends Resource {
          */
         public ProfileMappingComponent setIdentitySimple(String value) { 
             if (this.identity == null)
-              this.identity = new Id();
+              this.identity = new IdType();
             this.identity.setValue(value);
           return this;
         }
@@ -519,14 +521,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #uri} (A URI that identifies the specification that this mapping is expressed to.)
          */
-        public Uri getUri() { 
+        public UriType getUri() { 
           return this.uri;
         }
 
         /**
          * @param value {@link #uri} (A URI that identifies the specification that this mapping is expressed to.)
          */
-        public ProfileMappingComponent setUri(Uri value) { 
+        public ProfileMappingComponent setUri(UriType value) { 
           this.uri = value;
           return this;
         }
@@ -546,7 +548,7 @@ public class Profile extends Resource {
             this.uri = null;
           else {
             if (this.uri == null)
-              this.uri = new Uri();
+              this.uri = new UriType();
             this.uri.setValue(value);
           }
           return this;
@@ -555,14 +557,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (A name for the specification that is being mapped to.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (A name for the specification that is being mapped to.)
          */
-        public ProfileMappingComponent setName(String_ value) { 
+        public ProfileMappingComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -582,7 +584,7 @@ public class Profile extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -591,14 +593,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #comments} (Comments about this mapping, including version notes, issues, scope limitations, and other important notes for usage.)
          */
-        public String_ getComments() { 
+        public StringType getComments() { 
           return this.comments;
         }
 
         /**
          * @param value {@link #comments} (Comments about this mapping, including version notes, issues, scope limitations, and other important notes for usage.)
          */
-        public ProfileMappingComponent setComments(String_ value) { 
+        public ProfileMappingComponent setComments(StringType value) { 
           this.comments = value;
           return this;
         }
@@ -618,7 +620,7 @@ public class Profile extends Resource {
             this.comments = null;
           else {
             if (this.comments == null)
-              this.comments = new String_();
+              this.comments = new StringType();
             this.comments.setValue(value);
           }
           return this;
@@ -632,7 +634,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("comments", "string", "Comments about this mapping, including version notes, issues, scope limitations, and other important notes for usage.", 0, java.lang.Integer.MAX_VALUE, comments));
         }
 
-      public ProfileMappingComponent copy(Profile e) {
+      public ProfileMappingComponent copy() {
         ProfileMappingComponent dst = new ProfileMappingComponent();
         dst.identity = identity == null ? null : identity.copy();
         dst.uri = uri == null ? null : uri.copy();
@@ -647,22 +649,22 @@ public class Profile extends Resource {
         /**
          * The Resource or Data type being described.
          */
-        protected Code type;
+        protected CodeType type;
 
         /**
          * The name of this resource constraint statement (to refer to it from other resource constraints - from Profile.structure.element.definition.type.profile).
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * This definition of a profile on a structure is published as a formal statement. Some structural definitions might be defined purely for internal use within the profile, and not intended to be used outside that context.
          */
-        protected Boolean publish;
+        protected BooleanType publish;
 
         /**
          * Human summary: why describe this resource?.
          */
-        protected String_ purpose;
+        protected StringType purpose;
 
         /**
          * Captures constraints on each element within the resource.
@@ -674,11 +676,13 @@ public class Profile extends Resource {
          */
         protected List<ProfileStructureSearchParamComponent> searchParam = new ArrayList<ProfileStructureSearchParamComponent>();
 
+        private static final long serialVersionUID = 1006253436L;
+
       public ProfileStructureComponent() {
         super();
       }
 
-      public ProfileStructureComponent(Code type) {
+      public ProfileStructureComponent(CodeType type) {
         super();
         this.type = type;
       }
@@ -686,14 +690,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #type} (The Resource or Data type being described.)
          */
-        public Code getType() { 
+        public CodeType getType() { 
           return this.type;
         }
 
         /**
          * @param value {@link #type} (The Resource or Data type being described.)
          */
-        public ProfileStructureComponent setType(Code value) { 
+        public ProfileStructureComponent setType(CodeType value) { 
           this.type = value;
           return this;
         }
@@ -710,7 +714,7 @@ public class Profile extends Resource {
          */
         public ProfileStructureComponent setTypeSimple(String value) { 
             if (this.type == null)
-              this.type = new Code();
+              this.type = new CodeType();
             this.type.setValue(value);
           return this;
         }
@@ -718,14 +722,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (The name of this resource constraint statement (to refer to it from other resource constraints - from Profile.structure.element.definition.type.profile).)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (The name of this resource constraint statement (to refer to it from other resource constraints - from Profile.structure.element.definition.type.profile).)
          */
-        public ProfileStructureComponent setName(String_ value) { 
+        public ProfileStructureComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -745,7 +749,7 @@ public class Profile extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -754,14 +758,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #publish} (This definition of a profile on a structure is published as a formal statement. Some structural definitions might be defined purely for internal use within the profile, and not intended to be used outside that context.)
          */
-        public Boolean getPublish() { 
+        public BooleanType getPublish() { 
           return this.publish;
         }
 
         /**
          * @param value {@link #publish} (This definition of a profile on a structure is published as a formal statement. Some structural definitions might be defined purely for internal use within the profile, and not intended to be used outside that context.)
          */
-        public ProfileStructureComponent setPublish(Boolean value) { 
+        public ProfileStructureComponent setPublish(BooleanType value) { 
           this.publish = value;
           return this;
         }
@@ -781,7 +785,7 @@ public class Profile extends Resource {
             this.publish = null;
           else {
             if (this.publish == null)
-              this.publish = new Boolean();
+              this.publish = new BooleanType();
             this.publish.setValue(value);
           }
           return this;
@@ -790,14 +794,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #purpose} (Human summary: why describe this resource?.)
          */
-        public String_ getPurpose() { 
+        public StringType getPurpose() { 
           return this.purpose;
         }
 
         /**
          * @param value {@link #purpose} (Human summary: why describe this resource?.)
          */
-        public ProfileStructureComponent setPurpose(String_ value) { 
+        public ProfileStructureComponent setPurpose(StringType value) { 
           this.purpose = value;
           return this;
         }
@@ -817,7 +821,7 @@ public class Profile extends Resource {
             this.purpose = null;
           else {
             if (this.purpose == null)
-              this.purpose = new String_();
+              this.purpose = new StringType();
             this.purpose.setValue(value);
           }
           return this;
@@ -867,7 +871,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("searchParam", "", "Additional search parameters for implementations to support and/or make use of.", 0, java.lang.Integer.MAX_VALUE, searchParam));
         }
 
-      public ProfileStructureComponent copy(Profile e) {
+      public ProfileStructureComponent copy() {
         ProfileStructureComponent dst = new ProfileStructureComponent();
         dst.type = type == null ? null : type.copy();
         dst.name = name == null ? null : name.copy();
@@ -875,10 +879,10 @@ public class Profile extends Resource {
         dst.purpose = purpose == null ? null : purpose.copy();
         dst.element = new ArrayList<ElementComponent>();
         for (ElementComponent i : element)
-          dst.element.add(i.copy(e));
+          dst.element.add(i.copy());
         dst.searchParam = new ArrayList<ProfileStructureSearchParamComponent>();
         for (ProfileStructureSearchParamComponent i : searchParam)
-          dst.searchParam.add(i.copy(e));
+          dst.searchParam.add(i.copy());
         return dst;
       }
 
@@ -888,7 +892,7 @@ public class Profile extends Resource {
         /**
          * The path identifies the element and is expressed as a "."-separated list of ancestor elements, beginning with the name of the resource.
          */
-        protected String_ path;
+        protected StringType path;
 
         /**
          * Codes that define how this element is represented in instances, when the deviation varies from the normal case.
@@ -898,7 +902,7 @@ public class Profile extends Resource {
         /**
          * The name of this element definition (to refer to it from other element definitions using Profile.structure.element.definition.nameReference). This is a unique name referring to a specific set of constraints applied to this element. One use of this is to provide a name to different slices of the same element.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Indicates that the element is sliced into a set of alternative definitions (there are multiple definitions on a single element in the base resource). The set of slices is any elements that come after this in the element sequence that have the same path, until a shorter path occurs (the shorter path terminates the set).
@@ -910,11 +914,13 @@ public class Profile extends Resource {
          */
         protected ElementDefinitionComponent definition;
 
+        private static final long serialVersionUID = 1070089554L;
+
       public ElementComponent() {
         super();
       }
 
-      public ElementComponent(String_ path) {
+      public ElementComponent(StringType path) {
         super();
         this.path = path;
       }
@@ -922,14 +928,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #path} (The path identifies the element and is expressed as a "."-separated list of ancestor elements, beginning with the name of the resource.)
          */
-        public String_ getPath() { 
+        public StringType getPath() { 
           return this.path;
         }
 
         /**
          * @param value {@link #path} (The path identifies the element and is expressed as a "."-separated list of ancestor elements, beginning with the name of the resource.)
          */
-        public ElementComponent setPath(String_ value) { 
+        public ElementComponent setPath(StringType value) { 
           this.path = value;
           return this;
         }
@@ -946,7 +952,7 @@ public class Profile extends Resource {
          */
         public ElementComponent setPathSimple(String value) { 
             if (this.path == null)
-              this.path = new String_();
+              this.path = new StringType();
             this.path.setValue(value);
           return this;
         }
@@ -979,16 +985,26 @@ public class Profile extends Resource {
         }
 
         /**
+         * @param value {@link #representation} (Codes that define how this element is represented in instances, when the deviation varies from the normal case.)
+         */
+        public boolean hasRepresentationSimple(PropertyRepresentation value) { 
+          for (Enumeration<PropertyRepresentation> v : this.representation)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
+        }
+
+        /**
          * @return {@link #name} (The name of this element definition (to refer to it from other element definitions using Profile.structure.element.definition.nameReference). This is a unique name referring to a specific set of constraints applied to this element. One use of this is to provide a name to different slices of the same element.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (The name of this element definition (to refer to it from other element definitions using Profile.structure.element.definition.nameReference). This is a unique name referring to a specific set of constraints applied to this element. One use of this is to provide a name to different slices of the same element.)
          */
-        public ElementComponent setName(String_ value) { 
+        public ElementComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -1008,7 +1024,7 @@ public class Profile extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -1053,15 +1069,15 @@ public class Profile extends Resource {
           childrenList.add(new Property("definition", "", "Definition of the content of the element to provide a more specific definition than that contained for the element in the base resource.", 0, java.lang.Integer.MAX_VALUE, definition));
         }
 
-      public ElementComponent copy(Profile e) {
+      public ElementComponent copy() {
         ElementComponent dst = new ElementComponent();
         dst.path = path == null ? null : path.copy();
         dst.representation = new ArrayList<Enumeration<PropertyRepresentation>>();
         for (Enumeration<PropertyRepresentation> i : representation)
           dst.representation.add(i.copy());
         dst.name = name == null ? null : name.copy();
-        dst.slicing = slicing == null ? null : slicing.copy(e);
-        dst.definition = definition == null ? null : definition.copy(e);
+        dst.slicing = slicing == null ? null : slicing.copy();
+        dst.definition = definition == null ? null : definition.copy();
         return dst;
       }
 
@@ -1071,23 +1087,25 @@ public class Profile extends Resource {
         /**
          * Designates which child element is used to discriminate between the slices when processing an instance. The value of the child element in the instance SHALL completely distinguish which slice the element in the resource matches based on the allowed values for that element in each of the slices.
          */
-        protected Id discriminator;
+        protected IdType discriminator;
 
         /**
          * If the matching elements have to occur in the same order as defined in the profile.
          */
-        protected Boolean ordered;
+        protected BooleanType ordered;
 
         /**
          * Whether additional slices are allowed or not. When the slices are ordered, profile authors can also say that additional slices are only allowed at the end.
          */
         protected Enumeration<ResourceSlicingRules> rules;
 
+        private static final long serialVersionUID = -1790222992L;
+
       public ElementSlicingComponent() {
         super();
       }
 
-      public ElementSlicingComponent(Id discriminator, Boolean ordered, Enumeration<ResourceSlicingRules> rules) {
+      public ElementSlicingComponent(IdType discriminator, BooleanType ordered, Enumeration<ResourceSlicingRules> rules) {
         super();
         this.discriminator = discriminator;
         this.ordered = ordered;
@@ -1097,14 +1115,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #discriminator} (Designates which child element is used to discriminate between the slices when processing an instance. The value of the child element in the instance SHALL completely distinguish which slice the element in the resource matches based on the allowed values for that element in each of the slices.)
          */
-        public Id getDiscriminator() { 
+        public IdType getDiscriminator() { 
           return this.discriminator;
         }
 
         /**
          * @param value {@link #discriminator} (Designates which child element is used to discriminate between the slices when processing an instance. The value of the child element in the instance SHALL completely distinguish which slice the element in the resource matches based on the allowed values for that element in each of the slices.)
          */
-        public ElementSlicingComponent setDiscriminator(Id value) { 
+        public ElementSlicingComponent setDiscriminator(IdType value) { 
           this.discriminator = value;
           return this;
         }
@@ -1121,7 +1139,7 @@ public class Profile extends Resource {
          */
         public ElementSlicingComponent setDiscriminatorSimple(String value) { 
             if (this.discriminator == null)
-              this.discriminator = new Id();
+              this.discriminator = new IdType();
             this.discriminator.setValue(value);
           return this;
         }
@@ -1129,14 +1147,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #ordered} (If the matching elements have to occur in the same order as defined in the profile.)
          */
-        public Boolean getOrdered() { 
+        public BooleanType getOrdered() { 
           return this.ordered;
         }
 
         /**
          * @param value {@link #ordered} (If the matching elements have to occur in the same order as defined in the profile.)
          */
-        public ElementSlicingComponent setOrdered(Boolean value) { 
+        public ElementSlicingComponent setOrdered(BooleanType value) { 
           this.ordered = value;
           return this;
         }
@@ -1153,7 +1171,7 @@ public class Profile extends Resource {
          */
         public ElementSlicingComponent setOrderedSimple(boolean value) { 
             if (this.ordered == null)
-              this.ordered = new Boolean();
+              this.ordered = new BooleanType();
             this.ordered.setValue(value);
           return this;
         }
@@ -1197,7 +1215,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("rules", "code", "Whether additional slices are allowed or not. When the slices are ordered, profile authors can also say that additional slices are only allowed at the end.", 0, java.lang.Integer.MAX_VALUE, rules));
         }
 
-      public ElementSlicingComponent copy(Profile e) {
+      public ElementSlicingComponent copy() {
         ElementSlicingComponent dst = new ElementSlicingComponent();
         dst.discriminator = discriminator == null ? null : discriminator.copy();
         dst.ordered = ordered == null ? null : ordered.copy();
@@ -1211,37 +1229,37 @@ public class Profile extends Resource {
         /**
          * A concise definition that  is shown in the generated XML format that summarizes profiles (used throughout the specification).
          */
-        protected String_ short_;
+        protected StringType short_;
 
         /**
          * The definition SHALL be consistent with the base definition, but convey the meaning of the element in the particular context of use of the resource.
          */
-        protected String_ formal;
+        protected StringType formal;
 
         /**
          * Comments about the use of the element, including notes about how to use the data properly, exceptions to proper use, etc.
          */
-        protected String_ comments;
+        protected StringType comments;
 
         /**
          * Explains why this element is needed and why it's been constrained as it has.
          */
-        protected String_ requirements;
+        protected StringType requirements;
 
         /**
          * Identifies additional names by which this element might also be known.
          */
-        protected List<String_> synonym = new ArrayList<String_>();
+        protected List<StringType> synonym = new ArrayList<StringType>();
 
         /**
          * The minimum number of times this element SHALL appear in the instance.
          */
-        protected Integer min;
+        protected IntegerType min;
 
         /**
          * The maximum number of times this element is permitted to appear in the instance.
          */
-        protected String_ max;
+        protected StringType max;
 
         /**
          * The data type or resource that the value of this element is permitted to be.
@@ -1251,7 +1269,7 @@ public class Profile extends Resource {
         /**
          * Identifies the name of a slice defined elsewhere in the profile whose constraints should be applied to the current element.
          */
-        protected String_ nameReference;
+        protected StringType nameReference;
 
         /**
          * Specifies a primitive value that SHALL hold for this element in the instance.
@@ -1266,12 +1284,12 @@ public class Profile extends Resource {
         /**
          * Indicates the shortest length that SHALL be supported by conformant instances without truncation.
          */
-        protected Integer maxLength;
+        protected IntegerType maxLength;
 
         /**
          * A reference to an invariant that may make additional statements about the cardinality or value in the instance.
          */
-        protected List<Id> condition = new ArrayList<Id>();
+        protected List<IdType> condition = new ArrayList<IdType>();
 
         /**
          * Formal constraints such as co-occurrence and other constraints that can be computationally evaluated within the context of the instance.
@@ -1281,12 +1299,12 @@ public class Profile extends Resource {
         /**
          * If true, conformant resource authors SHALL be capable of providing a value for the element and resource consumers SHALL be capable of extracting and doing something useful with the data element.  If false, the element may be ignored and not supported.
          */
-        protected Boolean mustSupport;
+        protected BooleanType mustSupport;
 
         /**
          * If true, the value of this element affects the interpretation of the element or resource that contains it, and the value of the element cannot be ignored. Typically, this is used for status, negation and qualification codes. The effect of this is that the element cannot be ignored by systems: they SHALL either recognize the element and process it, and/or a pre-determination has been made that it is not relevant to their particular system.
          */
-        protected Boolean isModifier;
+        protected BooleanType isModifier;
 
         /**
          * Binds to a value set if this element is coded (code, Coding, CodeableConcept).
@@ -1298,11 +1316,13 @@ public class Profile extends Resource {
          */
         protected List<ElementDefinitionMappingComponent> mapping = new ArrayList<ElementDefinitionMappingComponent>();
 
+        private static final long serialVersionUID = 321886804L;
+
       public ElementDefinitionComponent() {
         super();
       }
 
-      public ElementDefinitionComponent(String_ short_, String_ formal, Integer min, String_ max, Boolean isModifier) {
+      public ElementDefinitionComponent(StringType short_, StringType formal, IntegerType min, StringType max, BooleanType isModifier) {
         super();
         this.short_ = short_;
         this.formal = formal;
@@ -1314,14 +1334,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #short_} (A concise definition that  is shown in the generated XML format that summarizes profiles (used throughout the specification).)
          */
-        public String_ getShort() { 
+        public StringType getShort() { 
           return this.short_;
         }
 
         /**
          * @param value {@link #short_} (A concise definition that  is shown in the generated XML format that summarizes profiles (used throughout the specification).)
          */
-        public ElementDefinitionComponent setShort(String_ value) { 
+        public ElementDefinitionComponent setShort(StringType value) { 
           this.short_ = value;
           return this;
         }
@@ -1338,7 +1358,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionComponent setShortSimple(String value) { 
             if (this.short_ == null)
-              this.short_ = new String_();
+              this.short_ = new StringType();
             this.short_.setValue(value);
           return this;
         }
@@ -1346,14 +1366,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #formal} (The definition SHALL be consistent with the base definition, but convey the meaning of the element in the particular context of use of the resource.)
          */
-        public String_ getFormal() { 
+        public StringType getFormal() { 
           return this.formal;
         }
 
         /**
          * @param value {@link #formal} (The definition SHALL be consistent with the base definition, but convey the meaning of the element in the particular context of use of the resource.)
          */
-        public ElementDefinitionComponent setFormal(String_ value) { 
+        public ElementDefinitionComponent setFormal(StringType value) { 
           this.formal = value;
           return this;
         }
@@ -1370,7 +1390,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionComponent setFormalSimple(String value) { 
             if (this.formal == null)
-              this.formal = new String_();
+              this.formal = new StringType();
             this.formal.setValue(value);
           return this;
         }
@@ -1378,14 +1398,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #comments} (Comments about the use of the element, including notes about how to use the data properly, exceptions to proper use, etc.)
          */
-        public String_ getComments() { 
+        public StringType getComments() { 
           return this.comments;
         }
 
         /**
          * @param value {@link #comments} (Comments about the use of the element, including notes about how to use the data properly, exceptions to proper use, etc.)
          */
-        public ElementDefinitionComponent setComments(String_ value) { 
+        public ElementDefinitionComponent setComments(StringType value) { 
           this.comments = value;
           return this;
         }
@@ -1405,7 +1425,7 @@ public class Profile extends Resource {
             this.comments = null;
           else {
             if (this.comments == null)
-              this.comments = new String_();
+              this.comments = new StringType();
             this.comments.setValue(value);
           }
           return this;
@@ -1414,14 +1434,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #requirements} (Explains why this element is needed and why it's been constrained as it has.)
          */
-        public String_ getRequirements() { 
+        public StringType getRequirements() { 
           return this.requirements;
         }
 
         /**
          * @param value {@link #requirements} (Explains why this element is needed and why it's been constrained as it has.)
          */
-        public ElementDefinitionComponent setRequirements(String_ value) { 
+        public ElementDefinitionComponent setRequirements(StringType value) { 
           this.requirements = value;
           return this;
         }
@@ -1441,7 +1461,7 @@ public class Profile extends Resource {
             this.requirements = null;
           else {
             if (this.requirements == null)
-              this.requirements = new String_();
+              this.requirements = new StringType();
             this.requirements.setValue(value);
           }
           return this;
@@ -1450,7 +1470,7 @@ public class Profile extends Resource {
         /**
          * @return {@link #synonym} (Identifies additional names by which this element might also be known.)
          */
-        public List<String_> getSynonym() { 
+        public List<StringType> getSynonym() { 
           return this.synonym;
         }
 
@@ -1458,8 +1478,8 @@ public class Profile extends Resource {
         /**
          * @return {@link #synonym} (Identifies additional names by which this element might also be known.)
          */
-        public String_ addSynonym() { 
-          String_ t = new String_();
+        public StringType addSynonym() { 
+          StringType t = new StringType();
           this.synonym.add(t);
           return t;
         }
@@ -1467,24 +1487,34 @@ public class Profile extends Resource {
         /**
          * @param value {@link #synonym} (Identifies additional names by which this element might also be known.)
          */
-        public String_ addSynonymSimple(String value) { 
-          String_ t = new String_();
+        public StringType addSynonymSimple(String value) { 
+          StringType t = new StringType();
           t.setValue(value);
           this.synonym.add(t);
           return t;
         }
 
         /**
+         * @param value {@link #synonym} (Identifies additional names by which this element might also be known.)
+         */
+        public boolean hasSynonymSimple(String value) { 
+          for (StringType v : this.synonym)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
+        }
+
+        /**
          * @return {@link #min} (The minimum number of times this element SHALL appear in the instance.)
          */
-        public Integer getMin() { 
+        public IntegerType getMin() { 
           return this.min;
         }
 
         /**
          * @param value {@link #min} (The minimum number of times this element SHALL appear in the instance.)
          */
-        public ElementDefinitionComponent setMin(Integer value) { 
+        public ElementDefinitionComponent setMin(IntegerType value) { 
           this.min = value;
           return this;
         }
@@ -1501,7 +1531,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionComponent setMinSimple(int value) { 
             if (this.min == null)
-              this.min = new Integer();
+              this.min = new IntegerType();
             this.min.setValue(value);
           return this;
         }
@@ -1509,14 +1539,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #max} (The maximum number of times this element is permitted to appear in the instance.)
          */
-        public String_ getMax() { 
+        public StringType getMax() { 
           return this.max;
         }
 
         /**
          * @param value {@link #max} (The maximum number of times this element is permitted to appear in the instance.)
          */
-        public ElementDefinitionComponent setMax(String_ value) { 
+        public ElementDefinitionComponent setMax(StringType value) { 
           this.max = value;
           return this;
         }
@@ -1533,7 +1563,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionComponent setMaxSimple(String value) { 
             if (this.max == null)
-              this.max = new String_();
+              this.max = new StringType();
             this.max.setValue(value);
           return this;
         }
@@ -1558,14 +1588,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #nameReference} (Identifies the name of a slice defined elsewhere in the profile whose constraints should be applied to the current element.)
          */
-        public String_ getNameReference() { 
+        public StringType getNameReference() { 
           return this.nameReference;
         }
 
         /**
          * @param value {@link #nameReference} (Identifies the name of a slice defined elsewhere in the profile whose constraints should be applied to the current element.)
          */
-        public ElementDefinitionComponent setNameReference(String_ value) { 
+        public ElementDefinitionComponent setNameReference(StringType value) { 
           this.nameReference = value;
           return this;
         }
@@ -1585,7 +1615,7 @@ public class Profile extends Resource {
             this.nameReference = null;
           else {
             if (this.nameReference == null)
-              this.nameReference = new String_();
+              this.nameReference = new StringType();
             this.nameReference.setValue(value);
           }
           return this;
@@ -1624,14 +1654,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #maxLength} (Indicates the shortest length that SHALL be supported by conformant instances without truncation.)
          */
-        public Integer getMaxLength() { 
+        public IntegerType getMaxLength() { 
           return this.maxLength;
         }
 
         /**
          * @param value {@link #maxLength} (Indicates the shortest length that SHALL be supported by conformant instances without truncation.)
          */
-        public ElementDefinitionComponent setMaxLength(Integer value) { 
+        public ElementDefinitionComponent setMaxLength(IntegerType value) { 
           this.maxLength = value;
           return this;
         }
@@ -1651,7 +1681,7 @@ public class Profile extends Resource {
             this.maxLength = null;
           else {
             if (this.maxLength == null)
-              this.maxLength = new Integer();
+              this.maxLength = new IntegerType();
             this.maxLength.setValue(value);
           }
           return this;
@@ -1660,7 +1690,7 @@ public class Profile extends Resource {
         /**
          * @return {@link #condition} (A reference to an invariant that may make additional statements about the cardinality or value in the instance.)
          */
-        public List<Id> getCondition() { 
+        public List<IdType> getCondition() { 
           return this.condition;
         }
 
@@ -1668,8 +1698,8 @@ public class Profile extends Resource {
         /**
          * @return {@link #condition} (A reference to an invariant that may make additional statements about the cardinality or value in the instance.)
          */
-        public Id addCondition() { 
-          Id t = new Id();
+        public IdType addCondition() { 
+          IdType t = new IdType();
           this.condition.add(t);
           return t;
         }
@@ -1677,11 +1707,21 @@ public class Profile extends Resource {
         /**
          * @param value {@link #condition} (A reference to an invariant that may make additional statements about the cardinality or value in the instance.)
          */
-        public Id addConditionSimple(String value) { 
-          Id t = new Id();
+        public IdType addConditionSimple(String value) { 
+          IdType t = new IdType();
           t.setValue(value);
           this.condition.add(t);
           return t;
+        }
+
+        /**
+         * @param value {@link #condition} (A reference to an invariant that may make additional statements about the cardinality or value in the instance.)
+         */
+        public boolean hasConditionSimple(String value) { 
+          for (IdType v : this.condition)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
         }
 
         /**
@@ -1704,14 +1744,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #mustSupport} (If true, conformant resource authors SHALL be capable of providing a value for the element and resource consumers SHALL be capable of extracting and doing something useful with the data element.  If false, the element may be ignored and not supported.)
          */
-        public Boolean getMustSupport() { 
+        public BooleanType getMustSupport() { 
           return this.mustSupport;
         }
 
         /**
          * @param value {@link #mustSupport} (If true, conformant resource authors SHALL be capable of providing a value for the element and resource consumers SHALL be capable of extracting and doing something useful with the data element.  If false, the element may be ignored and not supported.)
          */
-        public ElementDefinitionComponent setMustSupport(Boolean value) { 
+        public ElementDefinitionComponent setMustSupport(BooleanType value) { 
           this.mustSupport = value;
           return this;
         }
@@ -1731,7 +1771,7 @@ public class Profile extends Resource {
             this.mustSupport = null;
           else {
             if (this.mustSupport == null)
-              this.mustSupport = new Boolean();
+              this.mustSupport = new BooleanType();
             this.mustSupport.setValue(value);
           }
           return this;
@@ -1740,14 +1780,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #isModifier} (If true, the value of this element affects the interpretation of the element or resource that contains it, and the value of the element cannot be ignored. Typically, this is used for status, negation and qualification codes. The effect of this is that the element cannot be ignored by systems: they SHALL either recognize the element and process it, and/or a pre-determination has been made that it is not relevant to their particular system.)
          */
-        public Boolean getIsModifier() { 
+        public BooleanType getIsModifier() { 
           return this.isModifier;
         }
 
         /**
          * @param value {@link #isModifier} (If true, the value of this element affects the interpretation of the element or resource that contains it, and the value of the element cannot be ignored. Typically, this is used for status, negation and qualification codes. The effect of this is that the element cannot be ignored by systems: they SHALL either recognize the element and process it, and/or a pre-determination has been made that it is not relevant to their particular system.)
          */
-        public ElementDefinitionComponent setIsModifier(Boolean value) { 
+        public ElementDefinitionComponent setIsModifier(BooleanType value) { 
           this.isModifier = value;
           return this;
         }
@@ -1764,7 +1804,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionComponent setIsModifierSimple(boolean value) { 
             if (this.isModifier == null)
-              this.isModifier = new Boolean();
+              this.isModifier = new BooleanType();
             this.isModifier.setValue(value);
           return this;
         }
@@ -1823,36 +1863,36 @@ public class Profile extends Resource {
           childrenList.add(new Property("mapping", "", "Identifies a concept from an external specification that roughly corresponds to this element.", 0, java.lang.Integer.MAX_VALUE, mapping));
         }
 
-      public ElementDefinitionComponent copy(Profile e) {
+      public ElementDefinitionComponent copy() {
         ElementDefinitionComponent dst = new ElementDefinitionComponent();
         dst.short_ = short_ == null ? null : short_.copy();
         dst.formal = formal == null ? null : formal.copy();
         dst.comments = comments == null ? null : comments.copy();
         dst.requirements = requirements == null ? null : requirements.copy();
-        dst.synonym = new ArrayList<String_>();
-        for (String_ i : synonym)
+        dst.synonym = new ArrayList<StringType>();
+        for (StringType i : synonym)
           dst.synonym.add(i.copy());
         dst.min = min == null ? null : min.copy();
         dst.max = max == null ? null : max.copy();
         dst.type = new ArrayList<TypeRefComponent>();
         for (TypeRefComponent i : type)
-          dst.type.add(i.copy(e));
+          dst.type.add(i.copy());
         dst.nameReference = nameReference == null ? null : nameReference.copy();
         dst.value = value == null ? null : value.copy();
         dst.example = example == null ? null : example.copy();
         dst.maxLength = maxLength == null ? null : maxLength.copy();
-        dst.condition = new ArrayList<Id>();
-        for (Id i : condition)
+        dst.condition = new ArrayList<IdType>();
+        for (IdType i : condition)
           dst.condition.add(i.copy());
         dst.constraint = new ArrayList<ElementDefinitionConstraintComponent>();
         for (ElementDefinitionConstraintComponent i : constraint)
-          dst.constraint.add(i.copy(e));
+          dst.constraint.add(i.copy());
         dst.mustSupport = mustSupport == null ? null : mustSupport.copy();
         dst.isModifier = isModifier == null ? null : isModifier.copy();
-        dst.binding = binding == null ? null : binding.copy(e);
+        dst.binding = binding == null ? null : binding.copy();
         dst.mapping = new ArrayList<ElementDefinitionMappingComponent>();
         for (ElementDefinitionMappingComponent i : mapping)
-          dst.mapping.add(i.copy(e));
+          dst.mapping.add(i.copy());
         return dst;
       }
 
@@ -1862,23 +1902,25 @@ public class Profile extends Resource {
         /**
          * Name of Data type or Resource.
          */
-        protected Code code;
+        protected CodeType code;
 
         /**
          * Identifies a profile that SHALL hold for resources or datatypes referenced as the type of this element. Can be a local reference - to another structure in this profile, or a reference to a structure in another profile.
          */
-        protected Uri profile;
+        protected UriType profile;
 
         /**
          * If the type is a reference to another resource, how the resource is or can be aggreated - is it a contained resource, or a reference, and if the context is a bundle, is it included in the bundle.
          */
         protected List<Enumeration<ResourceAggregationMode>> aggregation = new ArrayList<Enumeration<ResourceAggregationMode>>();
 
+        private static final long serialVersionUID = -1402455002L;
+
       public TypeRefComponent() {
         super();
       }
 
-      public TypeRefComponent(Code code) {
+      public TypeRefComponent(CodeType code) {
         super();
         this.code = code;
       }
@@ -1886,14 +1928,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #code} (Name of Data type or Resource.)
          */
-        public Code getCode() { 
+        public CodeType getCode() { 
           return this.code;
         }
 
         /**
          * @param value {@link #code} (Name of Data type or Resource.)
          */
-        public TypeRefComponent setCode(Code value) { 
+        public TypeRefComponent setCode(CodeType value) { 
           this.code = value;
           return this;
         }
@@ -1910,7 +1952,7 @@ public class Profile extends Resource {
          */
         public TypeRefComponent setCodeSimple(String value) { 
             if (this.code == null)
-              this.code = new Code();
+              this.code = new CodeType();
             this.code.setValue(value);
           return this;
         }
@@ -1918,14 +1960,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #profile} (Identifies a profile that SHALL hold for resources or datatypes referenced as the type of this element. Can be a local reference - to another structure in this profile, or a reference to a structure in another profile.)
          */
-        public Uri getProfile() { 
+        public UriType getProfile() { 
           return this.profile;
         }
 
         /**
          * @param value {@link #profile} (Identifies a profile that SHALL hold for resources or datatypes referenced as the type of this element. Can be a local reference - to another structure in this profile, or a reference to a structure in another profile.)
          */
-        public TypeRefComponent setProfile(Uri value) { 
+        public TypeRefComponent setProfile(UriType value) { 
           this.profile = value;
           return this;
         }
@@ -1945,7 +1987,7 @@ public class Profile extends Resource {
             this.profile = null;
           else {
             if (this.profile == null)
-              this.profile = new Uri();
+              this.profile = new UriType();
             this.profile.setValue(value);
           }
           return this;
@@ -1978,6 +2020,16 @@ public class Profile extends Resource {
           return t;
         }
 
+        /**
+         * @param value {@link #aggregation} (If the type is a reference to another resource, how the resource is or can be aggreated - is it a contained resource, or a reference, and if the context is a bundle, is it included in the bundle.)
+         */
+        public boolean hasAggregationSimple(ResourceAggregationMode value) { 
+          for (Enumeration<ResourceAggregationMode> v : this.aggregation)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("code", "code", "Name of Data type or Resource.", 0, java.lang.Integer.MAX_VALUE, code));
@@ -1985,7 +2037,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("aggregation", "code", "If the type is a reference to another resource, how the resource is or can be aggreated - is it a contained resource, or a reference, and if the context is a bundle, is it included in the bundle.", 0, java.lang.Integer.MAX_VALUE, aggregation));
         }
 
-      public TypeRefComponent copy(Profile e) {
+      public TypeRefComponent copy() {
         TypeRefComponent dst = new TypeRefComponent();
         dst.code = code == null ? null : code.copy();
         dst.profile = profile == null ? null : profile.copy();
@@ -2001,12 +2053,12 @@ public class Profile extends Resource {
         /**
          * Allows identification of which elements have their cardinalities impacted by the constraint.  Will not be referenced for constraints that do not affect cardinality.
          */
-        protected Id key;
+        protected IdType key;
 
         /**
          * Used to label the constraint in OCL or in short displays incapable of displaying the full human description.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Identifies the impact constraint violation has on the conformance of the instance.
@@ -2016,18 +2068,20 @@ public class Profile extends Resource {
         /**
          * Text that can be used to describe the constraint in messages identifying that the constraint has been violated.
          */
-        protected String_ human;
+        protected StringType human;
 
         /**
          * XPath expression of constraint.
          */
-        protected String_ xpath;
+        protected StringType xpath;
+
+        private static final long serialVersionUID = -1195616532L;
 
       public ElementDefinitionConstraintComponent() {
         super();
       }
 
-      public ElementDefinitionConstraintComponent(Id key, Enumeration<ConstraintSeverity> severity, String_ human, String_ xpath) {
+      public ElementDefinitionConstraintComponent(IdType key, Enumeration<ConstraintSeverity> severity, StringType human, StringType xpath) {
         super();
         this.key = key;
         this.severity = severity;
@@ -2038,14 +2092,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #key} (Allows identification of which elements have their cardinalities impacted by the constraint.  Will not be referenced for constraints that do not affect cardinality.)
          */
-        public Id getKey() { 
+        public IdType getKey() { 
           return this.key;
         }
 
         /**
          * @param value {@link #key} (Allows identification of which elements have their cardinalities impacted by the constraint.  Will not be referenced for constraints that do not affect cardinality.)
          */
-        public ElementDefinitionConstraintComponent setKey(Id value) { 
+        public ElementDefinitionConstraintComponent setKey(IdType value) { 
           this.key = value;
           return this;
         }
@@ -2062,7 +2116,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionConstraintComponent setKeySimple(String value) { 
             if (this.key == null)
-              this.key = new Id();
+              this.key = new IdType();
             this.key.setValue(value);
           return this;
         }
@@ -2070,14 +2124,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (Used to label the constraint in OCL or in short displays incapable of displaying the full human description.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (Used to label the constraint in OCL or in short displays incapable of displaying the full human description.)
          */
-        public ElementDefinitionConstraintComponent setName(String_ value) { 
+        public ElementDefinitionConstraintComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -2097,7 +2151,7 @@ public class Profile extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -2138,14 +2192,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #human} (Text that can be used to describe the constraint in messages identifying that the constraint has been violated.)
          */
-        public String_ getHuman() { 
+        public StringType getHuman() { 
           return this.human;
         }
 
         /**
          * @param value {@link #human} (Text that can be used to describe the constraint in messages identifying that the constraint has been violated.)
          */
-        public ElementDefinitionConstraintComponent setHuman(String_ value) { 
+        public ElementDefinitionConstraintComponent setHuman(StringType value) { 
           this.human = value;
           return this;
         }
@@ -2162,7 +2216,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionConstraintComponent setHumanSimple(String value) { 
             if (this.human == null)
-              this.human = new String_();
+              this.human = new StringType();
             this.human.setValue(value);
           return this;
         }
@@ -2170,14 +2224,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #xpath} (XPath expression of constraint.)
          */
-        public String_ getXpath() { 
+        public StringType getXpath() { 
           return this.xpath;
         }
 
         /**
          * @param value {@link #xpath} (XPath expression of constraint.)
          */
-        public ElementDefinitionConstraintComponent setXpath(String_ value) { 
+        public ElementDefinitionConstraintComponent setXpath(StringType value) { 
           this.xpath = value;
           return this;
         }
@@ -2194,7 +2248,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionConstraintComponent setXpathSimple(String value) { 
             if (this.xpath == null)
-              this.xpath = new String_();
+              this.xpath = new StringType();
             this.xpath.setValue(value);
           return this;
         }
@@ -2208,7 +2262,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("xpath", "string", "XPath expression of constraint.", 0, java.lang.Integer.MAX_VALUE, xpath));
         }
 
-      public ElementDefinitionConstraintComponent copy(Profile e) {
+      public ElementDefinitionConstraintComponent copy() {
         ElementDefinitionConstraintComponent dst = new ElementDefinitionConstraintComponent();
         dst.key = key == null ? null : key.copy();
         dst.name = name == null ? null : name.copy();
@@ -2224,12 +2278,12 @@ public class Profile extends Resource {
         /**
          * A descriptive name for this - can be useful for generating implementation artifacts.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * If true, then conformant systems may use additional codes or (where the data type permits) text alone to convey concepts not covered by the set of codes identified in the binding.  If false, then conformant systems are constrained to the provided codes alone.
          */
-        protected Boolean isExtensible;
+        protected BooleanType isExtensible;
 
         /**
          * Indicates the degree of conformance expectations associated with this binding.
@@ -2239,18 +2293,20 @@ public class Profile extends Resource {
         /**
          * Describes the intended use of this particular set of codes.
          */
-        protected String_ description;
+        protected StringType description;
 
         /**
          * Points to the value set or external definition that identifies the set of codes to be used.
          */
         protected Type reference;
 
+        private static final long serialVersionUID = 1041151319L;
+
       public ElementDefinitionBindingComponent() {
         super();
       }
 
-      public ElementDefinitionBindingComponent(String_ name, Boolean isExtensible) {
+      public ElementDefinitionBindingComponent(StringType name, BooleanType isExtensible) {
         super();
         this.name = name;
         this.isExtensible = isExtensible;
@@ -2259,14 +2315,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (A descriptive name for this - can be useful for generating implementation artifacts.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (A descriptive name for this - can be useful for generating implementation artifacts.)
          */
-        public ElementDefinitionBindingComponent setName(String_ value) { 
+        public ElementDefinitionBindingComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -2283,7 +2339,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionBindingComponent setNameSimple(String value) { 
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           return this;
         }
@@ -2291,14 +2347,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #isExtensible} (If true, then conformant systems may use additional codes or (where the data type permits) text alone to convey concepts not covered by the set of codes identified in the binding.  If false, then conformant systems are constrained to the provided codes alone.)
          */
-        public Boolean getIsExtensible() { 
+        public BooleanType getIsExtensible() { 
           return this.isExtensible;
         }
 
         /**
          * @param value {@link #isExtensible} (If true, then conformant systems may use additional codes or (where the data type permits) text alone to convey concepts not covered by the set of codes identified in the binding.  If false, then conformant systems are constrained to the provided codes alone.)
          */
-        public ElementDefinitionBindingComponent setIsExtensible(Boolean value) { 
+        public ElementDefinitionBindingComponent setIsExtensible(BooleanType value) { 
           this.isExtensible = value;
           return this;
         }
@@ -2315,7 +2371,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionBindingComponent setIsExtensibleSimple(boolean value) { 
             if (this.isExtensible == null)
-              this.isExtensible = new Boolean();
+              this.isExtensible = new BooleanType();
             this.isExtensible.setValue(value);
           return this;
         }
@@ -2359,14 +2415,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #description} (Describes the intended use of this particular set of codes.)
          */
-        public String_ getDescription() { 
+        public StringType getDescription() { 
           return this.description;
         }
 
         /**
          * @param value {@link #description} (Describes the intended use of this particular set of codes.)
          */
-        public ElementDefinitionBindingComponent setDescription(String_ value) { 
+        public ElementDefinitionBindingComponent setDescription(StringType value) { 
           this.description = value;
           return this;
         }
@@ -2386,7 +2442,7 @@ public class Profile extends Resource {
             this.description = null;
           else {
             if (this.description == null)
-              this.description = new String_();
+              this.description = new StringType();
             this.description.setValue(value);
           }
           return this;
@@ -2416,7 +2472,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("reference[x]", "uri|Resource(ValueSet)", "Points to the value set or external definition that identifies the set of codes to be used.", 0, java.lang.Integer.MAX_VALUE, reference));
         }
 
-      public ElementDefinitionBindingComponent copy(Profile e) {
+      public ElementDefinitionBindingComponent copy() {
         ElementDefinitionBindingComponent dst = new ElementDefinitionBindingComponent();
         dst.name = name == null ? null : name.copy();
         dst.isExtensible = isExtensible == null ? null : isExtensible.copy();
@@ -2432,18 +2488,20 @@ public class Profile extends Resource {
         /**
          * An internal reference to the definition of a mapping.
          */
-        protected Id identity;
+        protected IdType identity;
 
         /**
          * Expresses what part of the target specification corresponds to this element.
          */
-        protected String_ map;
+        protected StringType map;
+
+        private static final long serialVersionUID = -450627426L;
 
       public ElementDefinitionMappingComponent() {
         super();
       }
 
-      public ElementDefinitionMappingComponent(Id identity, String_ map) {
+      public ElementDefinitionMappingComponent(IdType identity, StringType map) {
         super();
         this.identity = identity;
         this.map = map;
@@ -2452,14 +2510,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #identity} (An internal reference to the definition of a mapping.)
          */
-        public Id getIdentity() { 
+        public IdType getIdentity() { 
           return this.identity;
         }
 
         /**
          * @param value {@link #identity} (An internal reference to the definition of a mapping.)
          */
-        public ElementDefinitionMappingComponent setIdentity(Id value) { 
+        public ElementDefinitionMappingComponent setIdentity(IdType value) { 
           this.identity = value;
           return this;
         }
@@ -2476,7 +2534,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionMappingComponent setIdentitySimple(String value) { 
             if (this.identity == null)
-              this.identity = new Id();
+              this.identity = new IdType();
             this.identity.setValue(value);
           return this;
         }
@@ -2484,14 +2542,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #map} (Expresses what part of the target specification corresponds to this element.)
          */
-        public String_ getMap() { 
+        public StringType getMap() { 
           return this.map;
         }
 
         /**
          * @param value {@link #map} (Expresses what part of the target specification corresponds to this element.)
          */
-        public ElementDefinitionMappingComponent setMap(String_ value) { 
+        public ElementDefinitionMappingComponent setMap(StringType value) { 
           this.map = value;
           return this;
         }
@@ -2508,7 +2566,7 @@ public class Profile extends Resource {
          */
         public ElementDefinitionMappingComponent setMapSimple(String value) { 
             if (this.map == null)
-              this.map = new String_();
+              this.map = new StringType();
             this.map.setValue(value);
           return this;
         }
@@ -2519,7 +2577,7 @@ public class Profile extends Resource {
           childrenList.add(new Property("map", "string", "Expresses what part of the target specification corresponds to this element.", 0, java.lang.Integer.MAX_VALUE, map));
         }
 
-      public ElementDefinitionMappingComponent copy(Profile e) {
+      public ElementDefinitionMappingComponent copy() {
         ElementDefinitionMappingComponent dst = new ElementDefinitionMappingComponent();
         dst.identity = identity == null ? null : identity.copy();
         dst.map = map == null ? null : map.copy();
@@ -2532,7 +2590,7 @@ public class Profile extends Resource {
         /**
          * The name of the standard or custom search parameter.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * The type of value a search parameter refers to, and how the content is interpreted.
@@ -2542,23 +2600,25 @@ public class Profile extends Resource {
         /**
          * A specification for search parameters. For standard parameters, provides additional information on how the parameter is used in this solution.  For custom parameters, provides a description of what the parameter does.
          */
-        protected String_ documentation;
+        protected StringType documentation;
 
         /**
          * An XPath expression that returns a set of elements for the search parameter.
          */
-        protected String_ xpath;
+        protected StringType xpath;
 
         /**
          * Types of resource (if a resource is referenced).
          */
-        protected List<Code> target = new ArrayList<Code>();
+        protected List<CodeType> target = new ArrayList<CodeType>();
+
+        private static final long serialVersionUID = -1550477651L;
 
       public ProfileStructureSearchParamComponent() {
         super();
       }
 
-      public ProfileStructureSearchParamComponent(String_ name, Enumeration<SearchParamType> type, String_ documentation) {
+      public ProfileStructureSearchParamComponent(StringType name, Enumeration<SearchParamType> type, StringType documentation) {
         super();
         this.name = name;
         this.type = type;
@@ -2568,14 +2628,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (The name of the standard or custom search parameter.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (The name of the standard or custom search parameter.)
          */
-        public ProfileStructureSearchParamComponent setName(String_ value) { 
+        public ProfileStructureSearchParamComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -2592,7 +2652,7 @@ public class Profile extends Resource {
          */
         public ProfileStructureSearchParamComponent setNameSimple(String value) { 
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           return this;
         }
@@ -2632,14 +2692,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #documentation} (A specification for search parameters. For standard parameters, provides additional information on how the parameter is used in this solution.  For custom parameters, provides a description of what the parameter does.)
          */
-        public String_ getDocumentation() { 
+        public StringType getDocumentation() { 
           return this.documentation;
         }
 
         /**
          * @param value {@link #documentation} (A specification for search parameters. For standard parameters, provides additional information on how the parameter is used in this solution.  For custom parameters, provides a description of what the parameter does.)
          */
-        public ProfileStructureSearchParamComponent setDocumentation(String_ value) { 
+        public ProfileStructureSearchParamComponent setDocumentation(StringType value) { 
           this.documentation = value;
           return this;
         }
@@ -2656,7 +2716,7 @@ public class Profile extends Resource {
          */
         public ProfileStructureSearchParamComponent setDocumentationSimple(String value) { 
             if (this.documentation == null)
-              this.documentation = new String_();
+              this.documentation = new StringType();
             this.documentation.setValue(value);
           return this;
         }
@@ -2664,14 +2724,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #xpath} (An XPath expression that returns a set of elements for the search parameter.)
          */
-        public String_ getXpath() { 
+        public StringType getXpath() { 
           return this.xpath;
         }
 
         /**
          * @param value {@link #xpath} (An XPath expression that returns a set of elements for the search parameter.)
          */
-        public ProfileStructureSearchParamComponent setXpath(String_ value) { 
+        public ProfileStructureSearchParamComponent setXpath(StringType value) { 
           this.xpath = value;
           return this;
         }
@@ -2691,7 +2751,7 @@ public class Profile extends Resource {
             this.xpath = null;
           else {
             if (this.xpath == null)
-              this.xpath = new String_();
+              this.xpath = new StringType();
             this.xpath.setValue(value);
           }
           return this;
@@ -2700,7 +2760,7 @@ public class Profile extends Resource {
         /**
          * @return {@link #target} (Types of resource (if a resource is referenced).)
          */
-        public List<Code> getTarget() { 
+        public List<CodeType> getTarget() { 
           return this.target;
         }
 
@@ -2708,8 +2768,8 @@ public class Profile extends Resource {
         /**
          * @return {@link #target} (Types of resource (if a resource is referenced).)
          */
-        public Code addTarget() { 
-          Code t = new Code();
+        public CodeType addTarget() { 
+          CodeType t = new CodeType();
           this.target.add(t);
           return t;
         }
@@ -2717,11 +2777,21 @@ public class Profile extends Resource {
         /**
          * @param value {@link #target} (Types of resource (if a resource is referenced).)
          */
-        public Code addTargetSimple(String value) { 
-          Code t = new Code();
+        public CodeType addTargetSimple(String value) { 
+          CodeType t = new CodeType();
           t.setValue(value);
           this.target.add(t);
           return t;
+        }
+
+        /**
+         * @param value {@link #target} (Types of resource (if a resource is referenced).)
+         */
+        public boolean hasTargetSimple(String value) { 
+          for (CodeType v : this.target)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
         }
 
         protected void listChildren(List<Property> childrenList) {
@@ -2733,14 +2803,14 @@ public class Profile extends Resource {
           childrenList.add(new Property("target", "code", "Types of resource (if a resource is referenced).", 0, java.lang.Integer.MAX_VALUE, target));
         }
 
-      public ProfileStructureSearchParamComponent copy(Profile e) {
+      public ProfileStructureSearchParamComponent copy() {
         ProfileStructureSearchParamComponent dst = new ProfileStructureSearchParamComponent();
         dst.name = name == null ? null : name.copy();
         dst.type = type == null ? null : type.copy();
         dst.documentation = documentation == null ? null : documentation.copy();
         dst.xpath = xpath == null ? null : xpath.copy();
-        dst.target = new ArrayList<Code>();
-        for (Code i : target)
+        dst.target = new ArrayList<CodeType>();
+        for (CodeType i : target)
           dst.target.add(i.copy());
         return dst;
       }
@@ -2751,12 +2821,12 @@ public class Profile extends Resource {
         /**
          * A unique code (within the profile) used to identify the extension.
          */
-        protected Code code;
+        protected CodeType code;
 
         /**
          * Defined so that applications can use this name when displaying the value of the extension to the user.
          */
-        protected String_ display;
+        protected StringType display;
 
         /**
          * Identifies the type of context to which the extension applies.
@@ -2766,18 +2836,20 @@ public class Profile extends Resource {
         /**
          * Identifies the types of resource or data type elements to which the extension can be applied.
          */
-        protected List<String_> context = new ArrayList<String_>();
+        protected List<StringType> context = new ArrayList<StringType>();
 
         /**
          * Definition of the extension and its content.
          */
         protected ElementDefinitionComponent definition;
 
+        private static final long serialVersionUID = 39730526L;
+
       public ProfileExtensionDefnComponent() {
         super();
       }
 
-      public ProfileExtensionDefnComponent(Code code, Enumeration<ExtensionContext> contextType, ElementDefinitionComponent definition) {
+      public ProfileExtensionDefnComponent(CodeType code, Enumeration<ExtensionContext> contextType, ElementDefinitionComponent definition) {
         super();
         this.code = code;
         this.contextType = contextType;
@@ -2787,14 +2859,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #code} (A unique code (within the profile) used to identify the extension.)
          */
-        public Code getCode() { 
+        public CodeType getCode() { 
           return this.code;
         }
 
         /**
          * @param value {@link #code} (A unique code (within the profile) used to identify the extension.)
          */
-        public ProfileExtensionDefnComponent setCode(Code value) { 
+        public ProfileExtensionDefnComponent setCode(CodeType value) { 
           this.code = value;
           return this;
         }
@@ -2811,7 +2883,7 @@ public class Profile extends Resource {
          */
         public ProfileExtensionDefnComponent setCodeSimple(String value) { 
             if (this.code == null)
-              this.code = new Code();
+              this.code = new CodeType();
             this.code.setValue(value);
           return this;
         }
@@ -2819,14 +2891,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #display} (Defined so that applications can use this name when displaying the value of the extension to the user.)
          */
-        public String_ getDisplay() { 
+        public StringType getDisplay() { 
           return this.display;
         }
 
         /**
          * @param value {@link #display} (Defined so that applications can use this name when displaying the value of the extension to the user.)
          */
-        public ProfileExtensionDefnComponent setDisplay(String_ value) { 
+        public ProfileExtensionDefnComponent setDisplay(StringType value) { 
           this.display = value;
           return this;
         }
@@ -2846,7 +2918,7 @@ public class Profile extends Resource {
             this.display = null;
           else {
             if (this.display == null)
-              this.display = new String_();
+              this.display = new StringType();
             this.display.setValue(value);
           }
           return this;
@@ -2887,7 +2959,7 @@ public class Profile extends Resource {
         /**
          * @return {@link #context} (Identifies the types of resource or data type elements to which the extension can be applied.)
          */
-        public List<String_> getContext() { 
+        public List<StringType> getContext() { 
           return this.context;
         }
 
@@ -2895,8 +2967,8 @@ public class Profile extends Resource {
         /**
          * @return {@link #context} (Identifies the types of resource or data type elements to which the extension can be applied.)
          */
-        public String_ addContext() { 
-          String_ t = new String_();
+        public StringType addContext() { 
+          StringType t = new StringType();
           this.context.add(t);
           return t;
         }
@@ -2904,11 +2976,21 @@ public class Profile extends Resource {
         /**
          * @param value {@link #context} (Identifies the types of resource or data type elements to which the extension can be applied.)
          */
-        public String_ addContextSimple(String value) { 
-          String_ t = new String_();
+        public StringType addContextSimple(String value) { 
+          StringType t = new StringType();
           t.setValue(value);
           this.context.add(t);
           return t;
+        }
+
+        /**
+         * @param value {@link #context} (Identifies the types of resource or data type elements to which the extension can be applied.)
+         */
+        public boolean hasContextSimple(String value) { 
+          for (StringType v : this.context)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
         }
 
         /**
@@ -2935,15 +3017,15 @@ public class Profile extends Resource {
           childrenList.add(new Property("definition", "@Profile.structure.element.definition", "Definition of the extension and its content.", 0, java.lang.Integer.MAX_VALUE, definition));
         }
 
-      public ProfileExtensionDefnComponent copy(Profile e) {
+      public ProfileExtensionDefnComponent copy() {
         ProfileExtensionDefnComponent dst = new ProfileExtensionDefnComponent();
         dst.code = code == null ? null : code.copy();
         dst.display = display == null ? null : display.copy();
         dst.contextType = contextType == null ? null : contextType.copy();
-        dst.context = new ArrayList<String_>();
-        for (String_ i : context)
+        dst.context = new ArrayList<StringType>();
+        for (StringType i : context)
           dst.context.add(i.copy());
-        dst.definition = definition == null ? null : definition.copy(e);
+        dst.definition = definition == null ? null : definition.copy();
         return dst;
       }
 
@@ -2953,23 +3035,25 @@ public class Profile extends Resource {
         /**
          * The name of a query, which is used in the URI from Conformance statements declaring use of the query.  Typically this will also be the name for the _query parameter when the query is called, though in some cases it may be aliased by a server to avoid collisions.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Description of the query - the functionality it offers, and considerations about how it functions and to use it.
          */
-        protected String_ documentation;
+        protected StringType documentation;
 
         /**
          * A parameter of a named query.
          */
         protected List<ProfileStructureSearchParamComponent> parameter = new ArrayList<ProfileStructureSearchParamComponent>();
 
+        private static final long serialVersionUID = -816827533L;
+
       public ProfileQueryComponent() {
         super();
       }
 
-      public ProfileQueryComponent(String_ name, String_ documentation) {
+      public ProfileQueryComponent(StringType name, StringType documentation) {
         super();
         this.name = name;
         this.documentation = documentation;
@@ -2978,14 +3062,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #name} (The name of a query, which is used in the URI from Conformance statements declaring use of the query.  Typically this will also be the name for the _query parameter when the query is called, though in some cases it may be aliased by a server to avoid collisions.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (The name of a query, which is used in the URI from Conformance statements declaring use of the query.  Typically this will also be the name for the _query parameter when the query is called, though in some cases it may be aliased by a server to avoid collisions.)
          */
-        public ProfileQueryComponent setName(String_ value) { 
+        public ProfileQueryComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -3002,7 +3086,7 @@ public class Profile extends Resource {
          */
         public ProfileQueryComponent setNameSimple(String value) { 
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           return this;
         }
@@ -3010,14 +3094,14 @@ public class Profile extends Resource {
         /**
          * @return {@link #documentation} (Description of the query - the functionality it offers, and considerations about how it functions and to use it.)
          */
-        public String_ getDocumentation() { 
+        public StringType getDocumentation() { 
           return this.documentation;
         }
 
         /**
          * @param value {@link #documentation} (Description of the query - the functionality it offers, and considerations about how it functions and to use it.)
          */
-        public ProfileQueryComponent setDocumentation(String_ value) { 
+        public ProfileQueryComponent setDocumentation(StringType value) { 
           this.documentation = value;
           return this;
         }
@@ -3034,7 +3118,7 @@ public class Profile extends Resource {
          */
         public ProfileQueryComponent setDocumentationSimple(String value) { 
             if (this.documentation == null)
-              this.documentation = new String_();
+              this.documentation = new StringType();
             this.documentation.setValue(value);
           return this;
         }
@@ -3063,13 +3147,13 @@ public class Profile extends Resource {
           childrenList.add(new Property("parameter", "@Profile.structure.searchParam", "A parameter of a named query.", 0, java.lang.Integer.MAX_VALUE, parameter));
         }
 
-      public ProfileQueryComponent copy(Profile e) {
+      public ProfileQueryComponent copy() {
         ProfileQueryComponent dst = new ProfileQueryComponent();
         dst.name = name == null ? null : name.copy();
         dst.documentation = documentation == null ? null : documentation.copy();
         dst.parameter = new ArrayList<ProfileStructureSearchParamComponent>();
         for (ProfileStructureSearchParamComponent i : parameter)
-          dst.parameter.add(i.copy(e));
+          dst.parameter.add(i.copy());
         return dst;
       }
 
@@ -3078,22 +3162,22 @@ public class Profile extends Resource {
     /**
      * The identifier that is used to identify this profile when it is referenced in a specification, model, design or an instance  (should be globally unique OID, UUID, or URI).
      */
-    protected String_ identifier;
+    protected StringType identifier;
 
     /**
      * The identifier that is used to identify this version of the profile when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.
      */
-    protected String_ version;
+    protected StringType version;
 
     /**
      * A free text natural language name identifying the Profile.
      */
-    protected String_ name;
+    protected StringType name;
 
     /**
      * Details of the individual or organization who accepts responsibility for publishing the profile.
      */
-    protected String_ publisher;
+    protected StringType publisher;
 
     /**
      * Contact details to assist a user in finding and communicating with the publisher.
@@ -3103,7 +3187,7 @@ public class Profile extends Resource {
     /**
      * A free text natural language description of the profile and its use.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * A set of terms from external terminologies that may be used to assist with indexing and searching of templates.
@@ -3118,22 +3202,22 @@ public class Profile extends Resource {
     /**
      * This profile was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.
      */
-    protected Boolean experimental;
+    protected BooleanType experimental;
 
     /**
      * The date that this version of the profile was published.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * The Scope and Usage that this profile was created to meet.
      */
-    protected String_ requirements;
+    protected StringType requirements;
 
     /**
      * The version of the FHIR specification on which this profile is based.
      */
-    protected Id fhirVersion;
+    protected IdType fhirVersion;
 
     /**
      * An external specification that the content is mapped to.
@@ -3155,11 +3239,13 @@ public class Profile extends Resource {
      */
     protected List<ProfileQueryComponent> query = new ArrayList<ProfileQueryComponent>();
 
+    private static final long serialVersionUID = 69212962L;
+
     public Profile() {
       super();
     }
 
-    public Profile(String_ name, Enumeration<ResourceProfileStatus> status) {
+    public Profile(StringType name, Enumeration<ResourceProfileStatus> status) {
       super();
       this.name = name;
       this.status = status;
@@ -3168,14 +3254,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #identifier} (The identifier that is used to identify this profile when it is referenced in a specification, model, design or an instance  (should be globally unique OID, UUID, or URI).)
      */
-    public String_ getIdentifier() { 
+    public StringType getIdentifier() { 
       return this.identifier;
     }
 
     /**
      * @param value {@link #identifier} (The identifier that is used to identify this profile when it is referenced in a specification, model, design or an instance  (should be globally unique OID, UUID, or URI).)
      */
-    public Profile setIdentifier(String_ value) { 
+    public Profile setIdentifier(StringType value) { 
       this.identifier = value;
       return this;
     }
@@ -3195,7 +3281,7 @@ public class Profile extends Resource {
         this.identifier = null;
       else {
         if (this.identifier == null)
-          this.identifier = new String_();
+          this.identifier = new StringType();
         this.identifier.setValue(value);
       }
       return this;
@@ -3204,14 +3290,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #version} (The identifier that is used to identify this version of the profile when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.)
      */
-    public String_ getVersion() { 
+    public StringType getVersion() { 
       return this.version;
     }
 
     /**
      * @param value {@link #version} (The identifier that is used to identify this version of the profile when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.)
      */
-    public Profile setVersion(String_ value) { 
+    public Profile setVersion(StringType value) { 
       this.version = value;
       return this;
     }
@@ -3231,7 +3317,7 @@ public class Profile extends Resource {
         this.version = null;
       else {
         if (this.version == null)
-          this.version = new String_();
+          this.version = new StringType();
         this.version.setValue(value);
       }
       return this;
@@ -3240,14 +3326,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #name} (A free text natural language name identifying the Profile.)
      */
-    public String_ getName() { 
+    public StringType getName() { 
       return this.name;
     }
 
     /**
      * @param value {@link #name} (A free text natural language name identifying the Profile.)
      */
-    public Profile setName(String_ value) { 
+    public Profile setName(StringType value) { 
       this.name = value;
       return this;
     }
@@ -3264,7 +3350,7 @@ public class Profile extends Resource {
      */
     public Profile setNameSimple(String value) { 
         if (this.name == null)
-          this.name = new String_();
+          this.name = new StringType();
         this.name.setValue(value);
       return this;
     }
@@ -3272,14 +3358,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #publisher} (Details of the individual or organization who accepts responsibility for publishing the profile.)
      */
-    public String_ getPublisher() { 
+    public StringType getPublisher() { 
       return this.publisher;
     }
 
     /**
      * @param value {@link #publisher} (Details of the individual or organization who accepts responsibility for publishing the profile.)
      */
-    public Profile setPublisher(String_ value) { 
+    public Profile setPublisher(StringType value) { 
       this.publisher = value;
       return this;
     }
@@ -3299,7 +3385,7 @@ public class Profile extends Resource {
         this.publisher = null;
       else {
         if (this.publisher == null)
-          this.publisher = new String_();
+          this.publisher = new StringType();
         this.publisher.setValue(value);
       }
       return this;
@@ -3325,14 +3411,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #description} (A free text natural language description of the profile and its use.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (A free text natural language description of the profile and its use.)
      */
-    public Profile setDescription(String_ value) { 
+    public Profile setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -3352,7 +3438,7 @@ public class Profile extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -3410,14 +3496,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #experimental} (This profile was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.)
      */
-    public Boolean getExperimental() { 
+    public BooleanType getExperimental() { 
       return this.experimental;
     }
 
     /**
      * @param value {@link #experimental} (This profile was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.)
      */
-    public Profile setExperimental(Boolean value) { 
+    public Profile setExperimental(BooleanType value) { 
       this.experimental = value;
       return this;
     }
@@ -3437,7 +3523,7 @@ public class Profile extends Resource {
         this.experimental = null;
       else {
         if (this.experimental == null)
-          this.experimental = new Boolean();
+          this.experimental = new BooleanType();
         this.experimental.setValue(value);
       }
       return this;
@@ -3446,14 +3532,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #date} (The date that this version of the profile was published.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The date that this version of the profile was published.)
      */
-    public Profile setDate(DateTime value) { 
+    public Profile setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -3473,7 +3559,7 @@ public class Profile extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -3482,14 +3568,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #requirements} (The Scope and Usage that this profile was created to meet.)
      */
-    public String_ getRequirements() { 
+    public StringType getRequirements() { 
       return this.requirements;
     }
 
     /**
      * @param value {@link #requirements} (The Scope and Usage that this profile was created to meet.)
      */
-    public Profile setRequirements(String_ value) { 
+    public Profile setRequirements(StringType value) { 
       this.requirements = value;
       return this;
     }
@@ -3509,7 +3595,7 @@ public class Profile extends Resource {
         this.requirements = null;
       else {
         if (this.requirements == null)
-          this.requirements = new String_();
+          this.requirements = new StringType();
         this.requirements.setValue(value);
       }
       return this;
@@ -3518,14 +3604,14 @@ public class Profile extends Resource {
     /**
      * @return {@link #fhirVersion} (The version of the FHIR specification on which this profile is based.)
      */
-    public Id getFhirVersion() { 
+    public IdType getFhirVersion() { 
       return this.fhirVersion;
     }
 
     /**
      * @param value {@link #fhirVersion} (The version of the FHIR specification on which this profile is based.)
      */
-    public Profile setFhirVersion(Id value) { 
+    public Profile setFhirVersion(IdType value) { 
       this.fhirVersion = value;
       return this;
     }
@@ -3545,7 +3631,7 @@ public class Profile extends Resource {
         this.fhirVersion = null;
       else {
         if (this.fhirVersion == null)
-          this.fhirVersion = new Id();
+          this.fhirVersion = new IdType();
         this.fhirVersion.setValue(value);
       }
       return this;
@@ -3659,16 +3745,16 @@ public class Profile extends Resource {
         dst.fhirVersion = fhirVersion == null ? null : fhirVersion.copy();
         dst.mapping = new ArrayList<ProfileMappingComponent>();
         for (ProfileMappingComponent i : mapping)
-          dst.mapping.add(i.copy(dst));
+          dst.mapping.add(i.copy());
         dst.structure = new ArrayList<ProfileStructureComponent>();
         for (ProfileStructureComponent i : structure)
-          dst.structure.add(i.copy(dst));
+          dst.structure.add(i.copy());
         dst.extensionDefn = new ArrayList<ProfileExtensionDefnComponent>();
         for (ProfileExtensionDefnComponent i : extensionDefn)
-          dst.extensionDefn.add(i.copy(dst));
+          dst.extensionDefn.add(i.copy());
         dst.query = new ArrayList<ProfileQueryComponent>();
         for (ProfileQueryComponent i : query)
-          dst.query.add(i.copy(dst));
+          dst.query.add(i.copy());
         return dst;
       }
 

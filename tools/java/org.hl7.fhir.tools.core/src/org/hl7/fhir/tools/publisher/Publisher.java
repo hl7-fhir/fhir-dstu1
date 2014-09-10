@@ -106,6 +106,7 @@ import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.model.AtomEntry;
 import org.hl7.fhir.instance.model.AtomFeed;
 import org.hl7.fhir.instance.model.Code;
+import org.hl7.fhir.instance.model.CodeType;
 import org.hl7.fhir.instance.model.ConceptMap;
 import org.hl7.fhir.instance.model.ConceptMap.ConceptEquivalence;
 import org.hl7.fhir.instance.model.ConceptMap.ConceptMapConceptComponent;
@@ -553,7 +554,7 @@ public class Publisher {
     result.setNameSimple(i.getCode());
     result.setDefinitionSimple("http://hl7.org/fhir/profiles/" + rn);
     result.setTypeSimple(getSearchParamType(i.getType()));
-    result.setDocumentation(Factory.newString_(i.getDescription()));
+    result.setDocumentation(Factory.newString(i.getDescription()));
     i.setXPath(new XPathQueryGenerator(page.getDefinitions(), page, page.getQa()).generateXpath(i.getPaths())); // used elsewhere later
     return result;
   }
@@ -3091,7 +3092,7 @@ public class Publisher {
     // now, finally, we validate the resource ourselves.
     // the build tool validation focuses on codes and identifiers
     List<ValidationMessage> issues = new ArrayList<ValidationMessage>();
-    validator.validateInstance(issues, root);
+    validator.validateInstance(issues, root, null);
     // if (profile != null)
     // validator.validateInstanceByProfile(issues, root, profile);
     boolean abort = false;
@@ -3402,7 +3403,7 @@ public class Publisher {
         cc.setSystemSimple(n);
         for (DefinedCode c : cd.getCodes()) {
           if (n.equals(c.getSystem())) {
-            Code nc = org.hl7.fhir.instance.model.Factory.newCode(c.getCode());
+            CodeType nc = org.hl7.fhir.instance.model.Factory.newCode(c.getCode());
             cc.getCode().add(nc);
             if (!Utilities.noString(c.getComment()))
               ToolingExtensions.addComment(nc, c.getComment());

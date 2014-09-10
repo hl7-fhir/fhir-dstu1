@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -54,14 +54,26 @@ public class Other extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Identifies the patient, practitioner, device or any other resource that is the "focus" of this resoruce.)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * Indicates who was responsible for creating the resource instance.
      */
     protected ResourceReference author;
 
     /**
+     * The actual object that is the target of the reference (Indicates who was responsible for creating the resource instance.)
+     */
+    protected Resource authorTarget;
+
+    /**
      * Identifies when the resource was first created.
      */
-    protected Date created;
+    protected DateType created;
+
+    private static final long serialVersionUID = -1949730420L;
 
     public Other() {
       super();
@@ -120,6 +132,21 @@ public class Other extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Identifies the patient, practitioner, device or any other resource that is the "focus" of this resoruce.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Identifies the patient, practitioner, device or any other resource that is the "focus" of this resoruce.)
+     */
+    public Other setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #author} (Indicates who was responsible for creating the resource instance.)
      */
     public ResourceReference getAuthor() { 
@@ -135,16 +162,31 @@ public class Other extends Resource {
     }
 
     /**
+     * @return {@link #author} (The actual object that is the target of the reference. Indicates who was responsible for creating the resource instance.)
+     */
+    public Resource getAuthorTarget() { 
+      return this.authorTarget;
+    }
+
+    /**
+     * @param value {@link #author} (The actual object that is the target of the reference. Indicates who was responsible for creating the resource instance.)
+     */
+    public Other setAuthorTarget(Resource value) { 
+      this.authorTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #created} (Identifies when the resource was first created.)
      */
-    public Date getCreated() { 
+    public DateType getCreated() { 
       return this.created;
     }
 
     /**
      * @param value {@link #created} (Identifies when the resource was first created.)
      */
-    public Other setCreated(Date value) { 
+    public Other setCreated(DateType value) { 
       this.created = value;
       return this;
     }
@@ -164,7 +206,7 @@ public class Other extends Resource {
         this.created = null;
       else {
         if (this.created == null)
-          this.created = new Date();
+          this.created = new DateType();
         this.created.setValue(value);
       }
       return this;

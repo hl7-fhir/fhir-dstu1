@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -104,38 +104,40 @@ public class Address extends Type {
     /**
      * A full text representation of the address.
      */
-    protected String_ text;
+    protected StringType text;
 
     /**
      * This component contains the house number, apartment number, street name, street direction, 
 P.O. Box number, delivery hints, and similar address information.
      */
-    protected List<String_> line = new ArrayList<String_>();
+    protected List<StringType> line = new ArrayList<StringType>();
 
     /**
      * The name of the city, town, village or other community or delivery center.
      */
-    protected String_ city;
+    protected StringType city;
 
     /**
      * Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).
      */
-    protected String_ state;
+    protected StringType state;
 
     /**
      * A postal code designating a region defined by the postal service.
      */
-    protected String_ zip;
+    protected StringType zip;
 
     /**
      * Country - a nation as commonly understood or generally accepted.
      */
-    protected String_ country;
+    protected StringType country;
 
     /**
      * Time period when address was/is in use.
      */
     protected Period period;
+
+    private static final long serialVersionUID = 1214286881L;
 
     public Address() {
       super();
@@ -180,14 +182,14 @@ P.O. Box number, delivery hints, and similar address information.
     /**
      * @return {@link #text} (A full text representation of the address.)
      */
-    public String_ getText() { 
+    public StringType getText() { 
       return this.text;
     }
 
     /**
      * @param value {@link #text} (A full text representation of the address.)
      */
-    public Address setText(String_ value) { 
+    public Address setText(StringType value) { 
       this.text = value;
       return this;
     }
@@ -207,7 +209,7 @@ P.O. Box number, delivery hints, and similar address information.
         this.text = null;
       else {
         if (this.text == null)
-          this.text = new String_();
+          this.text = new StringType();
         this.text.setValue(value);
       }
       return this;
@@ -217,7 +219,7 @@ P.O. Box number, delivery hints, and similar address information.
      * @return {@link #line} (This component contains the house number, apartment number, street name, street direction, 
 P.O. Box number, delivery hints, and similar address information.)
      */
-    public List<String_> getLine() { 
+    public List<StringType> getLine() { 
       return this.line;
     }
 
@@ -226,8 +228,8 @@ P.O. Box number, delivery hints, and similar address information.)
      * @return {@link #line} (This component contains the house number, apartment number, street name, street direction, 
 P.O. Box number, delivery hints, and similar address information.)
      */
-    public String_ addLine() { 
-      String_ t = new String_();
+    public StringType addLine() { 
+      StringType t = new StringType();
       this.line.add(t);
       return t;
     }
@@ -236,24 +238,35 @@ P.O. Box number, delivery hints, and similar address information.)
      * @param value {@link #line} (This component contains the house number, apartment number, street name, street direction, 
 P.O. Box number, delivery hints, and similar address information.)
      */
-    public String_ addLineSimple(String value) { 
-      String_ t = new String_();
+    public StringType addLineSimple(String value) { 
+      StringType t = new StringType();
       t.setValue(value);
       this.line.add(t);
       return t;
     }
 
     /**
+     * @param value {@link #line} (This component contains the house number, apartment number, street name, street direction, 
+P.O. Box number, delivery hints, and similar address information.)
+     */
+    public boolean hasLineSimple(String value) { 
+      for (StringType v : this.line)
+        if (v.getValue().equals(value))
+          return true;
+      return false;
+    }
+
+    /**
      * @return {@link #city} (The name of the city, town, village or other community or delivery center.)
      */
-    public String_ getCity() { 
+    public StringType getCity() { 
       return this.city;
     }
 
     /**
      * @param value {@link #city} (The name of the city, town, village or other community or delivery center.)
      */
-    public Address setCity(String_ value) { 
+    public Address setCity(StringType value) { 
       this.city = value;
       return this;
     }
@@ -273,7 +286,7 @@ P.O. Box number, delivery hints, and similar address information.)
         this.city = null;
       else {
         if (this.city == null)
-          this.city = new String_();
+          this.city = new StringType();
         this.city.setValue(value);
       }
       return this;
@@ -282,14 +295,14 @@ P.O. Box number, delivery hints, and similar address information.)
     /**
      * @return {@link #state} (Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).)
      */
-    public String_ getState() { 
+    public StringType getState() { 
       return this.state;
     }
 
     /**
      * @param value {@link #state} (Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes).)
      */
-    public Address setState(String_ value) { 
+    public Address setState(StringType value) { 
       this.state = value;
       return this;
     }
@@ -309,7 +322,7 @@ P.O. Box number, delivery hints, and similar address information.)
         this.state = null;
       else {
         if (this.state == null)
-          this.state = new String_();
+          this.state = new StringType();
         this.state.setValue(value);
       }
       return this;
@@ -318,14 +331,14 @@ P.O. Box number, delivery hints, and similar address information.)
     /**
      * @return {@link #zip} (A postal code designating a region defined by the postal service.)
      */
-    public String_ getZip() { 
+    public StringType getZip() { 
       return this.zip;
     }
 
     /**
      * @param value {@link #zip} (A postal code designating a region defined by the postal service.)
      */
-    public Address setZip(String_ value) { 
+    public Address setZip(StringType value) { 
       this.zip = value;
       return this;
     }
@@ -345,7 +358,7 @@ P.O. Box number, delivery hints, and similar address information.)
         this.zip = null;
       else {
         if (this.zip == null)
-          this.zip = new String_();
+          this.zip = new StringType();
         this.zip.setValue(value);
       }
       return this;
@@ -354,14 +367,14 @@ P.O. Box number, delivery hints, and similar address information.)
     /**
      * @return {@link #country} (Country - a nation as commonly understood or generally accepted.)
      */
-    public String_ getCountry() { 
+    public StringType getCountry() { 
       return this.country;
     }
 
     /**
      * @param value {@link #country} (Country - a nation as commonly understood or generally accepted.)
      */
-    public Address setCountry(String_ value) { 
+    public Address setCountry(StringType value) { 
       this.country = value;
       return this;
     }
@@ -381,7 +394,7 @@ P.O. Box number, delivery hints, and similar address information.)
         this.country = null;
       else {
         if (this.country == null)
-          this.country = new String_();
+          this.country = new StringType();
         this.country.setValue(value);
       }
       return this;
@@ -418,8 +431,8 @@ P.O. Box number, delivery hints, and similar address information.)
         Address dst = new Address();
         dst.use = use == null ? null : use.copy();
         dst.text = text == null ? null : text.copy();
-        dst.line = new ArrayList<String_>();
-        for (String_ i : line)
+        dst.line = new ArrayList<StringType>();
+        for (StringType i : line)
           dst.line.add(i.copy());
         dst.city = city == null ? null : city.copy();
         dst.state = state == null ? null : state.copy();

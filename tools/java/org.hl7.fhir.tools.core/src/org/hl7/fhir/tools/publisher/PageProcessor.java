@@ -82,6 +82,7 @@ import org.hl7.fhir.instance.model.ConceptMap;
 import org.hl7.fhir.instance.model.DateAndTime;
 import org.hl7.fhir.instance.model.Profile;
 import org.hl7.fhir.instance.model.Uri;
+import org.hl7.fhir.instance.model.UriType;
 import org.hl7.fhir.instance.model.ValueSet;
 import org.hl7.fhir.instance.model.ValueSet.ConceptSetComponent;
 import org.hl7.fhir.instance.utils.NarrativeGenerator;
@@ -1160,7 +1161,7 @@ public class PageProcessor implements Logger  {
     for (AtomEntry ae : valueSets.values()) {
       ValueSet vs = (ValueSet) ae.getResource();
       if (vs.getCompose() != null) {
-        for (Uri t : vs.getCompose().getImport()) {
+        for (UriType t : vs.getCompose().getImport()) {
           if (t.getValue().equals(vsn)) 
             b.append(" <li>Imported into Valueset <a href=\""+(ae.getLinks().get("path").startsWith("valueset-") ? ae.getLinks().get("path"): "valueset-"+ae.getLinks().get("path"))+"\">"+Utilities.escapeXml(vs.getNameSimple())+"</a></li>");
         }

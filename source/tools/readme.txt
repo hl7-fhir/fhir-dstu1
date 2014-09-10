@@ -9,6 +9,9 @@ Usage: FHIRValidator.jar [source] (-defn [definitions]) (-output [output]) where
 * [source] is a file name or url of the resource or bundle feed to validate
 * [definitions] is the file name or url of the validation pack (validation.zip). Default: get it from hl7.org
 * [output] is a filename for the results (OperationOutcome). Default: results are sent to the std out.
+* [profile] is an optional filename or URL for a specific profile to validate a resource
+    against. In the absence of this parameter, the resource will be checked against the 
+    base specification using the definitions.
 
 Or, you can use the java class directly in the jar. Quick Doco:
 

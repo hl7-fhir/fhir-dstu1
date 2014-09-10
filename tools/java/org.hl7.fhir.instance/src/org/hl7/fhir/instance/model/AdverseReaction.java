@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -215,6 +215,8 @@ public class AdverseReaction extends Resource {
          */
         protected Enumeration<ReactionSeverity> severity;
 
+        private static final long serialVersionUID = -1856198542L;
+
       public AdverseReactionSymptomComponent() {
         super();
       }
@@ -281,7 +283,7 @@ public class AdverseReaction extends Resource {
           childrenList.add(new Property("severity", "code", "The severity of the sign or symptom.", 0, java.lang.Integer.MAX_VALUE, severity));
         }
 
-      public AdverseReactionSymptomComponent copy(AdverseReaction e) {
+      public AdverseReactionSymptomComponent copy() {
         AdverseReactionSymptomComponent dst = new AdverseReactionSymptomComponent();
         dst.code = code == null ? null : code.copy();
         dst.severity = severity == null ? null : severity.copy();
@@ -294,7 +296,7 @@ public class AdverseReaction extends Resource {
         /**
          * Identifies the initial date of the exposure that is suspected to be related to the reaction.
          */
-        protected DateTime date;
+        protected DateTimeType date;
 
         /**
          * The type of exposure: Drug Administration, Immunization, Coincidental.
@@ -311,6 +313,13 @@ public class AdverseReaction extends Resource {
          */
         protected ResourceReference substance;
 
+        /**
+         * The actual object that is the target of the reference (Substance that is presumed to have caused the adverse reaction.)
+         */
+        protected Substance substanceTarget;
+
+        private static final long serialVersionUID = -1829911400L;
+
       public AdverseReactionExposureComponent() {
         super();
       }
@@ -318,14 +327,14 @@ public class AdverseReaction extends Resource {
         /**
          * @return {@link #date} (Identifies the initial date of the exposure that is suspected to be related to the reaction.)
          */
-        public DateTime getDate() { 
+        public DateTimeType getDate() { 
           return this.date;
         }
 
         /**
          * @param value {@link #date} (Identifies the initial date of the exposure that is suspected to be related to the reaction.)
          */
-        public AdverseReactionExposureComponent setDate(DateTime value) { 
+        public AdverseReactionExposureComponent setDate(DateTimeType value) { 
           this.date = value;
           return this;
         }
@@ -345,7 +354,7 @@ public class AdverseReaction extends Resource {
             this.date = null;
           else {
             if (this.date == null)
-              this.date = new DateTime();
+              this.date = new DateTimeType();
             this.date.setValue(value);
           }
           return this;
@@ -438,6 +447,21 @@ public class AdverseReaction extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #substance} (The actual object that is the target of the reference. Substance that is presumed to have caused the adverse reaction.)
+         */
+        public Substance getSubstanceTarget() { 
+          return this.substanceTarget;
+        }
+
+        /**
+         * @param value {@link #substance} (The actual object that is the target of the reference. Substance that is presumed to have caused the adverse reaction.)
+         */
+        public AdverseReactionExposureComponent setSubstanceTarget(Substance value) { 
+          this.substanceTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("date", "dateTime", "Identifies the initial date of the exposure that is suspected to be related to the reaction.", 0, java.lang.Integer.MAX_VALUE, date));
@@ -446,7 +470,7 @@ public class AdverseReaction extends Resource {
           childrenList.add(new Property("substance", "Resource(Substance)", "Substance that is presumed to have caused the adverse reaction.", 0, java.lang.Integer.MAX_VALUE, substance));
         }
 
-      public AdverseReactionExposureComponent copy(AdverseReaction e) {
+      public AdverseReactionExposureComponent copy() {
         AdverseReactionExposureComponent dst = new AdverseReactionExposureComponent();
         dst.date = date == null ? null : date.copy();
         dst.type = type == null ? null : type.copy();
@@ -465,7 +489,7 @@ public class AdverseReaction extends Resource {
     /**
      * The date (and possibly time) when the reaction began.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * The subject of the adverse reaction.
@@ -473,14 +497,24 @@ public class AdverseReaction extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The subject of the adverse reaction.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * If true, indicates that no reaction occurred.
      */
-    protected Boolean didNotOccurFlag;
+    protected BooleanType didNotOccurFlag;
 
     /**
      * Identifies the individual responsible for the information in the reaction record.
      */
     protected ResourceReference recorder;
+
+    /**
+     * The actual object that is the target of the reference (Identifies the individual responsible for the information in the reaction record.)
+     */
+    protected Resource recorderTarget;
 
     /**
      * The signs and symptoms that were observed as part of the reaction.
@@ -492,11 +526,13 @@ public class AdverseReaction extends Resource {
      */
     protected List<AdverseReactionExposureComponent> exposure = new ArrayList<AdverseReactionExposureComponent>();
 
+    private static final long serialVersionUID = -285872214L;
+
     public AdverseReaction() {
       super();
     }
 
-    public AdverseReaction(ResourceReference subject, Boolean didNotOccurFlag) {
+    public AdverseReaction(ResourceReference subject, BooleanType didNotOccurFlag) {
       super();
       this.subject = subject;
       this.didNotOccurFlag = didNotOccurFlag;
@@ -522,14 +558,14 @@ public class AdverseReaction extends Resource {
     /**
      * @return {@link #date} (The date (and possibly time) when the reaction began.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The date (and possibly time) when the reaction began.)
      */
-    public AdverseReaction setDate(DateTime value) { 
+    public AdverseReaction setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -549,7 +585,7 @@ public class AdverseReaction extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -571,16 +607,31 @@ public class AdverseReaction extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The subject of the adverse reaction.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The subject of the adverse reaction.)
+     */
+    public AdverseReaction setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #didNotOccurFlag} (If true, indicates that no reaction occurred.)
      */
-    public Boolean getDidNotOccurFlag() { 
+    public BooleanType getDidNotOccurFlag() { 
       return this.didNotOccurFlag;
     }
 
     /**
      * @param value {@link #didNotOccurFlag} (If true, indicates that no reaction occurred.)
      */
-    public AdverseReaction setDidNotOccurFlag(Boolean value) { 
+    public AdverseReaction setDidNotOccurFlag(BooleanType value) { 
       this.didNotOccurFlag = value;
       return this;
     }
@@ -597,7 +648,7 @@ public class AdverseReaction extends Resource {
      */
     public AdverseReaction setDidNotOccurFlagSimple(boolean value) { 
         if (this.didNotOccurFlag == null)
-          this.didNotOccurFlag = new Boolean();
+          this.didNotOccurFlag = new BooleanType();
         this.didNotOccurFlag.setValue(value);
       return this;
     }
@@ -614,6 +665,21 @@ public class AdverseReaction extends Resource {
      */
     public AdverseReaction setRecorder(ResourceReference value) { 
       this.recorder = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #recorder} (The actual object that is the target of the reference. Identifies the individual responsible for the information in the reaction record.)
+     */
+    public Resource getRecorderTarget() { 
+      return this.recorderTarget;
+    }
+
+    /**
+     * @param value {@link #recorder} (The actual object that is the target of the reference. Identifies the individual responsible for the information in the reaction record.)
+     */
+    public AdverseReaction setRecorderTarget(Resource value) { 
+      this.recorderTarget = value;
       return this;
     }
 
@@ -673,10 +739,10 @@ public class AdverseReaction extends Resource {
         dst.recorder = recorder == null ? null : recorder.copy();
         dst.symptom = new ArrayList<AdverseReactionSymptomComponent>();
         for (AdverseReactionSymptomComponent i : symptom)
-          dst.symptom.add(i.copy(dst));
+          dst.symptom.add(i.copy());
         dst.exposure = new ArrayList<AdverseReactionExposureComponent>();
         for (AdverseReactionExposureComponent i : exposure)
-          dst.exposure.add(i.copy(dst));
+          dst.exposure.add(i.copy());
         return dst;
       }
 

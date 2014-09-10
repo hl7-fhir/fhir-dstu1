@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -190,12 +190,12 @@ public class ConceptMap extends Resource {
         /**
          * System that defines the concept being mapped.
          */
-        protected Uri system;
+        protected UriType system;
 
         /**
          * Identifies concept being mapped.
          */
-        protected Code code;
+        protected CodeType code;
 
         /**
          * A set of additional dependencies for this mapping to hold. This mapping is only applicable if the specified concept can be resolved, and it has the specified value.
@@ -207,11 +207,13 @@ public class ConceptMap extends Resource {
          */
         protected List<ConceptMapConceptMapComponent> map = new ArrayList<ConceptMapConceptMapComponent>();
 
+        private static final long serialVersionUID = 448760663L;
+
       public ConceptMapConceptComponent() {
         super();
       }
 
-      public ConceptMapConceptComponent(Uri system) {
+      public ConceptMapConceptComponent(UriType system) {
         super();
         this.system = system;
       }
@@ -219,14 +221,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #system} (System that defines the concept being mapped.)
          */
-        public Uri getSystem() { 
+        public UriType getSystem() { 
           return this.system;
         }
 
         /**
          * @param value {@link #system} (System that defines the concept being mapped.)
          */
-        public ConceptMapConceptComponent setSystem(Uri value) { 
+        public ConceptMapConceptComponent setSystem(UriType value) { 
           this.system = value;
           return this;
         }
@@ -243,7 +245,7 @@ public class ConceptMap extends Resource {
          */
         public ConceptMapConceptComponent setSystemSimple(String value) { 
             if (this.system == null)
-              this.system = new Uri();
+              this.system = new UriType();
             this.system.setValue(value);
           return this;
         }
@@ -251,14 +253,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #code} (Identifies concept being mapped.)
          */
-        public Code getCode() { 
+        public CodeType getCode() { 
           return this.code;
         }
 
         /**
          * @param value {@link #code} (Identifies concept being mapped.)
          */
-        public ConceptMapConceptComponent setCode(Code value) { 
+        public ConceptMapConceptComponent setCode(CodeType value) { 
           this.code = value;
           return this;
         }
@@ -278,7 +280,7 @@ public class ConceptMap extends Resource {
             this.code = null;
           else {
             if (this.code == null)
-              this.code = new Code();
+              this.code = new CodeType();
             this.code.setValue(value);
           }
           return this;
@@ -326,16 +328,16 @@ public class ConceptMap extends Resource {
           childrenList.add(new Property("map", "", "A concept from the target value set that this concept maps to.", 0, java.lang.Integer.MAX_VALUE, map));
         }
 
-      public ConceptMapConceptComponent copy(ConceptMap e) {
+      public ConceptMapConceptComponent copy() {
         ConceptMapConceptComponent dst = new ConceptMapConceptComponent();
         dst.system = system == null ? null : system.copy();
         dst.code = code == null ? null : code.copy();
         dst.dependsOn = new ArrayList<OtherConceptComponent>();
         for (OtherConceptComponent i : dependsOn)
-          dst.dependsOn.add(i.copy(e));
+          dst.dependsOn.add(i.copy());
         dst.map = new ArrayList<ConceptMapConceptMapComponent>();
         for (ConceptMapConceptMapComponent i : map)
-          dst.map.add(i.copy(e));
+          dst.map.add(i.copy());
         return dst;
       }
 
@@ -345,23 +347,25 @@ public class ConceptMap extends Resource {
         /**
          * A reference to a specific concept that holds a coded value. This can be an element in a FHIR resource, or a specific reference to a data element in a different specification (e.g. v2) or a general reference to a kind of data field, or a reference to a value set with an appropriately narrow definition.
          */
-        protected Uri concept;
+        protected UriType concept;
 
         /**
          * System for a concept in the referenced concept.
          */
-        protected Uri system;
+        protected UriType system;
 
         /**
          * Code for a concept in the referenced concept.
          */
-        protected Code code;
+        protected CodeType code;
+
+        private static final long serialVersionUID = -1863306043L;
 
       public OtherConceptComponent() {
         super();
       }
 
-      public OtherConceptComponent(Uri concept, Uri system, Code code) {
+      public OtherConceptComponent(UriType concept, UriType system, CodeType code) {
         super();
         this.concept = concept;
         this.system = system;
@@ -371,14 +375,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #concept} (A reference to a specific concept that holds a coded value. This can be an element in a FHIR resource, or a specific reference to a data element in a different specification (e.g. v2) or a general reference to a kind of data field, or a reference to a value set with an appropriately narrow definition.)
          */
-        public Uri getConcept() { 
+        public UriType getConcept() { 
           return this.concept;
         }
 
         /**
          * @param value {@link #concept} (A reference to a specific concept that holds a coded value. This can be an element in a FHIR resource, or a specific reference to a data element in a different specification (e.g. v2) or a general reference to a kind of data field, or a reference to a value set with an appropriately narrow definition.)
          */
-        public OtherConceptComponent setConcept(Uri value) { 
+        public OtherConceptComponent setConcept(UriType value) { 
           this.concept = value;
           return this;
         }
@@ -395,7 +399,7 @@ public class ConceptMap extends Resource {
          */
         public OtherConceptComponent setConceptSimple(String value) { 
             if (this.concept == null)
-              this.concept = new Uri();
+              this.concept = new UriType();
             this.concept.setValue(value);
           return this;
         }
@@ -403,14 +407,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #system} (System for a concept in the referenced concept.)
          */
-        public Uri getSystem() { 
+        public UriType getSystem() { 
           return this.system;
         }
 
         /**
          * @param value {@link #system} (System for a concept in the referenced concept.)
          */
-        public OtherConceptComponent setSystem(Uri value) { 
+        public OtherConceptComponent setSystem(UriType value) { 
           this.system = value;
           return this;
         }
@@ -427,7 +431,7 @@ public class ConceptMap extends Resource {
          */
         public OtherConceptComponent setSystemSimple(String value) { 
             if (this.system == null)
-              this.system = new Uri();
+              this.system = new UriType();
             this.system.setValue(value);
           return this;
         }
@@ -435,14 +439,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #code} (Code for a concept in the referenced concept.)
          */
-        public Code getCode() { 
+        public CodeType getCode() { 
           return this.code;
         }
 
         /**
          * @param value {@link #code} (Code for a concept in the referenced concept.)
          */
-        public OtherConceptComponent setCode(Code value) { 
+        public OtherConceptComponent setCode(CodeType value) { 
           this.code = value;
           return this;
         }
@@ -459,7 +463,7 @@ public class ConceptMap extends Resource {
          */
         public OtherConceptComponent setCodeSimple(String value) { 
             if (this.code == null)
-              this.code = new Code();
+              this.code = new CodeType();
             this.code.setValue(value);
           return this;
         }
@@ -471,7 +475,7 @@ public class ConceptMap extends Resource {
           childrenList.add(new Property("code", "code", "Code for a concept in the referenced concept.", 0, java.lang.Integer.MAX_VALUE, code));
         }
 
-      public OtherConceptComponent copy(ConceptMap e) {
+      public OtherConceptComponent copy() {
         OtherConceptComponent dst = new OtherConceptComponent();
         dst.concept = concept == null ? null : concept.copy();
         dst.system = system == null ? null : system.copy();
@@ -485,12 +489,12 @@ public class ConceptMap extends Resource {
         /**
          * System of the target.
          */
-        protected Uri system;
+        protected UriType system;
 
         /**
          * Code that identifies the target concept.
          */
-        protected Code code;
+        protected CodeType code;
 
         /**
          * equal | equivalent | wider | subsumes | narrower | specialises | inexact | unmatched | disjoint.
@@ -500,12 +504,14 @@ public class ConceptMap extends Resource {
         /**
          * Description of status/issues in mapping.
          */
-        protected String_ comments;
+        protected StringType comments;
 
         /**
          * A set of additional outcomes from this mapping to other value sets. To properly execute this mapping, the specified value set must be mapped to some data element or source that is in context. The mapping may still be useful without a place for the additional data elements, but the equivalence cannot be relied on.
          */
         protected List<OtherConceptComponent> product = new ArrayList<OtherConceptComponent>();
+
+        private static final long serialVersionUID = -409087185L;
 
       public ConceptMapConceptMapComponent() {
         super();
@@ -519,14 +525,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #system} (System of the target.)
          */
-        public Uri getSystem() { 
+        public UriType getSystem() { 
           return this.system;
         }
 
         /**
          * @param value {@link #system} (System of the target.)
          */
-        public ConceptMapConceptMapComponent setSystem(Uri value) { 
+        public ConceptMapConceptMapComponent setSystem(UriType value) { 
           this.system = value;
           return this;
         }
@@ -546,7 +552,7 @@ public class ConceptMap extends Resource {
             this.system = null;
           else {
             if (this.system == null)
-              this.system = new Uri();
+              this.system = new UriType();
             this.system.setValue(value);
           }
           return this;
@@ -555,14 +561,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #code} (Code that identifies the target concept.)
          */
-        public Code getCode() { 
+        public CodeType getCode() { 
           return this.code;
         }
 
         /**
          * @param value {@link #code} (Code that identifies the target concept.)
          */
-        public ConceptMapConceptMapComponent setCode(Code value) { 
+        public ConceptMapConceptMapComponent setCode(CodeType value) { 
           this.code = value;
           return this;
         }
@@ -582,7 +588,7 @@ public class ConceptMap extends Resource {
             this.code = null;
           else {
             if (this.code == null)
-              this.code = new Code();
+              this.code = new CodeType();
             this.code.setValue(value);
           }
           return this;
@@ -623,14 +629,14 @@ public class ConceptMap extends Resource {
         /**
          * @return {@link #comments} (Description of status/issues in mapping.)
          */
-        public String_ getComments() { 
+        public StringType getComments() { 
           return this.comments;
         }
 
         /**
          * @param value {@link #comments} (Description of status/issues in mapping.)
          */
-        public ConceptMapConceptMapComponent setComments(String_ value) { 
+        public ConceptMapConceptMapComponent setComments(StringType value) { 
           this.comments = value;
           return this;
         }
@@ -650,7 +656,7 @@ public class ConceptMap extends Resource {
             this.comments = null;
           else {
             if (this.comments == null)
-              this.comments = new String_();
+              this.comments = new StringType();
             this.comments.setValue(value);
           }
           return this;
@@ -682,7 +688,7 @@ public class ConceptMap extends Resource {
           childrenList.add(new Property("product", "@ConceptMap.concept.dependsOn", "A set of additional outcomes from this mapping to other value sets. To properly execute this mapping, the specified value set must be mapped to some data element or source that is in context. The mapping may still be useful without a place for the additional data elements, but the equivalence cannot be relied on.", 0, java.lang.Integer.MAX_VALUE, product));
         }
 
-      public ConceptMapConceptMapComponent copy(ConceptMap e) {
+      public ConceptMapConceptMapComponent copy() {
         ConceptMapConceptMapComponent dst = new ConceptMapConceptMapComponent();
         dst.system = system == null ? null : system.copy();
         dst.code = code == null ? null : code.copy();
@@ -690,7 +696,7 @@ public class ConceptMap extends Resource {
         dst.comments = comments == null ? null : comments.copy();
         dst.product = new ArrayList<OtherConceptComponent>();
         for (OtherConceptComponent i : product)
-          dst.product.add(i.copy(e));
+          dst.product.add(i.copy());
         return dst;
       }
 
@@ -699,22 +705,22 @@ public class ConceptMap extends Resource {
     /**
      * The identifier that is used to identify this concept map when it is referenced in a specification, model, design or an instance (should be globally unique OID, UUID, or URI).
      */
-    protected String_ identifier;
+    protected StringType identifier;
 
     /**
      * The identifier that is used to identify this version of the concept map when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.
      */
-    protected String_ version;
+    protected StringType version;
 
     /**
      * A free text natural language name describing the concept map.
      */
-    protected String_ name;
+    protected StringType name;
 
     /**
      * The name of the individual or organization that published the concept map.
      */
-    protected String_ publisher;
+    protected StringType publisher;
 
     /**
      * Contacts of the publisher to assist a user in finding and communicating with the publisher.
@@ -724,12 +730,12 @@ public class ConceptMap extends Resource {
     /**
      * A free text natural language description of the use of the concept map - reason for definition, conditions of use, etc.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * A copyright statement relating to the concept map and/or its contents.
      */
-    protected String_ copyright;
+    protected StringType copyright;
 
     /**
      * The status of the concept map.
@@ -739,12 +745,12 @@ public class ConceptMap extends Resource {
     /**
      * This ConceptMap was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.
      */
-    protected Boolean experimental;
+    protected BooleanType experimental;
 
     /**
      * The date that the concept map status was last changed.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * The source value set that specifies the concepts that are being mapped.
@@ -752,20 +758,32 @@ public class ConceptMap extends Resource {
     protected ResourceReference source;
 
     /**
+     * The actual object that is the target of the reference (The source value set that specifies the concepts that are being mapped.)
+     */
+    protected ValueSet sourceTarget;
+
+    /**
      * The target value set provides context to the mappings. Note that the mapping is made between concepts, not between value sets, but the value set provides important context about how the concept mapping choices are made.
      */
     protected ResourceReference target;
+
+    /**
+     * The actual object that is the target of the reference (The target value set provides context to the mappings. Note that the mapping is made between concepts, not between value sets, but the value set provides important context about how the concept mapping choices are made.)
+     */
+    protected ValueSet targetTarget;
 
     /**
      * Mappings for a concept from the source valueset.
      */
     protected List<ConceptMapConceptComponent> concept = new ArrayList<ConceptMapConceptComponent>();
 
+    private static final long serialVersionUID = 1257205861L;
+
     public ConceptMap() {
       super();
     }
 
-    public ConceptMap(String_ name, Enumeration<ValuesetStatus> status, ResourceReference source, ResourceReference target) {
+    public ConceptMap(StringType name, Enumeration<ValuesetStatus> status, ResourceReference source, ResourceReference target) {
       super();
       this.name = name;
       this.status = status;
@@ -776,14 +794,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #identifier} (The identifier that is used to identify this concept map when it is referenced in a specification, model, design or an instance (should be globally unique OID, UUID, or URI).)
      */
-    public String_ getIdentifier() { 
+    public StringType getIdentifier() { 
       return this.identifier;
     }
 
     /**
      * @param value {@link #identifier} (The identifier that is used to identify this concept map when it is referenced in a specification, model, design or an instance (should be globally unique OID, UUID, or URI).)
      */
-    public ConceptMap setIdentifier(String_ value) { 
+    public ConceptMap setIdentifier(StringType value) { 
       this.identifier = value;
       return this;
     }
@@ -803,7 +821,7 @@ public class ConceptMap extends Resource {
         this.identifier = null;
       else {
         if (this.identifier == null)
-          this.identifier = new String_();
+          this.identifier = new StringType();
         this.identifier.setValue(value);
       }
       return this;
@@ -812,14 +830,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #version} (The identifier that is used to identify this version of the concept map when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.)
      */
-    public String_ getVersion() { 
+    public StringType getVersion() { 
       return this.version;
     }
 
     /**
      * @param value {@link #version} (The identifier that is used to identify this version of the concept map when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the profile author manually and the value should be a timestamp.)
      */
-    public ConceptMap setVersion(String_ value) { 
+    public ConceptMap setVersion(StringType value) { 
       this.version = value;
       return this;
     }
@@ -839,7 +857,7 @@ public class ConceptMap extends Resource {
         this.version = null;
       else {
         if (this.version == null)
-          this.version = new String_();
+          this.version = new StringType();
         this.version.setValue(value);
       }
       return this;
@@ -848,14 +866,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #name} (A free text natural language name describing the concept map.)
      */
-    public String_ getName() { 
+    public StringType getName() { 
       return this.name;
     }
 
     /**
      * @param value {@link #name} (A free text natural language name describing the concept map.)
      */
-    public ConceptMap setName(String_ value) { 
+    public ConceptMap setName(StringType value) { 
       this.name = value;
       return this;
     }
@@ -872,7 +890,7 @@ public class ConceptMap extends Resource {
      */
     public ConceptMap setNameSimple(String value) { 
         if (this.name == null)
-          this.name = new String_();
+          this.name = new StringType();
         this.name.setValue(value);
       return this;
     }
@@ -880,14 +898,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #publisher} (The name of the individual or organization that published the concept map.)
      */
-    public String_ getPublisher() { 
+    public StringType getPublisher() { 
       return this.publisher;
     }
 
     /**
      * @param value {@link #publisher} (The name of the individual or organization that published the concept map.)
      */
-    public ConceptMap setPublisher(String_ value) { 
+    public ConceptMap setPublisher(StringType value) { 
       this.publisher = value;
       return this;
     }
@@ -907,7 +925,7 @@ public class ConceptMap extends Resource {
         this.publisher = null;
       else {
         if (this.publisher == null)
-          this.publisher = new String_();
+          this.publisher = new StringType();
         this.publisher.setValue(value);
       }
       return this;
@@ -933,14 +951,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #description} (A free text natural language description of the use of the concept map - reason for definition, conditions of use, etc.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (A free text natural language description of the use of the concept map - reason for definition, conditions of use, etc.)
      */
-    public ConceptMap setDescription(String_ value) { 
+    public ConceptMap setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -960,7 +978,7 @@ public class ConceptMap extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -969,14 +987,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #copyright} (A copyright statement relating to the concept map and/or its contents.)
      */
-    public String_ getCopyright() { 
+    public StringType getCopyright() { 
       return this.copyright;
     }
 
     /**
      * @param value {@link #copyright} (A copyright statement relating to the concept map and/or its contents.)
      */
-    public ConceptMap setCopyright(String_ value) { 
+    public ConceptMap setCopyright(StringType value) { 
       this.copyright = value;
       return this;
     }
@@ -996,7 +1014,7 @@ public class ConceptMap extends Resource {
         this.copyright = null;
       else {
         if (this.copyright == null)
-          this.copyright = new String_();
+          this.copyright = new StringType();
         this.copyright.setValue(value);
       }
       return this;
@@ -1037,14 +1055,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #experimental} (This ConceptMap was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.)
      */
-    public Boolean getExperimental() { 
+    public BooleanType getExperimental() { 
       return this.experimental;
     }
 
     /**
      * @param value {@link #experimental} (This ConceptMap was authored for testing purposes (or education/evaluation/marketing), and is not intended to be used for genuine usage.)
      */
-    public ConceptMap setExperimental(Boolean value) { 
+    public ConceptMap setExperimental(BooleanType value) { 
       this.experimental = value;
       return this;
     }
@@ -1064,7 +1082,7 @@ public class ConceptMap extends Resource {
         this.experimental = null;
       else {
         if (this.experimental == null)
-          this.experimental = new Boolean();
+          this.experimental = new BooleanType();
         this.experimental.setValue(value);
       }
       return this;
@@ -1073,14 +1091,14 @@ public class ConceptMap extends Resource {
     /**
      * @return {@link #date} (The date that the concept map status was last changed.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The date that the concept map status was last changed.)
      */
-    public ConceptMap setDate(DateTime value) { 
+    public ConceptMap setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -1100,7 +1118,7 @@ public class ConceptMap extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -1122,6 +1140,21 @@ public class ConceptMap extends Resource {
     }
 
     /**
+     * @return {@link #source} (The actual object that is the target of the reference. The source value set that specifies the concepts that are being mapped.)
+     */
+    public ValueSet getSourceTarget() { 
+      return this.sourceTarget;
+    }
+
+    /**
+     * @param value {@link #source} (The actual object that is the target of the reference. The source value set that specifies the concepts that are being mapped.)
+     */
+    public ConceptMap setSourceTarget(ValueSet value) { 
+      this.sourceTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #target} (The target value set provides context to the mappings. Note that the mapping is made between concepts, not between value sets, but the value set provides important context about how the concept mapping choices are made.)
      */
     public ResourceReference getTarget() { 
@@ -1133,6 +1166,21 @@ public class ConceptMap extends Resource {
      */
     public ConceptMap setTarget(ResourceReference value) { 
       this.target = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #target} (The actual object that is the target of the reference. The target value set provides context to the mappings. Note that the mapping is made between concepts, not between value sets, but the value set provides important context about how the concept mapping choices are made.)
+     */
+    public ValueSet getTargetTarget() { 
+      return this.targetTarget;
+    }
+
+    /**
+     * @param value {@link #target} (The actual object that is the target of the reference. The target value set provides context to the mappings. Note that the mapping is made between concepts, not between value sets, but the value set provides important context about how the concept mapping choices are made.)
+     */
+    public ConceptMap setTargetTarget(ValueSet value) { 
+      this.targetTarget = value;
       return this;
     }
 
@@ -1188,7 +1236,7 @@ public class ConceptMap extends Resource {
         dst.target = target == null ? null : target.copy();
         dst.concept = new ArrayList<ConceptMapConceptComponent>();
         for (ConceptMapConceptComponent i : concept)
-          dst.concept.add(i.copy(dst));
+          dst.concept.add(i.copy());
         return dst;
       }
 

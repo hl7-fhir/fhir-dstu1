@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -48,6 +48,8 @@ public class Immunization extends Resource {
          * Refusal or exemption reasons.
          */
         protected List<CodeableConcept> refusalReason = new ArrayList<CodeableConcept>();
+
+        private static final long serialVersionUID = -945852082L;
 
       public ImmunizationExplanationComponent() {
         super();
@@ -93,7 +95,7 @@ public class Immunization extends Resource {
           childrenList.add(new Property("refusalReason", "CodeableConcept", "Refusal or exemption reasons.", 0, java.lang.Integer.MAX_VALUE, refusalReason));
         }
 
-      public ImmunizationExplanationComponent copy(Immunization e) {
+      public ImmunizationExplanationComponent copy() {
         ImmunizationExplanationComponent dst = new ImmunizationExplanationComponent();
         dst.reason = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : reason)
@@ -110,7 +112,7 @@ public class Immunization extends Resource {
         /**
          * Date of reaction to the immunization.
          */
-        protected DateTime date;
+        protected DateTimeType date;
 
         /**
          * Details of the reaction.
@@ -118,9 +120,16 @@ public class Immunization extends Resource {
         protected ResourceReference detail;
 
         /**
+         * The actual object that is the target of the reference (Details of the reaction.)
+         */
+        protected Resource detailTarget;
+
+        /**
          * Self-reported indicator.
          */
-        protected Boolean reported;
+        protected BooleanType reported;
+
+        private static final long serialVersionUID = -1842660322L;
 
       public ImmunizationReactionComponent() {
         super();
@@ -129,14 +138,14 @@ public class Immunization extends Resource {
         /**
          * @return {@link #date} (Date of reaction to the immunization.)
          */
-        public DateTime getDate() { 
+        public DateTimeType getDate() { 
           return this.date;
         }
 
         /**
          * @param value {@link #date} (Date of reaction to the immunization.)
          */
-        public ImmunizationReactionComponent setDate(DateTime value) { 
+        public ImmunizationReactionComponent setDate(DateTimeType value) { 
           this.date = value;
           return this;
         }
@@ -156,7 +165,7 @@ public class Immunization extends Resource {
             this.date = null;
           else {
             if (this.date == null)
-              this.date = new DateTime();
+              this.date = new DateTimeType();
             this.date.setValue(value);
           }
           return this;
@@ -178,16 +187,31 @@ public class Immunization extends Resource {
         }
 
         /**
+         * @return {@link #detail} (The actual object that is the target of the reference. Details of the reaction.)
+         */
+        public Resource getDetailTarget() { 
+          return this.detailTarget;
+        }
+
+        /**
+         * @param value {@link #detail} (The actual object that is the target of the reference. Details of the reaction.)
+         */
+        public ImmunizationReactionComponent setDetailTarget(Resource value) { 
+          this.detailTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #reported} (Self-reported indicator.)
          */
-        public Boolean getReported() { 
+        public BooleanType getReported() { 
           return this.reported;
         }
 
         /**
          * @param value {@link #reported} (Self-reported indicator.)
          */
-        public ImmunizationReactionComponent setReported(Boolean value) { 
+        public ImmunizationReactionComponent setReported(BooleanType value) { 
           this.reported = value;
           return this;
         }
@@ -207,7 +231,7 @@ public class Immunization extends Resource {
             this.reported = null;
           else {
             if (this.reported == null)
-              this.reported = new Boolean();
+              this.reported = new BooleanType();
             this.reported.setValue(value);
           }
           return this;
@@ -220,7 +244,7 @@ public class Immunization extends Resource {
           childrenList.add(new Property("reported", "boolean", "Self-reported indicator.", 0, java.lang.Integer.MAX_VALUE, reported));
         }
 
-      public ImmunizationReactionComponent copy(Immunization e) {
+      public ImmunizationReactionComponent copy() {
         ImmunizationReactionComponent dst = new ImmunizationReactionComponent();
         dst.date = date == null ? null : date.copy();
         dst.detail = detail == null ? null : detail.copy();
@@ -234,12 +258,12 @@ public class Immunization extends Resource {
         /**
          * Nominal position in a series.
          */
-        protected Integer doseSequence;
+        protected IntegerType doseSequence;
 
         /**
          * Contains the description about the protocol under which the vaccine was administered.
          */
-        protected String_ description;
+        protected StringType description;
 
         /**
          * Indicates the authority who published the protocol?  E.g. ACIP.
@@ -247,14 +271,19 @@ public class Immunization extends Resource {
         protected ResourceReference authority;
 
         /**
+         * The actual object that is the target of the reference (Indicates the authority who published the protocol?  E.g. ACIP.)
+         */
+        protected Organization authorityTarget;
+
+        /**
          * One possible path to achieve presumed immunity against a disease - within the context of an authority.
          */
-        protected String_ series;
+        protected StringType series;
 
         /**
          * The recommended number of doses to achieve immunity.
          */
-        protected Integer seriesDoses;
+        protected IntegerType seriesDoses;
 
         /**
          * The targeted disease.
@@ -271,11 +300,13 @@ public class Immunization extends Resource {
          */
         protected CodeableConcept doseStatusReason;
 
+        private static final long serialVersionUID = -619399794L;
+
       public ImmunizationVaccinationProtocolComponent() {
         super();
       }
 
-      public ImmunizationVaccinationProtocolComponent(Integer doseSequence, CodeableConcept doseTarget, CodeableConcept doseStatus) {
+      public ImmunizationVaccinationProtocolComponent(IntegerType doseSequence, CodeableConcept doseTarget, CodeableConcept doseStatus) {
         super();
         this.doseSequence = doseSequence;
         this.doseTarget = doseTarget;
@@ -285,14 +316,14 @@ public class Immunization extends Resource {
         /**
          * @return {@link #doseSequence} (Nominal position in a series.)
          */
-        public Integer getDoseSequence() { 
+        public IntegerType getDoseSequence() { 
           return this.doseSequence;
         }
 
         /**
          * @param value {@link #doseSequence} (Nominal position in a series.)
          */
-        public ImmunizationVaccinationProtocolComponent setDoseSequence(Integer value) { 
+        public ImmunizationVaccinationProtocolComponent setDoseSequence(IntegerType value) { 
           this.doseSequence = value;
           return this;
         }
@@ -309,7 +340,7 @@ public class Immunization extends Resource {
          */
         public ImmunizationVaccinationProtocolComponent setDoseSequenceSimple(int value) { 
             if (this.doseSequence == null)
-              this.doseSequence = new Integer();
+              this.doseSequence = new IntegerType();
             this.doseSequence.setValue(value);
           return this;
         }
@@ -317,14 +348,14 @@ public class Immunization extends Resource {
         /**
          * @return {@link #description} (Contains the description about the protocol under which the vaccine was administered.)
          */
-        public String_ getDescription() { 
+        public StringType getDescription() { 
           return this.description;
         }
 
         /**
          * @param value {@link #description} (Contains the description about the protocol under which the vaccine was administered.)
          */
-        public ImmunizationVaccinationProtocolComponent setDescription(String_ value) { 
+        public ImmunizationVaccinationProtocolComponent setDescription(StringType value) { 
           this.description = value;
           return this;
         }
@@ -344,7 +375,7 @@ public class Immunization extends Resource {
             this.description = null;
           else {
             if (this.description == null)
-              this.description = new String_();
+              this.description = new StringType();
             this.description.setValue(value);
           }
           return this;
@@ -366,16 +397,31 @@ public class Immunization extends Resource {
         }
 
         /**
+         * @return {@link #authority} (The actual object that is the target of the reference. Indicates the authority who published the protocol?  E.g. ACIP.)
+         */
+        public Organization getAuthorityTarget() { 
+          return this.authorityTarget;
+        }
+
+        /**
+         * @param value {@link #authority} (The actual object that is the target of the reference. Indicates the authority who published the protocol?  E.g. ACIP.)
+         */
+        public ImmunizationVaccinationProtocolComponent setAuthorityTarget(Organization value) { 
+          this.authorityTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #series} (One possible path to achieve presumed immunity against a disease - within the context of an authority.)
          */
-        public String_ getSeries() { 
+        public StringType getSeries() { 
           return this.series;
         }
 
         /**
          * @param value {@link #series} (One possible path to achieve presumed immunity against a disease - within the context of an authority.)
          */
-        public ImmunizationVaccinationProtocolComponent setSeries(String_ value) { 
+        public ImmunizationVaccinationProtocolComponent setSeries(StringType value) { 
           this.series = value;
           return this;
         }
@@ -395,7 +441,7 @@ public class Immunization extends Resource {
             this.series = null;
           else {
             if (this.series == null)
-              this.series = new String_();
+              this.series = new StringType();
             this.series.setValue(value);
           }
           return this;
@@ -404,14 +450,14 @@ public class Immunization extends Resource {
         /**
          * @return {@link #seriesDoses} (The recommended number of doses to achieve immunity.)
          */
-        public Integer getSeriesDoses() { 
+        public IntegerType getSeriesDoses() { 
           return this.seriesDoses;
         }
 
         /**
          * @param value {@link #seriesDoses} (The recommended number of doses to achieve immunity.)
          */
-        public ImmunizationVaccinationProtocolComponent setSeriesDoses(Integer value) { 
+        public ImmunizationVaccinationProtocolComponent setSeriesDoses(IntegerType value) { 
           this.seriesDoses = value;
           return this;
         }
@@ -431,7 +477,7 @@ public class Immunization extends Resource {
             this.seriesDoses = null;
           else {
             if (this.seriesDoses == null)
-              this.seriesDoses = new Integer();
+              this.seriesDoses = new IntegerType();
             this.seriesDoses.setValue(value);
           }
           return this;
@@ -494,7 +540,7 @@ public class Immunization extends Resource {
           childrenList.add(new Property("doseStatusReason", "CodeableConcept", "Provides an explanation as to why a immunization event should or should not count against the protocol.", 0, java.lang.Integer.MAX_VALUE, doseStatusReason));
         }
 
-      public ImmunizationVaccinationProtocolComponent copy(Immunization e) {
+      public ImmunizationVaccinationProtocolComponent copy() {
         ImmunizationVaccinationProtocolComponent dst = new ImmunizationVaccinationProtocolComponent();
         dst.doseSequence = doseSequence == null ? null : doseSequence.copy();
         dst.description = description == null ? null : description.copy();
@@ -517,7 +563,7 @@ public class Immunization extends Resource {
     /**
      * Date vaccine administered or was to be administered.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * Vaccine that was administered or was to be administered.
@@ -530,14 +576,19 @@ public class Immunization extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The patient to whom the vaccine was to be administered.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * Indicates if the vaccination was refused.
      */
-    protected Boolean refusedIndicator;
+    protected BooleanType refusedIndicator;
 
     /**
      * True if this administration was reported rather than directly administered.
      */
-    protected Boolean reported;
+    protected BooleanType reported;
 
     /**
      * Clinician who administered the vaccine.
@@ -545,9 +596,19 @@ public class Immunization extends Resource {
     protected ResourceReference performer;
 
     /**
+     * The actual object that is the target of the reference (Clinician who administered the vaccine.)
+     */
+    protected Practitioner performerTarget;
+
+    /**
      * Clinician who ordered the vaccination.
      */
     protected ResourceReference requester;
+
+    /**
+     * The actual object that is the target of the reference (Clinician who ordered the vaccination.)
+     */
+    protected Practitioner requesterTarget;
 
     /**
      * Name of vaccine manufacturer.
@@ -555,19 +616,29 @@ public class Immunization extends Resource {
     protected ResourceReference manufacturer;
 
     /**
+     * The actual object that is the target of the reference (Name of vaccine manufacturer.)
+     */
+    protected Organization manufacturerTarget;
+
+    /**
      * The service delivery location where the vaccine administration occurred.
      */
     protected ResourceReference location;
 
     /**
+     * The actual object that is the target of the reference (The service delivery location where the vaccine administration occurred.)
+     */
+    protected Location locationTarget;
+
+    /**
      * Lot number of the  vaccine product.
      */
-    protected String_ lotNumber;
+    protected StringType lotNumber;
 
     /**
      * Date vaccine batch expires.
      */
-    protected Date expirationDate;
+    protected DateType expirationDate;
 
     /**
      * Body site where vaccine was administered.
@@ -599,11 +670,13 @@ public class Immunization extends Resource {
      */
     protected List<ImmunizationVaccinationProtocolComponent> vaccinationProtocol = new ArrayList<ImmunizationVaccinationProtocolComponent>();
 
+    private static final long serialVersionUID = 927863190L;
+
     public Immunization() {
       super();
     }
 
-    public Immunization(DateTime date, CodeableConcept vaccineType, ResourceReference subject, Boolean refusedIndicator, Boolean reported) {
+    public Immunization(DateTimeType date, CodeableConcept vaccineType, ResourceReference subject, BooleanType refusedIndicator, BooleanType reported) {
       super();
       this.date = date;
       this.vaccineType = vaccineType;
@@ -632,14 +705,14 @@ public class Immunization extends Resource {
     /**
      * @return {@link #date} (Date vaccine administered or was to be administered.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (Date vaccine administered or was to be administered.)
      */
-    public Immunization setDate(DateTime value) { 
+    public Immunization setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -656,7 +729,7 @@ public class Immunization extends Resource {
      */
     public Immunization setDateSimple(DateAndTime value) { 
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       return this;
     }
@@ -692,16 +765,31 @@ public class Immunization extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The patient to whom the vaccine was to be administered.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The patient to whom the vaccine was to be administered.)
+     */
+    public Immunization setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #refusedIndicator} (Indicates if the vaccination was refused.)
      */
-    public Boolean getRefusedIndicator() { 
+    public BooleanType getRefusedIndicator() { 
       return this.refusedIndicator;
     }
 
     /**
      * @param value {@link #refusedIndicator} (Indicates if the vaccination was refused.)
      */
-    public Immunization setRefusedIndicator(Boolean value) { 
+    public Immunization setRefusedIndicator(BooleanType value) { 
       this.refusedIndicator = value;
       return this;
     }
@@ -718,7 +806,7 @@ public class Immunization extends Resource {
      */
     public Immunization setRefusedIndicatorSimple(boolean value) { 
         if (this.refusedIndicator == null)
-          this.refusedIndicator = new Boolean();
+          this.refusedIndicator = new BooleanType();
         this.refusedIndicator.setValue(value);
       return this;
     }
@@ -726,14 +814,14 @@ public class Immunization extends Resource {
     /**
      * @return {@link #reported} (True if this administration was reported rather than directly administered.)
      */
-    public Boolean getReported() { 
+    public BooleanType getReported() { 
       return this.reported;
     }
 
     /**
      * @param value {@link #reported} (True if this administration was reported rather than directly administered.)
      */
-    public Immunization setReported(Boolean value) { 
+    public Immunization setReported(BooleanType value) { 
       this.reported = value;
       return this;
     }
@@ -750,7 +838,7 @@ public class Immunization extends Resource {
      */
     public Immunization setReportedSimple(boolean value) { 
         if (this.reported == null)
-          this.reported = new Boolean();
+          this.reported = new BooleanType();
         this.reported.setValue(value);
       return this;
     }
@@ -771,6 +859,21 @@ public class Immunization extends Resource {
     }
 
     /**
+     * @return {@link #performer} (The actual object that is the target of the reference. Clinician who administered the vaccine.)
+     */
+    public Practitioner getPerformerTarget() { 
+      return this.performerTarget;
+    }
+
+    /**
+     * @param value {@link #performer} (The actual object that is the target of the reference. Clinician who administered the vaccine.)
+     */
+    public Immunization setPerformerTarget(Practitioner value) { 
+      this.performerTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #requester} (Clinician who ordered the vaccination.)
      */
     public ResourceReference getRequester() { 
@@ -782,6 +885,21 @@ public class Immunization extends Resource {
      */
     public Immunization setRequester(ResourceReference value) { 
       this.requester = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #requester} (The actual object that is the target of the reference. Clinician who ordered the vaccination.)
+     */
+    public Practitioner getRequesterTarget() { 
+      return this.requesterTarget;
+    }
+
+    /**
+     * @param value {@link #requester} (The actual object that is the target of the reference. Clinician who ordered the vaccination.)
+     */
+    public Immunization setRequesterTarget(Practitioner value) { 
+      this.requesterTarget = value;
       return this;
     }
 
@@ -801,6 +919,21 @@ public class Immunization extends Resource {
     }
 
     /**
+     * @return {@link #manufacturer} (The actual object that is the target of the reference. Name of vaccine manufacturer.)
+     */
+    public Organization getManufacturerTarget() { 
+      return this.manufacturerTarget;
+    }
+
+    /**
+     * @param value {@link #manufacturer} (The actual object that is the target of the reference. Name of vaccine manufacturer.)
+     */
+    public Immunization setManufacturerTarget(Organization value) { 
+      this.manufacturerTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #location} (The service delivery location where the vaccine administration occurred.)
      */
     public ResourceReference getLocation() { 
@@ -816,16 +949,31 @@ public class Immunization extends Resource {
     }
 
     /**
+     * @return {@link #location} (The actual object that is the target of the reference. The service delivery location where the vaccine administration occurred.)
+     */
+    public Location getLocationTarget() { 
+      return this.locationTarget;
+    }
+
+    /**
+     * @param value {@link #location} (The actual object that is the target of the reference. The service delivery location where the vaccine administration occurred.)
+     */
+    public Immunization setLocationTarget(Location value) { 
+      this.locationTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #lotNumber} (Lot number of the  vaccine product.)
      */
-    public String_ getLotNumber() { 
+    public StringType getLotNumber() { 
       return this.lotNumber;
     }
 
     /**
      * @param value {@link #lotNumber} (Lot number of the  vaccine product.)
      */
-    public Immunization setLotNumber(String_ value) { 
+    public Immunization setLotNumber(StringType value) { 
       this.lotNumber = value;
       return this;
     }
@@ -845,7 +993,7 @@ public class Immunization extends Resource {
         this.lotNumber = null;
       else {
         if (this.lotNumber == null)
-          this.lotNumber = new String_();
+          this.lotNumber = new StringType();
         this.lotNumber.setValue(value);
       }
       return this;
@@ -854,14 +1002,14 @@ public class Immunization extends Resource {
     /**
      * @return {@link #expirationDate} (Date vaccine batch expires.)
      */
-    public Date getExpirationDate() { 
+    public DateType getExpirationDate() { 
       return this.expirationDate;
     }
 
     /**
      * @param value {@link #expirationDate} (Date vaccine batch expires.)
      */
-    public Immunization setExpirationDate(Date value) { 
+    public Immunization setExpirationDate(DateType value) { 
       this.expirationDate = value;
       return this;
     }
@@ -881,7 +1029,7 @@ public class Immunization extends Resource {
         this.expirationDate = null;
       else {
         if (this.expirationDate == null)
-          this.expirationDate = new Date();
+          this.expirationDate = new DateType();
         this.expirationDate.setValue(value);
       }
       return this;
@@ -1022,13 +1170,13 @@ public class Immunization extends Resource {
         dst.site = site == null ? null : site.copy();
         dst.route = route == null ? null : route.copy();
         dst.doseQuantity = doseQuantity == null ? null : doseQuantity.copy();
-        dst.explanation = explanation == null ? null : explanation.copy(dst);
+        dst.explanation = explanation == null ? null : explanation.copy();
         dst.reaction = new ArrayList<ImmunizationReactionComponent>();
         for (ImmunizationReactionComponent i : reaction)
-          dst.reaction.add(i.copy(dst));
+          dst.reaction.add(i.copy());
         dst.vaccinationProtocol = new ArrayList<ImmunizationVaccinationProtocolComponent>();
         for (ImmunizationVaccinationProtocolComponent i : vaccinationProtocol)
-          dst.vaccinationProtocol.add(i.copy(dst));
+          dst.vaccinationProtocol.add(i.copy());
         return dst;
       }
 

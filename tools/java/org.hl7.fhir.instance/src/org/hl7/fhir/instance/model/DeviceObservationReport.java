@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -48,6 +48,8 @@ public class DeviceObservationReport extends Resource {
          * Groups together physiological measurement data and derived data.
          */
         protected List<DeviceObservationReportVirtualDeviceChannelComponent> channel = new ArrayList<DeviceObservationReportVirtualDeviceChannelComponent>();
+
+        private static final long serialVersionUID = -396624204L;
 
       public DeviceObservationReportVirtualDeviceComponent() {
         super();
@@ -91,12 +93,12 @@ public class DeviceObservationReport extends Resource {
           childrenList.add(new Property("channel", "", "Groups together physiological measurement data and derived data.", 0, java.lang.Integer.MAX_VALUE, channel));
         }
 
-      public DeviceObservationReportVirtualDeviceComponent copy(DeviceObservationReport e) {
+      public DeviceObservationReportVirtualDeviceComponent copy() {
         DeviceObservationReportVirtualDeviceComponent dst = new DeviceObservationReportVirtualDeviceComponent();
         dst.code = code == null ? null : code.copy();
         dst.channel = new ArrayList<DeviceObservationReportVirtualDeviceChannelComponent>();
         for (DeviceObservationReportVirtualDeviceChannelComponent i : channel)
-          dst.channel.add(i.copy(e));
+          dst.channel.add(i.copy());
         return dst;
       }
 
@@ -112,6 +114,8 @@ public class DeviceObservationReport extends Resource {
          * A piece of measured or derived data that is reported by the machine.
          */
         protected List<DeviceObservationReportVirtualDeviceChannelMetricComponent> metric = new ArrayList<DeviceObservationReportVirtualDeviceChannelMetricComponent>();
+
+        private static final long serialVersionUID = 1868788989L;
 
       public DeviceObservationReportVirtualDeviceChannelComponent() {
         super();
@@ -155,12 +159,12 @@ public class DeviceObservationReport extends Resource {
           childrenList.add(new Property("metric", "", "A piece of measured or derived data that is reported by the machine.", 0, java.lang.Integer.MAX_VALUE, metric));
         }
 
-      public DeviceObservationReportVirtualDeviceChannelComponent copy(DeviceObservationReport e) {
+      public DeviceObservationReportVirtualDeviceChannelComponent copy() {
         DeviceObservationReportVirtualDeviceChannelComponent dst = new DeviceObservationReportVirtualDeviceChannelComponent();
         dst.code = code == null ? null : code.copy();
         dst.metric = new ArrayList<DeviceObservationReportVirtualDeviceChannelMetricComponent>();
         for (DeviceObservationReportVirtualDeviceChannelMetricComponent i : metric)
-          dst.metric.add(i.copy(e));
+          dst.metric.add(i.copy());
         return dst;
       }
 
@@ -171,6 +175,13 @@ public class DeviceObservationReport extends Resource {
          * The data for the metric.
          */
         protected ResourceReference observation;
+
+        /**
+         * The actual object that is the target of the reference (The data for the metric.)
+         */
+        protected Observation observationTarget;
+
+        private static final long serialVersionUID = -753705470L;
 
       public DeviceObservationReportVirtualDeviceChannelMetricComponent() {
         super();
@@ -196,12 +207,27 @@ public class DeviceObservationReport extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #observation} (The actual object that is the target of the reference. The data for the metric.)
+         */
+        public Observation getObservationTarget() { 
+          return this.observationTarget;
+        }
+
+        /**
+         * @param value {@link #observation} (The actual object that is the target of the reference. The data for the metric.)
+         */
+        public DeviceObservationReportVirtualDeviceChannelMetricComponent setObservationTarget(Observation value) { 
+          this.observationTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("observation", "Resource(Observation)", "The data for the metric.", 0, java.lang.Integer.MAX_VALUE, observation));
         }
 
-      public DeviceObservationReportVirtualDeviceChannelMetricComponent copy(DeviceObservationReport e) {
+      public DeviceObservationReportVirtualDeviceChannelMetricComponent copy() {
         DeviceObservationReportVirtualDeviceChannelMetricComponent dst = new DeviceObservationReportVirtualDeviceChannelMetricComponent();
         dst.observation = observation == null ? null : observation.copy();
         return dst;
@@ -212,7 +238,7 @@ public class DeviceObservationReport extends Resource {
     /**
      * The point in time that the values are reported.
      */
-    protected Instant instant;
+    protected InstantType instant;
 
     /**
      * An identifier assigned to this observation bu the source device that made the observation.
@@ -225,20 +251,32 @@ public class DeviceObservationReport extends Resource {
     protected ResourceReference source;
 
     /**
+     * The actual object that is the target of the reference (Identification information for the device that is the source of the data.)
+     */
+    protected Device sourceTarget;
+
+    /**
      * The subject of the measurement.
      */
     protected ResourceReference subject;
+
+    /**
+     * The actual object that is the target of the reference (The subject of the measurement.)
+     */
+    protected Resource subjectTarget;
 
     /**
      * A medical-related subsystem of a medical device.
      */
     protected List<DeviceObservationReportVirtualDeviceComponent> virtualDevice = new ArrayList<DeviceObservationReportVirtualDeviceComponent>();
 
+    private static final long serialVersionUID = -1068505466L;
+
     public DeviceObservationReport() {
       super();
     }
 
-    public DeviceObservationReport(Instant instant, ResourceReference source) {
+    public DeviceObservationReport(InstantType instant, ResourceReference source) {
       super();
       this.instant = instant;
       this.source = source;
@@ -247,14 +285,14 @@ public class DeviceObservationReport extends Resource {
     /**
      * @return {@link #instant} (The point in time that the values are reported.)
      */
-    public Instant getInstant() { 
+    public InstantType getInstant() { 
       return this.instant;
     }
 
     /**
      * @param value {@link #instant} (The point in time that the values are reported.)
      */
-    public DeviceObservationReport setInstant(Instant value) { 
+    public DeviceObservationReport setInstant(InstantType value) { 
       this.instant = value;
       return this;
     }
@@ -271,7 +309,7 @@ public class DeviceObservationReport extends Resource {
      */
     public DeviceObservationReport setInstantSimple(DateAndTime value) { 
         if (this.instant == null)
-          this.instant = new Instant();
+          this.instant = new InstantType();
         this.instant.setValue(value);
       return this;
     }
@@ -307,6 +345,21 @@ public class DeviceObservationReport extends Resource {
     }
 
     /**
+     * @return {@link #source} (The actual object that is the target of the reference. Identification information for the device that is the source of the data.)
+     */
+    public Device getSourceTarget() { 
+      return this.sourceTarget;
+    }
+
+    /**
+     * @param value {@link #source} (The actual object that is the target of the reference. Identification information for the device that is the source of the data.)
+     */
+    public DeviceObservationReport setSourceTarget(Device value) { 
+      this.sourceTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #subject} (The subject of the measurement.)
      */
     public ResourceReference getSubject() { 
@@ -318,6 +371,21 @@ public class DeviceObservationReport extends Resource {
      */
     public DeviceObservationReport setSubject(ResourceReference value) { 
       this.subject = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The subject of the measurement.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The subject of the measurement.)
+     */
+    public DeviceObservationReport setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
       return this;
     }
 
@@ -355,7 +423,7 @@ public class DeviceObservationReport extends Resource {
         dst.subject = subject == null ? null : subject.copy();
         dst.virtualDevice = new ArrayList<DeviceObservationReportVirtualDeviceComponent>();
         for (DeviceObservationReportVirtualDeviceComponent i : virtualDevice)
-          dst.virtualDevice.add(i.copy(dst));
+          dst.virtualDevice.add(i.copy());
         return dst;
       }
 

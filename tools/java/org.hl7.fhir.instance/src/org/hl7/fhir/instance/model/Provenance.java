@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -110,18 +110,20 @@ public class Provenance extends Resource {
         /**
          * Identity of participant. May be a logical or physical uri and maybe absolute or relative.
          */
-        protected Uri reference;
+        protected UriType reference;
 
         /**
          * Human-readable description of the participant.
          */
-        protected String_ display;
+        protected StringType display;
+
+        private static final long serialVersionUID = 14713896L;
 
       public ProvenanceAgentComponent() {
         super();
       }
 
-      public ProvenanceAgentComponent(Coding role, Coding type, Uri reference) {
+      public ProvenanceAgentComponent(Coding role, Coding type, UriType reference) {
         super();
         this.role = role;
         this.type = type;
@@ -161,14 +163,14 @@ public class Provenance extends Resource {
         /**
          * @return {@link #reference} (Identity of participant. May be a logical or physical uri and maybe absolute or relative.)
          */
-        public Uri getReference() { 
+        public UriType getReference() { 
           return this.reference;
         }
 
         /**
          * @param value {@link #reference} (Identity of participant. May be a logical or physical uri and maybe absolute or relative.)
          */
-        public ProvenanceAgentComponent setReference(Uri value) { 
+        public ProvenanceAgentComponent setReference(UriType value) { 
           this.reference = value;
           return this;
         }
@@ -185,7 +187,7 @@ public class Provenance extends Resource {
          */
         public ProvenanceAgentComponent setReferenceSimple(String value) { 
             if (this.reference == null)
-              this.reference = new Uri();
+              this.reference = new UriType();
             this.reference.setValue(value);
           return this;
         }
@@ -193,14 +195,14 @@ public class Provenance extends Resource {
         /**
          * @return {@link #display} (Human-readable description of the participant.)
          */
-        public String_ getDisplay() { 
+        public StringType getDisplay() { 
           return this.display;
         }
 
         /**
          * @param value {@link #display} (Human-readable description of the participant.)
          */
-        public ProvenanceAgentComponent setDisplay(String_ value) { 
+        public ProvenanceAgentComponent setDisplay(StringType value) { 
           this.display = value;
           return this;
         }
@@ -220,7 +222,7 @@ public class Provenance extends Resource {
             this.display = null;
           else {
             if (this.display == null)
-              this.display = new String_();
+              this.display = new StringType();
             this.display.setValue(value);
           }
           return this;
@@ -234,7 +236,7 @@ public class Provenance extends Resource {
           childrenList.add(new Property("display", "string", "Human-readable description of the participant.", 0, java.lang.Integer.MAX_VALUE, display));
         }
 
-      public ProvenanceAgentComponent copy(Provenance e) {
+      public ProvenanceAgentComponent copy() {
         ProvenanceAgentComponent dst = new ProvenanceAgentComponent();
         dst.role = role == null ? null : role.copy();
         dst.type = type == null ? null : type.copy();
@@ -259,23 +261,25 @@ public class Provenance extends Resource {
         /**
          * Identity of participant. May be a logical or physical uri and maybe absolute or relative.
          */
-        protected Uri reference;
+        protected UriType reference;
 
         /**
          * Human-readable description of the entity.
          */
-        protected String_ display;
+        protected StringType display;
 
         /**
          * The entity is attributed to an agent to express the agent's responsibility for that entity, possibly along with other agents. This description can be understood as shorthand for saying that the agent was responsible for the activity which generated the entity.
          */
         protected ProvenanceAgentComponent agent;
 
+        private static final long serialVersionUID = 1533729633L;
+
       public ProvenanceEntityComponent() {
         super();
       }
 
-      public ProvenanceEntityComponent(Enumeration<ProvenanceEntityRole> role, Coding type, Uri reference) {
+      public ProvenanceEntityComponent(Enumeration<ProvenanceEntityRole> role, Coding type, UriType reference) {
         super();
         this.role = role;
         this.type = type;
@@ -332,14 +336,14 @@ public class Provenance extends Resource {
         /**
          * @return {@link #reference} (Identity of participant. May be a logical or physical uri and maybe absolute or relative.)
          */
-        public Uri getReference() { 
+        public UriType getReference() { 
           return this.reference;
         }
 
         /**
          * @param value {@link #reference} (Identity of participant. May be a logical or physical uri and maybe absolute or relative.)
          */
-        public ProvenanceEntityComponent setReference(Uri value) { 
+        public ProvenanceEntityComponent setReference(UriType value) { 
           this.reference = value;
           return this;
         }
@@ -356,7 +360,7 @@ public class Provenance extends Resource {
          */
         public ProvenanceEntityComponent setReferenceSimple(String value) { 
             if (this.reference == null)
-              this.reference = new Uri();
+              this.reference = new UriType();
             this.reference.setValue(value);
           return this;
         }
@@ -364,14 +368,14 @@ public class Provenance extends Resource {
         /**
          * @return {@link #display} (Human-readable description of the entity.)
          */
-        public String_ getDisplay() { 
+        public StringType getDisplay() { 
           return this.display;
         }
 
         /**
          * @param value {@link #display} (Human-readable description of the entity.)
          */
-        public ProvenanceEntityComponent setDisplay(String_ value) { 
+        public ProvenanceEntityComponent setDisplay(StringType value) { 
           this.display = value;
           return this;
         }
@@ -391,7 +395,7 @@ public class Provenance extends Resource {
             this.display = null;
           else {
             if (this.display == null)
-              this.display = new String_();
+              this.display = new StringType();
             this.display.setValue(value);
           }
           return this;
@@ -421,13 +425,13 @@ public class Provenance extends Resource {
           childrenList.add(new Property("agent", "@Provenance.agent", "The entity is attributed to an agent to express the agent's responsibility for that entity, possibly along with other agents. This description can be understood as shorthand for saying that the agent was responsible for the activity which generated the entity.", 0, java.lang.Integer.MAX_VALUE, agent));
         }
 
-      public ProvenanceEntityComponent copy(Provenance e) {
+      public ProvenanceEntityComponent copy() {
         ProvenanceEntityComponent dst = new ProvenanceEntityComponent();
         dst.role = role == null ? null : role.copy();
         dst.type = type == null ? null : type.copy();
         dst.reference = reference == null ? null : reference.copy();
         dst.display = display == null ? null : display.copy();
-        dst.agent = agent == null ? null : agent.copy(e);
+        dst.agent = agent == null ? null : agent.copy();
         return dst;
       }
 
@@ -437,6 +441,11 @@ public class Provenance extends Resource {
      * The resource(s) that were generated by  the activity described in this resource. A provenance can point to more than one target if multiple resources were created/updated by the same activity.
      */
     protected List<ResourceReference> target = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (The resource(s) that were generated by  the activity described in this resource. A provenance can point to more than one target if multiple resources were created/updated by the same activity.)
+     */
+    protected List<Resource> targetTarget = new ArrayList<Resource>();
+
 
     /**
      * The period during which the activity occurred.
@@ -446,7 +455,7 @@ public class Provenance extends Resource {
     /**
      * The instant of time at which the activity was recorded.
      */
-    protected Instant recorded;
+    protected InstantType recorded;
 
     /**
      * The reason that the activity was taking place.
@@ -459,9 +468,14 @@ public class Provenance extends Resource {
     protected ResourceReference location;
 
     /**
+     * The actual object that is the target of the reference (Where the activity occurred, if relevant.)
+     */
+    protected Location locationTarget;
+
+    /**
      * Policy or plan the activity was defined by. Typically, a single activity may have multiple applicable policy documents, such as patient consent, guarantor funding, etc.
      */
-    protected List<Uri> policy = new ArrayList<Uri>();
+    protected List<UriType> policy = new ArrayList<UriType>();
 
     /**
      * An agent takes a role in an activity such that the agent can be assigned some degree of responsibility for the activity taking place. An agent can be a person, a piece of software, an inanimate object, an organization, or other entities that may be ascribed responsibility.
@@ -476,13 +490,15 @@ public class Provenance extends Resource {
     /**
      * A digital signature on the target resource(s). The signature should match a Provenance.agent.reference in the provenance resource. The signature is only added to support checking cryptographic integrity of the resource, and not to represent workflow and clinical aspects of the signing process, or to support non-repudiation.
      */
-    protected String_ integritySignature;
+    protected StringType integritySignature;
+
+    private static final long serialVersionUID = -5531531L;
 
     public Provenance() {
       super();
     }
 
-    public Provenance(Instant recorded) {
+    public Provenance(InstantType recorded) {
       super();
       this.recorded = recorded;
     }
@@ -505,6 +521,13 @@ public class Provenance extends Resource {
     }
 
     /**
+     * @return {@link #target} (The actual objects that are the target of the reference. The resource(s) that were generated by  the activity described in this resource. A provenance can point to more than one target if multiple resources were created/updated by the same activity.)
+     */
+    public List<Resource> getTargetTarget() { 
+      return this.targetTarget;
+    }
+
+    /**
      * @return {@link #period} (The period during which the activity occurred.)
      */
     public Period getPeriod() { 
@@ -522,14 +545,14 @@ public class Provenance extends Resource {
     /**
      * @return {@link #recorded} (The instant of time at which the activity was recorded.)
      */
-    public Instant getRecorded() { 
+    public InstantType getRecorded() { 
       return this.recorded;
     }
 
     /**
      * @param value {@link #recorded} (The instant of time at which the activity was recorded.)
      */
-    public Provenance setRecorded(Instant value) { 
+    public Provenance setRecorded(InstantType value) { 
       this.recorded = value;
       return this;
     }
@@ -546,7 +569,7 @@ public class Provenance extends Resource {
      */
     public Provenance setRecordedSimple(DateAndTime value) { 
         if (this.recorded == null)
-          this.recorded = new Instant();
+          this.recorded = new InstantType();
         this.recorded.setValue(value);
       return this;
     }
@@ -582,9 +605,24 @@ public class Provenance extends Resource {
     }
 
     /**
+     * @return {@link #location} (The actual object that is the target of the reference. Where the activity occurred, if relevant.)
+     */
+    public Location getLocationTarget() { 
+      return this.locationTarget;
+    }
+
+    /**
+     * @param value {@link #location} (The actual object that is the target of the reference. Where the activity occurred, if relevant.)
+     */
+    public Provenance setLocationTarget(Location value) { 
+      this.locationTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #policy} (Policy or plan the activity was defined by. Typically, a single activity may have multiple applicable policy documents, such as patient consent, guarantor funding, etc.)
      */
-    public List<Uri> getPolicy() { 
+    public List<UriType> getPolicy() { 
       return this.policy;
     }
 
@@ -592,8 +630,8 @@ public class Provenance extends Resource {
     /**
      * @return {@link #policy} (Policy or plan the activity was defined by. Typically, a single activity may have multiple applicable policy documents, such as patient consent, guarantor funding, etc.)
      */
-    public Uri addPolicy() { 
-      Uri t = new Uri();
+    public UriType addPolicy() { 
+      UriType t = new UriType();
       this.policy.add(t);
       return t;
     }
@@ -601,11 +639,21 @@ public class Provenance extends Resource {
     /**
      * @param value {@link #policy} (Policy or plan the activity was defined by. Typically, a single activity may have multiple applicable policy documents, such as patient consent, guarantor funding, etc.)
      */
-    public Uri addPolicySimple(String value) { 
-      Uri t = new Uri();
+    public UriType addPolicySimple(String value) { 
+      UriType t = new UriType();
       t.setValue(value);
       this.policy.add(t);
       return t;
+    }
+
+    /**
+     * @param value {@link #policy} (Policy or plan the activity was defined by. Typically, a single activity may have multiple applicable policy documents, such as patient consent, guarantor funding, etc.)
+     */
+    public boolean hasPolicySimple(String value) { 
+      for (UriType v : this.policy)
+        if (v.getValue().equals(value))
+          return true;
+      return false;
     }
 
     /**
@@ -645,14 +693,14 @@ public class Provenance extends Resource {
     /**
      * @return {@link #integritySignature} (A digital signature on the target resource(s). The signature should match a Provenance.agent.reference in the provenance resource. The signature is only added to support checking cryptographic integrity of the resource, and not to represent workflow and clinical aspects of the signing process, or to support non-repudiation.)
      */
-    public String_ getIntegritySignature() { 
+    public StringType getIntegritySignature() { 
       return this.integritySignature;
     }
 
     /**
      * @param value {@link #integritySignature} (A digital signature on the target resource(s). The signature should match a Provenance.agent.reference in the provenance resource. The signature is only added to support checking cryptographic integrity of the resource, and not to represent workflow and clinical aspects of the signing process, or to support non-repudiation.)
      */
-    public Provenance setIntegritySignature(String_ value) { 
+    public Provenance setIntegritySignature(StringType value) { 
       this.integritySignature = value;
       return this;
     }
@@ -672,7 +720,7 @@ public class Provenance extends Resource {
         this.integritySignature = null;
       else {
         if (this.integritySignature == null)
-          this.integritySignature = new String_();
+          this.integritySignature = new StringType();
         this.integritySignature.setValue(value);
       }
       return this;
@@ -700,15 +748,15 @@ public class Provenance extends Resource {
         dst.recorded = recorded == null ? null : recorded.copy();
         dst.reason = reason == null ? null : reason.copy();
         dst.location = location == null ? null : location.copy();
-        dst.policy = new ArrayList<Uri>();
-        for (Uri i : policy)
+        dst.policy = new ArrayList<UriType>();
+        for (UriType i : policy)
           dst.policy.add(i.copy());
         dst.agent = new ArrayList<ProvenanceAgentComponent>();
         for (ProvenanceAgentComponent i : agent)
-          dst.agent.add(i.copy(dst));
+          dst.agent.add(i.copy());
         dst.entity = new ArrayList<ProvenanceEntityComponent>();
         for (ProvenanceEntityComponent i : entity)
-          dst.entity.add(i.copy(dst));
+          dst.entity.add(i.copy());
         dst.integritySignature = integritySignature == null ? null : integritySignature.copy();
         return dst;
       }

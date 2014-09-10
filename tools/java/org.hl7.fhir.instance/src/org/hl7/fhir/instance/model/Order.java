@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -48,6 +48,8 @@ public class Order extends Resource {
          * A formal schedule.
          */
         protected Schedule schedule;
+
+        private static final long serialVersionUID = -987281180L;
 
       public OrderWhenComponent() {
         super();
@@ -89,7 +91,7 @@ public class Order extends Resource {
           childrenList.add(new Property("schedule", "Schedule", "A formal schedule.", 0, java.lang.Integer.MAX_VALUE, schedule));
         }
 
-      public OrderWhenComponent copy(Order e) {
+      public OrderWhenComponent copy() {
         OrderWhenComponent dst = new OrderWhenComponent();
         dst.code = code == null ? null : code.copy();
         dst.schedule = schedule == null ? null : schedule.copy();
@@ -106,7 +108,7 @@ public class Order extends Resource {
     /**
      * When the order was made.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * Patient this order is about.
@@ -114,14 +116,29 @@ public class Order extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Patient this order is about.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * Who initiated the order.
      */
     protected ResourceReference source;
 
     /**
+     * The actual object that is the target of the reference (Who initiated the order.)
+     */
+    protected Practitioner sourceTarget;
+
+    /**
      * Who is intended to fulfill the order.
      */
     protected ResourceReference target;
+
+    /**
+     * The actual object that is the target of the reference (Who is intended to fulfill the order.)
+     */
+    protected Resource targetTarget;
 
     /**
      * Text - why the order was made.
@@ -134,6 +151,11 @@ public class Order extends Resource {
     protected ResourceReference authority;
 
     /**
+     * The actual object that is the target of the reference (If required by policy.)
+     */
+    protected Resource authorityTarget;
+
+    /**
      * When order should be fulfilled.
      */
     protected OrderWhenComponent when;
@@ -142,6 +164,13 @@ public class Order extends Resource {
      * What action is being ordered.
      */
     protected List<ResourceReference> detail = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (What action is being ordered.)
+     */
+    protected List<Resource> detailTarget = new ArrayList<Resource>();
+
+
+    private static final long serialVersionUID = 156950294L;
 
     public Order() {
       super();
@@ -167,14 +196,14 @@ public class Order extends Resource {
     /**
      * @return {@link #date} (When the order was made.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (When the order was made.)
      */
-    public Order setDate(DateTime value) { 
+    public Order setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -194,7 +223,7 @@ public class Order extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -216,6 +245,21 @@ public class Order extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Patient this order is about.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Patient this order is about.)
+     */
+    public Order setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #source} (Who initiated the order.)
      */
     public ResourceReference getSource() { 
@@ -231,6 +275,21 @@ public class Order extends Resource {
     }
 
     /**
+     * @return {@link #source} (The actual object that is the target of the reference. Who initiated the order.)
+     */
+    public Practitioner getSourceTarget() { 
+      return this.sourceTarget;
+    }
+
+    /**
+     * @param value {@link #source} (The actual object that is the target of the reference. Who initiated the order.)
+     */
+    public Order setSourceTarget(Practitioner value) { 
+      this.sourceTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #target} (Who is intended to fulfill the order.)
      */
     public ResourceReference getTarget() { 
@@ -242,6 +301,21 @@ public class Order extends Resource {
      */
     public Order setTarget(ResourceReference value) { 
       this.target = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #target} (The actual object that is the target of the reference. Who is intended to fulfill the order.)
+     */
+    public Resource getTargetTarget() { 
+      return this.targetTarget;
+    }
+
+    /**
+     * @param value {@link #target} (The actual object that is the target of the reference. Who is intended to fulfill the order.)
+     */
+    public Order setTargetTarget(Resource value) { 
+      this.targetTarget = value;
       return this;
     }
 
@@ -272,6 +346,21 @@ public class Order extends Resource {
      */
     public Order setAuthority(ResourceReference value) { 
       this.authority = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #authority} (The actual object that is the target of the reference. If required by policy.)
+     */
+    public Resource getAuthorityTarget() { 
+      return this.authorityTarget;
+    }
+
+    /**
+     * @param value {@link #authority} (The actual object that is the target of the reference. If required by policy.)
+     */
+    public Order setAuthorityTarget(Resource value) { 
+      this.authorityTarget = value;
       return this;
     }
 
@@ -307,6 +396,13 @@ public class Order extends Resource {
       return t;
     }
 
+    /**
+     * @return {@link #detail} (The actual objects that are the target of the reference. What action is being ordered.)
+     */
+    public List<Resource> getDetailTarget() { 
+      return this.detailTarget;
+    }
+
       protected void listChildren(List<Property> childrenList) {
         super.listChildren(childrenList);
         childrenList.add(new Property("identifier", "Identifier", "Identifiers assigned to this order by the orderer or by the receiver.", 0, java.lang.Integer.MAX_VALUE, identifier));
@@ -331,7 +427,7 @@ public class Order extends Resource {
         dst.target = target == null ? null : target.copy();
         dst.reason = reason == null ? null : reason.copy();
         dst.authority = authority == null ? null : authority.copy();
-        dst.when = when == null ? null : when.copy(dst);
+        dst.when = when == null ? null : when.copy();
         dst.detail = new ArrayList<ResourceReference>();
         for (ResourceReference i : detail)
           dst.detail.add(i.copy());

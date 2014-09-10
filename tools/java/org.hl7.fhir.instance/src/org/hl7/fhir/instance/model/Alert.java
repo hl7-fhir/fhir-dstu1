@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -109,20 +109,32 @@ public class Alert extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The person who this alert concerns.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * The person or device that created the alert.
      */
     protected ResourceReference author;
 
     /**
+     * The actual object that is the target of the reference (The person or device that created the alert.)
+     */
+    protected Resource authorTarget;
+
+    /**
      * The textual component of the alert to display to the user.
      */
-    protected String_ note;
+    protected StringType note;
+
+    private static final long serialVersionUID = 1816158418L;
 
     public Alert() {
       super();
     }
 
-    public Alert(Enumeration<AlertStatus> status, ResourceReference subject, String_ note) {
+    public Alert(Enumeration<AlertStatus> status, ResourceReference subject, StringType note) {
       super();
       this.status = status;
       this.subject = subject;
@@ -209,6 +221,21 @@ public class Alert extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The person who this alert concerns.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The person who this alert concerns.)
+     */
+    public Alert setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #author} (The person or device that created the alert.)
      */
     public ResourceReference getAuthor() { 
@@ -224,16 +251,31 @@ public class Alert extends Resource {
     }
 
     /**
+     * @return {@link #author} (The actual object that is the target of the reference. The person or device that created the alert.)
+     */
+    public Resource getAuthorTarget() { 
+      return this.authorTarget;
+    }
+
+    /**
+     * @param value {@link #author} (The actual object that is the target of the reference. The person or device that created the alert.)
+     */
+    public Alert setAuthorTarget(Resource value) { 
+      this.authorTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #note} (The textual component of the alert to display to the user.)
      */
-    public String_ getNote() { 
+    public StringType getNote() { 
       return this.note;
     }
 
     /**
      * @param value {@link #note} (The textual component of the alert to display to the user.)
      */
-    public Alert setNote(String_ value) { 
+    public Alert setNote(StringType value) { 
       this.note = value;
       return this;
     }
@@ -250,7 +292,7 @@ public class Alert extends Resource {
      */
     public Alert setNoteSimple(String value) { 
         if (this.note == null)
-          this.note = new String_();
+          this.note = new StringType();
         this.note.setValue(value);
       return this;
     }

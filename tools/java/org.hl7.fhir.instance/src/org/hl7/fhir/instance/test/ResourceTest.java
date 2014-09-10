@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -35,10 +35,9 @@ import java.io.FileOutputStream;
 import org.hl7.fhir.instance.formats.JsonComposer;
 import org.hl7.fhir.instance.formats.JsonParser;
 import org.hl7.fhir.instance.formats.Parser;
+import org.hl7.fhir.instance.formats.ResourceOrFeed;
 import org.hl7.fhir.instance.formats.XmlComposer;
 import org.hl7.fhir.instance.formats.XmlParser;
-import org.hl7.fhir.instance.formats.ResourceOrFeed;
-import org.hl7.fhir.instance.model.Resource;
 
 public class ResourceTest {
 
@@ -80,7 +79,6 @@ public class ResourceTest {
       XmlComposer xml1 = new XmlComposer();
       xml1.compose(out, rf.getResource(), true);
     }
-    
     
   }
 

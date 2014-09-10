@@ -226,4 +226,24 @@ public class SpecificationInternalClient implements FHIRClient {
     throw new Error("fetchFeed not supported by the internal specification client");
   }
 
+  @Override
+  public void initialize(String baseServiceUrl, int recordCount) throws URISyntaxException {
+    throw new Error("initialize not supported by the internal specification client");
+  }
+
+  @Override
+  public int getMaximumRecordCount() {
+    throw new Error("getMaximumRecordCount not supported by the internal specification client");
+  }
+
+  @Override
+  public void setMaximumRecordCount(int recordCount) {
+    throw new Error("setMaximumRecordCount not supported by the internal specification client");
+  }
+
+  @Override
+  public <T extends Resource> AtomFeed history(Class<T> resourceClass) {
+    throw new Error("history not supported by the internal specification client");
+  }
+
 }

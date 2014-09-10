@@ -1,6 +1,7 @@
 package org.hl7.fhir.instance.validation;
+
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -28,6 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -39,7 +41,10 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.hl7.fhir.instance.formats.JsonParser;
 import org.hl7.fhir.instance.formats.XmlComposer;
+import org.hl7.fhir.instance.formats.XmlParser;
+import org.hl7.fhir.instance.model.Profile;
 import org.hl7.fhir.utilities.Utilities;
 
 /**
@@ -64,6 +69,9 @@ public class Validator {
       System.out.println("Usage: FHIRValidator.jar [source] (-defn [definitions]) (-output [output]) (-noxslt) where: ");
       System.out.println("* [source] is a file name or url of the resource or bundle feed to validate");
       System.out.println("* [definitions] is the file name or url of the validation pack (validation.zip). Default: get it from hl7.org");
+      System.out.println("* [profile] is an optional filename or URL for a specific profile to validate a resource");
+      System.out.println("    against. In the absence of this parameter, the resource will be checked against the ");
+      System.out.println("    base specification using the definitions.");
       System.out.println("* [output] is a filename for the results (OperationOutcome). Default: results are sent to the std out.");
       System.out.println("* -noxslt means not to run the schematrons (you really need to run these, but they need xslt2).");
       System.out.println("");
@@ -91,6 +99,8 @@ public class Validator {
             exe.setDefinitions(args[i+1]);
           if (args[i].equals("-output"))
             output = args[i+1];
+          if (args[i].equals("-profile"))
+              exe.setProfile(args[i+1]);
           if (args[i].equals("-noxslt"))
           	exe.engine.setNoSchematron(true);
         }
@@ -113,6 +123,12 @@ public class Validator {
 
 
 
+  private void setProfile(String string) {
+	  this.profile = profile;
+  }
+
+
+
 	private List<ValidationMessage> outputs() {
     return engine.getOutputs();
   }
@@ -127,6 +143,10 @@ public class Validator {
   private String definitions;
   
   /**
+   * A specific profile against which to validate the instance (optional)
+   */
+  private String profile;
+  /**
    * The name of the resource/feed to validate. this can be the actual source as json or xml, a file name, a zip file, 
    * or a url. If the source identifies a collection of resources and/or feeds, they
    * will all be validated
@@ -138,12 +158,36 @@ public class Validator {
 
   public void process() throws Exception {
     byte[] defn = loadDefinitions();
+    if (!Utilities.noString(profile)) 
+        engine.setProfile(readProfile(loadProfile()));
     readDefinitions(engine, defn);
     engine.setSource(loadSource());
     engine.process();
   }
 
- 
+  private Profile readProfile(byte[] content) throws Exception {
+	  try {
+		  XmlParser xml = new XmlParser(true);
+		  return (Profile) xml.parse(new ByteArrayInputStream(content));
+	  } catch (Exception e) {
+		  // well, we'll try again
+		  JsonParser json = new JsonParser();
+		  return (Profile) json.parse(new ByteArrayInputStream(content));
+
+	  }
+  }
+
+  private byte[] loadProfile() throws Exception {
+	  if (Utilities.noString(profile)) {
+		  return null;
+	  } else if (definitions.startsWith("https:") || definitions.startsWith("http:")) {
+		  return loadFromUrl(profile);
+	  } else if (new File(profile).exists()) {
+		  return loadFromFile(profile);      
+	  } else
+		  throw new Exception("Unable to find named profile (source = "+profile+")");
+  }
+
   private void readDefinitions(ValidationEngine engine, byte[] defn) throws Exception {
     ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(defn));
     ZipEntry ze;

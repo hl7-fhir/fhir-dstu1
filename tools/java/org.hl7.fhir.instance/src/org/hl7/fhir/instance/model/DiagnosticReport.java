@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -132,12 +132,19 @@ public class DiagnosticReport extends Resource {
         /**
          * A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.
          */
-        protected String_ comment;
+        protected StringType comment;
 
         /**
          * Reference to the image source.
          */
         protected ResourceReference link;
+
+        /**
+         * The actual object that is the target of the reference (Reference to the image source.)
+         */
+        protected Media linkTarget;
+
+        private static final long serialVersionUID = -910272270L;
 
       public DiagnosticReportImageComponent() {
         super();
@@ -151,14 +158,14 @@ public class DiagnosticReport extends Resource {
         /**
          * @return {@link #comment} (A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.)
          */
-        public String_ getComment() { 
+        public StringType getComment() { 
           return this.comment;
         }
 
         /**
          * @param value {@link #comment} (A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.)
          */
-        public DiagnosticReportImageComponent setComment(String_ value) { 
+        public DiagnosticReportImageComponent setComment(StringType value) { 
           this.comment = value;
           return this;
         }
@@ -178,7 +185,7 @@ public class DiagnosticReport extends Resource {
             this.comment = null;
           else {
             if (this.comment == null)
-              this.comment = new String_();
+              this.comment = new StringType();
             this.comment.setValue(value);
           }
           return this;
@@ -199,13 +206,28 @@ public class DiagnosticReport extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #link} (The actual object that is the target of the reference. Reference to the image source.)
+         */
+        public Media getLinkTarget() { 
+          return this.linkTarget;
+        }
+
+        /**
+         * @param value {@link #link} (The actual object that is the target of the reference. Reference to the image source.)
+         */
+        public DiagnosticReportImageComponent setLinkTarget(Media value) { 
+          this.linkTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("comment", "string", "A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.", 0, java.lang.Integer.MAX_VALUE, comment));
           childrenList.add(new Property("link", "Resource(Media)", "Reference to the image source.", 0, java.lang.Integer.MAX_VALUE, link));
         }
 
-      public DiagnosticReportImageComponent copy(DiagnosticReport e) {
+      public DiagnosticReportImageComponent copy() {
         DiagnosticReportImageComponent dst = new DiagnosticReportImageComponent();
         dst.comment = comment == null ? null : comment.copy();
         dst.link = link == null ? null : link.copy();
@@ -227,7 +249,7 @@ public class DiagnosticReport extends Resource {
     /**
      * The date and/or time that this version of the report was released from the source diagnostic service.
      */
-    protected DateTime issued;
+    protected DateTimeType issued;
 
     /**
      * The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.
@@ -235,9 +257,19 @@ public class DiagnosticReport extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * The diagnostic service that is responsible for issuing the report.
      */
     protected ResourceReference performer;
+
+    /**
+     * The actual object that is the target of the reference (The diagnostic service that is responsible for issuing the report.)
+     */
+    protected Resource performerTarget;
 
     /**
      * The local ID assigned to the report by the order filler, usually by the Information System of the diagnostic service provider.
@@ -248,6 +280,11 @@ public class DiagnosticReport extends Resource {
      * Details concerning a test requested.
      */
     protected List<ResourceReference> requestDetail = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Details concerning a test requested.)
+     */
+    protected List<DiagnosticOrder> requestDetailTarget = new ArrayList<DiagnosticOrder>();
+
 
     /**
      * The section of the diagnostic service that performs the examination e.g. biochemistry, hematology, MRI.
@@ -263,16 +300,31 @@ public class DiagnosticReport extends Resource {
      * Details about the specimens on which this Disagnostic report is based.
      */
     protected List<ResourceReference> specimen = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Details about the specimens on which this Disagnostic report is based.)
+     */
+    protected List<Specimen> specimenTarget = new ArrayList<Specimen>();
+
 
     /**
      * Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. "atomic" results), or they can be grouping observations that include references to other members of the group (e.g. "panels").
      */
     protected List<ResourceReference> result = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. "atomic" results), or they can be grouping observations that include references to other members of the group (e.g. "panels").)
+     */
+    protected List<Observation> resultTarget = new ArrayList<Observation>();
+
 
     /**
      * One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.
      */
     protected List<ResourceReference> imagingStudy = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.)
+     */
+    protected List<ImagingStudy> imagingStudyTarget = new ArrayList<ImagingStudy>();
+
 
     /**
      * A list of key images associated with this report. The images are generally created during the diagnostic process, and may be directly of the patient, or of treated specimens (i.e. slides of interest).
@@ -282,7 +334,7 @@ public class DiagnosticReport extends Resource {
     /**
      * Concise and clinically contextualized narrative interpretation of the diagnostic report.
      */
-    protected String_ conclusion;
+    protected StringType conclusion;
 
     /**
      * Codes for the conclusion.
@@ -294,11 +346,13 @@ public class DiagnosticReport extends Resource {
      */
     protected List<Attachment> presentedForm = new ArrayList<Attachment>();
 
+    private static final long serialVersionUID = -117351753L;
+
     public DiagnosticReport() {
       super();
     }
 
-    public DiagnosticReport(CodeableConcept name, Enumeration<DiagnosticReportStatus> status, DateTime issued, ResourceReference subject, ResourceReference performer, Type diagnostic) {
+    public DiagnosticReport(CodeableConcept name, Enumeration<DiagnosticReportStatus> status, DateTimeType issued, ResourceReference subject, ResourceReference performer, Type diagnostic) {
       super();
       this.name = name;
       this.status = status;
@@ -358,14 +412,14 @@ public class DiagnosticReport extends Resource {
     /**
      * @return {@link #issued} (The date and/or time that this version of the report was released from the source diagnostic service.)
      */
-    public DateTime getIssued() { 
+    public DateTimeType getIssued() { 
       return this.issued;
     }
 
     /**
      * @param value {@link #issued} (The date and/or time that this version of the report was released from the source diagnostic service.)
      */
-    public DiagnosticReport setIssued(DateTime value) { 
+    public DiagnosticReport setIssued(DateTimeType value) { 
       this.issued = value;
       return this;
     }
@@ -382,7 +436,7 @@ public class DiagnosticReport extends Resource {
      */
     public DiagnosticReport setIssuedSimple(DateAndTime value) { 
         if (this.issued == null)
-          this.issued = new DateTime();
+          this.issued = new DateTimeType();
         this.issued.setValue(value);
       return this;
     }
@@ -403,6 +457,21 @@ public class DiagnosticReport extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The subject of the report. Usually, but not always, this is a patient. However diagnostic services also perform analyses on specimens collected from a variety of other sources.)
+     */
+    public DiagnosticReport setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #performer} (The diagnostic service that is responsible for issuing the report.)
      */
     public ResourceReference getPerformer() { 
@@ -414,6 +483,21 @@ public class DiagnosticReport extends Resource {
      */
     public DiagnosticReport setPerformer(ResourceReference value) { 
       this.performer = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #performer} (The actual object that is the target of the reference. The diagnostic service that is responsible for issuing the report.)
+     */
+    public Resource getPerformerTarget() { 
+      return this.performerTarget;
+    }
+
+    /**
+     * @param value {@link #performer} (The actual object that is the target of the reference. The diagnostic service that is responsible for issuing the report.)
+     */
+    public DiagnosticReport setPerformerTarget(Resource value) { 
+      this.performerTarget = value;
       return this;
     }
 
@@ -447,6 +531,23 @@ public class DiagnosticReport extends Resource {
       ResourceReference t = new ResourceReference();
       this.requestDetail.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #requestDetail} (The actual objects that are the target of the reference. Details concerning a test requested.)
+     */
+    public List<DiagnosticOrder> getRequestDetailTarget() { 
+      return this.requestDetailTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #requestDetail} (Add an actual object that is the target of the reference. Details concerning a test requested.)
+     */
+    public DiagnosticOrder addRequestDetailTarget() { 
+      DiagnosticOrder r = new DiagnosticOrder();
+      this.requestDetailTarget.add(r);
+      return r;
     }
 
     /**
@@ -497,6 +598,23 @@ public class DiagnosticReport extends Resource {
     }
 
     /**
+     * @return {@link #specimen} (The actual objects that are the target of the reference. Details about the specimens on which this Disagnostic report is based.)
+     */
+    public List<Specimen> getSpecimenTarget() { 
+      return this.specimenTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #specimen} (Add an actual object that is the target of the reference. Details about the specimens on which this Disagnostic report is based.)
+     */
+    public Specimen addSpecimenTarget() { 
+      Specimen r = new Specimen();
+      this.specimenTarget.add(r);
+      return r;
+    }
+
+    /**
      * @return {@link #result} (Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. "atomic" results), or they can be grouping observations that include references to other members of the group (e.g. "panels").)
      */
     public List<ResourceReference> getResult() { 
@@ -514,6 +632,23 @@ public class DiagnosticReport extends Resource {
     }
 
     /**
+     * @return {@link #result} (The actual objects that are the target of the reference. Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. "atomic" results), or they can be grouping observations that include references to other members of the group (e.g. "panels").)
+     */
+    public List<Observation> getResultTarget() { 
+      return this.resultTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #result} (Add an actual object that is the target of the reference. Observations that are part of this diagnostic report. Observations can be simple name/value pairs (e.g. "atomic" results), or they can be grouping observations that include references to other members of the group (e.g. "panels").)
+     */
+    public Observation addResultTarget() { 
+      Observation r = new Observation();
+      this.resultTarget.add(r);
+      return r;
+    }
+
+    /**
      * @return {@link #imagingStudy} (One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.)
      */
     public List<ResourceReference> getImagingStudy() { 
@@ -528,6 +663,23 @@ public class DiagnosticReport extends Resource {
       ResourceReference t = new ResourceReference();
       this.imagingStudy.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #imagingStudy} (The actual objects that are the target of the reference. One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.)
+     */
+    public List<ImagingStudy> getImagingStudyTarget() { 
+      return this.imagingStudyTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #imagingStudy} (Add an actual object that is the target of the reference. One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.)
+     */
+    public ImagingStudy addImagingStudyTarget() { 
+      ImagingStudy r = new ImagingStudy();
+      this.imagingStudyTarget.add(r);
+      return r;
     }
 
     /**
@@ -550,14 +702,14 @@ public class DiagnosticReport extends Resource {
     /**
      * @return {@link #conclusion} (Concise and clinically contextualized narrative interpretation of the diagnostic report.)
      */
-    public String_ getConclusion() { 
+    public StringType getConclusion() { 
       return this.conclusion;
     }
 
     /**
      * @param value {@link #conclusion} (Concise and clinically contextualized narrative interpretation of the diagnostic report.)
      */
-    public DiagnosticReport setConclusion(String_ value) { 
+    public DiagnosticReport setConclusion(StringType value) { 
       this.conclusion = value;
       return this;
     }
@@ -577,7 +729,7 @@ public class DiagnosticReport extends Resource {
         this.conclusion = null;
       else {
         if (this.conclusion == null)
-          this.conclusion = new String_();
+          this.conclusion = new StringType();
         this.conclusion.setValue(value);
       }
       return this;
@@ -661,7 +813,7 @@ public class DiagnosticReport extends Resource {
           dst.imagingStudy.add(i.copy());
         dst.image = new ArrayList<DiagnosticReportImageComponent>();
         for (DiagnosticReportImageComponent i : image)
-          dst.image.add(i.copy(dst));
+          dst.image.add(i.copy());
         dst.conclusion = conclusion == null ? null : conclusion.copy();
         dst.codedDiagnosis = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : codedDiagnosis)

@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -47,6 +47,11 @@ public class RelatedPerson extends Resource {
      * The patient this person is related to.
      */
     protected ResourceReference patient;
+
+    /**
+     * The actual object that is the target of the reference (The patient this person is related to.)
+     */
+    protected Patient patientTarget;
 
     /**
      * The nature of the relationship between a patient and the related person.
@@ -77,6 +82,8 @@ public class RelatedPerson extends Resource {
      * Image of the person.
      */
     protected List<Attachment> photo = new ArrayList<Attachment>();
+
+    private static final long serialVersionUID = -995377560L;
 
     public RelatedPerson() {
       super();
@@ -116,6 +123,21 @@ public class RelatedPerson extends Resource {
      */
     public RelatedPerson setPatient(ResourceReference value) { 
       this.patient = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #patient} (The actual object that is the target of the reference. The patient this person is related to.)
+     */
+    public Patient getPatientTarget() { 
+      return this.patientTarget;
+    }
+
+    /**
+     * @param value {@link #patient} (The actual object that is the target of the reference. The patient this person is related to.)
+     */
+    public RelatedPerson setPatientTarget(Patient value) { 
+      this.patientTarget = value;
       return this;
     }
 

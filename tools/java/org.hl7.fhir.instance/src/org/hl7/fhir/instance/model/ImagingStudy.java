@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -864,7 +864,7 @@ public class ImagingStudy extends Resource {
         /**
          * The number of this series in the overall sequence.
          */
-        protected Integer number;
+        protected IntegerType number;
 
         /**
          * The modality of this series sequence.
@@ -874,17 +874,17 @@ public class ImagingStudy extends Resource {
         /**
          * Formal identifier for this series.
          */
-        protected Oid uid;
+        protected OidType uid;
 
         /**
          * A description of the series.
          */
-        protected String_ description;
+        protected StringType description;
 
         /**
          * Sequence that contains attributes from the.
          */
-        protected Integer numberOfInstances;
+        protected IntegerType numberOfInstances;
 
         /**
          * Availability of series (online, offline or nearline).
@@ -894,7 +894,7 @@ public class ImagingStudy extends Resource {
         /**
          * WADO-RS URI where Series is available.
          */
-        protected Uri url;
+        protected UriType url;
 
         /**
          * Body part examined. See  DICOM Part 16 Annex L for the mapping from DICOM to Snomed.
@@ -904,18 +904,20 @@ public class ImagingStudy extends Resource {
         /**
          * When the series started.
          */
-        protected DateTime dateTime;
+        protected DateTimeType dateTime;
 
         /**
          * A single image taken from a patient.
          */
         protected List<ImagingStudySeriesInstanceComponent> instance = new ArrayList<ImagingStudySeriesInstanceComponent>();
 
+        private static final long serialVersionUID = 1575647295L;
+
       public ImagingStudySeriesComponent() {
         super();
       }
 
-      public ImagingStudySeriesComponent(Enumeration<Modality> modality, Oid uid, Integer numberOfInstances) {
+      public ImagingStudySeriesComponent(Enumeration<Modality> modality, OidType uid, IntegerType numberOfInstances) {
         super();
         this.modality = modality;
         this.uid = uid;
@@ -925,14 +927,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #number} (The number of this series in the overall sequence.)
          */
-        public Integer getNumber() { 
+        public IntegerType getNumber() { 
           return this.number;
         }
 
         /**
          * @param value {@link #number} (The number of this series in the overall sequence.)
          */
-        public ImagingStudySeriesComponent setNumber(Integer value) { 
+        public ImagingStudySeriesComponent setNumber(IntegerType value) { 
           this.number = value;
           return this;
         }
@@ -952,7 +954,7 @@ public class ImagingStudy extends Resource {
             this.number = null;
           else {
             if (this.number == null)
-              this.number = new Integer();
+              this.number = new IntegerType();
             this.number.setValue(value);
           }
           return this;
@@ -993,14 +995,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #uid} (Formal identifier for this series.)
          */
-        public Oid getUid() { 
+        public OidType getUid() { 
           return this.uid;
         }
 
         /**
          * @param value {@link #uid} (Formal identifier for this series.)
          */
-        public ImagingStudySeriesComponent setUid(Oid value) { 
+        public ImagingStudySeriesComponent setUid(OidType value) { 
           this.uid = value;
           return this;
         }
@@ -1017,7 +1019,7 @@ public class ImagingStudy extends Resource {
          */
         public ImagingStudySeriesComponent setUidSimple(String value) { 
             if (this.uid == null)
-              this.uid = new Oid();
+              this.uid = new OidType();
             this.uid.setValue(value);
           return this;
         }
@@ -1025,14 +1027,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #description} (A description of the series.)
          */
-        public String_ getDescription() { 
+        public StringType getDescription() { 
           return this.description;
         }
 
         /**
          * @param value {@link #description} (A description of the series.)
          */
-        public ImagingStudySeriesComponent setDescription(String_ value) { 
+        public ImagingStudySeriesComponent setDescription(StringType value) { 
           this.description = value;
           return this;
         }
@@ -1052,7 +1054,7 @@ public class ImagingStudy extends Resource {
             this.description = null;
           else {
             if (this.description == null)
-              this.description = new String_();
+              this.description = new StringType();
             this.description.setValue(value);
           }
           return this;
@@ -1061,14 +1063,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #numberOfInstances} (Sequence that contains attributes from the.)
          */
-        public Integer getNumberOfInstances() { 
+        public IntegerType getNumberOfInstances() { 
           return this.numberOfInstances;
         }
 
         /**
          * @param value {@link #numberOfInstances} (Sequence that contains attributes from the.)
          */
-        public ImagingStudySeriesComponent setNumberOfInstances(Integer value) { 
+        public ImagingStudySeriesComponent setNumberOfInstances(IntegerType value) { 
           this.numberOfInstances = value;
           return this;
         }
@@ -1085,7 +1087,7 @@ public class ImagingStudy extends Resource {
          */
         public ImagingStudySeriesComponent setNumberOfInstancesSimple(int value) { 
             if (this.numberOfInstances == null)
-              this.numberOfInstances = new Integer();
+              this.numberOfInstances = new IntegerType();
             this.numberOfInstances.setValue(value);
           return this;
         }
@@ -1129,14 +1131,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #url} (WADO-RS URI where Series is available.)
          */
-        public Uri getUrl() { 
+        public UriType getUrl() { 
           return this.url;
         }
 
         /**
          * @param value {@link #url} (WADO-RS URI where Series is available.)
          */
-        public ImagingStudySeriesComponent setUrl(Uri value) { 
+        public ImagingStudySeriesComponent setUrl(UriType value) { 
           this.url = value;
           return this;
         }
@@ -1156,7 +1158,7 @@ public class ImagingStudy extends Resource {
             this.url = null;
           else {
             if (this.url == null)
-              this.url = new Uri();
+              this.url = new UriType();
             this.url.setValue(value);
           }
           return this;
@@ -1180,14 +1182,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #dateTime} (When the series started.)
          */
-        public DateTime getDateTime() { 
+        public DateTimeType getDateTime() { 
           return this.dateTime;
         }
 
         /**
          * @param value {@link #dateTime} (When the series started.)
          */
-        public ImagingStudySeriesComponent setDateTime(DateTime value) { 
+        public ImagingStudySeriesComponent setDateTime(DateTimeType value) { 
           this.dateTime = value;
           return this;
         }
@@ -1207,7 +1209,7 @@ public class ImagingStudy extends Resource {
             this.dateTime = null;
           else {
             if (this.dateTime == null)
-              this.dateTime = new DateTime();
+              this.dateTime = new DateTimeType();
             this.dateTime.setValue(value);
           }
           return this;
@@ -1244,7 +1246,7 @@ public class ImagingStudy extends Resource {
           childrenList.add(new Property("instance", "", "A single image taken from a patient.", 0, java.lang.Integer.MAX_VALUE, instance));
         }
 
-      public ImagingStudySeriesComponent copy(ImagingStudy e) {
+      public ImagingStudySeriesComponent copy() {
         ImagingStudySeriesComponent dst = new ImagingStudySeriesComponent();
         dst.number = number == null ? null : number.copy();
         dst.modality = modality == null ? null : modality.copy();
@@ -1257,7 +1259,7 @@ public class ImagingStudy extends Resource {
         dst.dateTime = dateTime == null ? null : dateTime.copy();
         dst.instance = new ArrayList<ImagingStudySeriesInstanceComponent>();
         for (ImagingStudySeriesInstanceComponent i : instance)
-          dst.instance.add(i.copy(e));
+          dst.instance.add(i.copy());
         return dst;
       }
 
@@ -1267,43 +1269,50 @@ public class ImagingStudy extends Resource {
         /**
          * The number of this image in the series.
          */
-        protected Integer number;
+        protected IntegerType number;
 
         /**
          * Formal identifier for this image.
          */
-        protected Oid uid;
+        protected OidType uid;
 
         /**
          * DICOM Image type.
          */
-        protected Oid sopclass;
+        protected OidType sopclass;
 
         /**
          * Type of instance (image etc) (0004,1430).
          */
-        protected String_ type;
+        protected StringType type;
 
         /**
          * Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).
          */
-        protected String_ title;
+        protected StringType title;
 
         /**
          * WADO-RS url where image is available.
          */
-        protected Uri url;
+        protected UriType url;
 
         /**
          * A FHIR resource with content for this instance.
          */
         protected ResourceReference attachment;
 
+        /**
+         * The actual object that is the target of the reference (A FHIR resource with content for this instance.)
+         */
+        protected Resource attachmentTarget;
+
+        private static final long serialVersionUID = 1782301410L;
+
       public ImagingStudySeriesInstanceComponent() {
         super();
       }
 
-      public ImagingStudySeriesInstanceComponent(Oid uid, Oid sopclass) {
+      public ImagingStudySeriesInstanceComponent(OidType uid, OidType sopclass) {
         super();
         this.uid = uid;
         this.sopclass = sopclass;
@@ -1312,14 +1321,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #number} (The number of this image in the series.)
          */
-        public Integer getNumber() { 
+        public IntegerType getNumber() { 
           return this.number;
         }
 
         /**
          * @param value {@link #number} (The number of this image in the series.)
          */
-        public ImagingStudySeriesInstanceComponent setNumber(Integer value) { 
+        public ImagingStudySeriesInstanceComponent setNumber(IntegerType value) { 
           this.number = value;
           return this;
         }
@@ -1339,7 +1348,7 @@ public class ImagingStudy extends Resource {
             this.number = null;
           else {
             if (this.number == null)
-              this.number = new Integer();
+              this.number = new IntegerType();
             this.number.setValue(value);
           }
           return this;
@@ -1348,14 +1357,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #uid} (Formal identifier for this image.)
          */
-        public Oid getUid() { 
+        public OidType getUid() { 
           return this.uid;
         }
 
         /**
          * @param value {@link #uid} (Formal identifier for this image.)
          */
-        public ImagingStudySeriesInstanceComponent setUid(Oid value) { 
+        public ImagingStudySeriesInstanceComponent setUid(OidType value) { 
           this.uid = value;
           return this;
         }
@@ -1372,7 +1381,7 @@ public class ImagingStudy extends Resource {
          */
         public ImagingStudySeriesInstanceComponent setUidSimple(String value) { 
             if (this.uid == null)
-              this.uid = new Oid();
+              this.uid = new OidType();
             this.uid.setValue(value);
           return this;
         }
@@ -1380,14 +1389,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #sopclass} (DICOM Image type.)
          */
-        public Oid getSopclass() { 
+        public OidType getSopclass() { 
           return this.sopclass;
         }
 
         /**
          * @param value {@link #sopclass} (DICOM Image type.)
          */
-        public ImagingStudySeriesInstanceComponent setSopclass(Oid value) { 
+        public ImagingStudySeriesInstanceComponent setSopclass(OidType value) { 
           this.sopclass = value;
           return this;
         }
@@ -1404,7 +1413,7 @@ public class ImagingStudy extends Resource {
          */
         public ImagingStudySeriesInstanceComponent setSopclassSimple(String value) { 
             if (this.sopclass == null)
-              this.sopclass = new Oid();
+              this.sopclass = new OidType();
             this.sopclass.setValue(value);
           return this;
         }
@@ -1412,14 +1421,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #type} (Type of instance (image etc) (0004,1430).)
          */
-        public String_ getType() { 
+        public StringType getType() { 
           return this.type;
         }
 
         /**
          * @param value {@link #type} (Type of instance (image etc) (0004,1430).)
          */
-        public ImagingStudySeriesInstanceComponent setType(String_ value) { 
+        public ImagingStudySeriesInstanceComponent setType(StringType value) { 
           this.type = value;
           return this;
         }
@@ -1439,7 +1448,7 @@ public class ImagingStudy extends Resource {
             this.type = null;
           else {
             if (this.type == null)
-              this.type = new String_();
+              this.type = new StringType();
             this.type.setValue(value);
           }
           return this;
@@ -1448,14 +1457,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #title} (Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).)
          */
-        public String_ getTitle() { 
+        public StringType getTitle() { 
           return this.title;
         }
 
         /**
          * @param value {@link #title} (Description (0070,0080 | 0040,A043 > 0008,0104 | 0042,0010 | 0008,0008).)
          */
-        public ImagingStudySeriesInstanceComponent setTitle(String_ value) { 
+        public ImagingStudySeriesInstanceComponent setTitle(StringType value) { 
           this.title = value;
           return this;
         }
@@ -1475,7 +1484,7 @@ public class ImagingStudy extends Resource {
             this.title = null;
           else {
             if (this.title == null)
-              this.title = new String_();
+              this.title = new StringType();
             this.title.setValue(value);
           }
           return this;
@@ -1484,14 +1493,14 @@ public class ImagingStudy extends Resource {
         /**
          * @return {@link #url} (WADO-RS url where image is available.)
          */
-        public Uri getUrl() { 
+        public UriType getUrl() { 
           return this.url;
         }
 
         /**
          * @param value {@link #url} (WADO-RS url where image is available.)
          */
-        public ImagingStudySeriesInstanceComponent setUrl(Uri value) { 
+        public ImagingStudySeriesInstanceComponent setUrl(UriType value) { 
           this.url = value;
           return this;
         }
@@ -1511,7 +1520,7 @@ public class ImagingStudy extends Resource {
             this.url = null;
           else {
             if (this.url == null)
-              this.url = new Uri();
+              this.url = new UriType();
             this.url.setValue(value);
           }
           return this;
@@ -1532,6 +1541,21 @@ public class ImagingStudy extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #attachment} (The actual object that is the target of the reference. A FHIR resource with content for this instance.)
+         */
+        public Resource getAttachmentTarget() { 
+          return this.attachmentTarget;
+        }
+
+        /**
+         * @param value {@link #attachment} (The actual object that is the target of the reference. A FHIR resource with content for this instance.)
+         */
+        public ImagingStudySeriesInstanceComponent setAttachmentTarget(Resource value) { 
+          this.attachmentTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("number", "integer", "The number of this image in the series.", 0, java.lang.Integer.MAX_VALUE, number));
@@ -1543,7 +1567,7 @@ public class ImagingStudy extends Resource {
           childrenList.add(new Property("attachment", "Resource(Any)", "A FHIR resource with content for this instance.", 0, java.lang.Integer.MAX_VALUE, attachment));
         }
 
-      public ImagingStudySeriesInstanceComponent copy(ImagingStudy e) {
+      public ImagingStudySeriesInstanceComponent copy() {
         ImagingStudySeriesInstanceComponent dst = new ImagingStudySeriesInstanceComponent();
         dst.number = number == null ? null : number.copy();
         dst.uid = uid == null ? null : uid.copy();
@@ -1560,7 +1584,7 @@ public class ImagingStudy extends Resource {
     /**
      * Date and Time the study took place.
      */
-    protected DateTime dateTime;
+    protected DateTimeType dateTime;
 
     /**
      * Who the images are of.
@@ -1568,9 +1592,14 @@ public class ImagingStudy extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Who the images are of.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * Formal identifier for the study.
      */
-    protected Oid uid;
+    protected OidType uid;
 
     /**
      * Accession Number.
@@ -1586,6 +1615,11 @@ public class ImagingStudy extends Resource {
      * A list of the diagnostic orders that resulted in this imaging study being performed.
      */
     protected List<ResourceReference> order = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (A list of the diagnostic orders that resulted in this imaging study being performed.)
+     */
+    protected List<DiagnosticOrder> orderTarget = new ArrayList<DiagnosticOrder>();
+
 
     /**
      * A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).
@@ -1598,6 +1632,11 @@ public class ImagingStudy extends Resource {
     protected ResourceReference referrer;
 
     /**
+     * The actual object that is the target of the reference (The requesting/referring physician.)
+     */
+    protected Practitioner referrerTarget;
+
+    /**
      * Availability of study (online, offline or nearline).
      */
     protected Enumeration<InstanceAvailability> availability;
@@ -1605,22 +1644,22 @@ public class ImagingStudy extends Resource {
     /**
      * WADO-RS URI where Study is available.
      */
-    protected Uri url;
+    protected UriType url;
 
     /**
      * Number of Series in Study.
      */
-    protected Integer numberOfSeries;
+    protected IntegerType numberOfSeries;
 
     /**
      * Number of SOP Instances in Study.
      */
-    protected Integer numberOfInstances;
+    protected IntegerType numberOfInstances;
 
     /**
      * Diagnoses etc provided with request.
      */
-    protected String_ clinicalInformation;
+    protected StringType clinicalInformation;
 
     /**
      * Type of procedure performed.
@@ -1633,20 +1672,27 @@ public class ImagingStudy extends Resource {
     protected ResourceReference interpreter;
 
     /**
+     * The actual object that is the target of the reference (Who read study and interpreted the images.)
+     */
+    protected Practitioner interpreterTarget;
+
+    /**
      * Institution-generated description or classification of the Study (component) performed.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * Each study has one or more series of image instances.
      */
     protected List<ImagingStudySeriesComponent> series = new ArrayList<ImagingStudySeriesComponent>();
 
+    private static final long serialVersionUID = -358913729L;
+
     public ImagingStudy() {
       super();
     }
 
-    public ImagingStudy(ResourceReference subject, Oid uid, Integer numberOfSeries, Integer numberOfInstances) {
+    public ImagingStudy(ResourceReference subject, OidType uid, IntegerType numberOfSeries, IntegerType numberOfInstances) {
       super();
       this.subject = subject;
       this.uid = uid;
@@ -1657,14 +1703,14 @@ public class ImagingStudy extends Resource {
     /**
      * @return {@link #dateTime} (Date and Time the study took place.)
      */
-    public DateTime getDateTime() { 
+    public DateTimeType getDateTime() { 
       return this.dateTime;
     }
 
     /**
      * @param value {@link #dateTime} (Date and Time the study took place.)
      */
-    public ImagingStudy setDateTime(DateTime value) { 
+    public ImagingStudy setDateTime(DateTimeType value) { 
       this.dateTime = value;
       return this;
     }
@@ -1684,7 +1730,7 @@ public class ImagingStudy extends Resource {
         this.dateTime = null;
       else {
         if (this.dateTime == null)
-          this.dateTime = new DateTime();
+          this.dateTime = new DateTimeType();
         this.dateTime.setValue(value);
       }
       return this;
@@ -1706,16 +1752,31 @@ public class ImagingStudy extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Who the images are of.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Who the images are of.)
+     */
+    public ImagingStudy setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #uid} (Formal identifier for the study.)
      */
-    public Oid getUid() { 
+    public OidType getUid() { 
       return this.uid;
     }
 
     /**
      * @param value {@link #uid} (Formal identifier for the study.)
      */
-    public ImagingStudy setUid(Oid value) { 
+    public ImagingStudy setUid(OidType value) { 
       this.uid = value;
       return this;
     }
@@ -1732,7 +1793,7 @@ public class ImagingStudy extends Resource {
      */
     public ImagingStudy setUidSimple(String value) { 
         if (this.uid == null)
-          this.uid = new Oid();
+          this.uid = new OidType();
         this.uid.setValue(value);
       return this;
     }
@@ -1787,6 +1848,23 @@ public class ImagingStudy extends Resource {
     }
 
     /**
+     * @return {@link #order} (The actual objects that are the target of the reference. A list of the diagnostic orders that resulted in this imaging study being performed.)
+     */
+    public List<DiagnosticOrder> getOrderTarget() { 
+      return this.orderTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #order} (Add an actual object that is the target of the reference. A list of the diagnostic orders that resulted in this imaging study being performed.)
+     */
+    public DiagnosticOrder addOrderTarget() { 
+      DiagnosticOrder r = new DiagnosticOrder();
+      this.orderTarget.add(r);
+      return r;
+    }
+
+    /**
      * @return {@link #modality} (A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).)
      */
     public List<Enumeration<ImagingModality>> getModality() { 
@@ -1814,6 +1892,16 @@ public class ImagingStudy extends Resource {
     }
 
     /**
+     * @param value {@link #modality} (A list of all the Series.ImageModality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).)
+     */
+    public boolean hasModalitySimple(ImagingModality value) { 
+      for (Enumeration<ImagingModality> v : this.modality)
+        if (v.getValue().equals(value))
+          return true;
+      return false;
+    }
+
+    /**
      * @return {@link #referrer} (The requesting/referring physician.)
      */
     public ResourceReference getReferrer() { 
@@ -1825,6 +1913,21 @@ public class ImagingStudy extends Resource {
      */
     public ImagingStudy setReferrer(ResourceReference value) { 
       this.referrer = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #referrer} (The actual object that is the target of the reference. The requesting/referring physician.)
+     */
+    public Practitioner getReferrerTarget() { 
+      return this.referrerTarget;
+    }
+
+    /**
+     * @param value {@link #referrer} (The actual object that is the target of the reference. The requesting/referring physician.)
+     */
+    public ImagingStudy setReferrerTarget(Practitioner value) { 
+      this.referrerTarget = value;
       return this;
     }
 
@@ -1867,14 +1970,14 @@ public class ImagingStudy extends Resource {
     /**
      * @return {@link #url} (WADO-RS URI where Study is available.)
      */
-    public Uri getUrl() { 
+    public UriType getUrl() { 
       return this.url;
     }
 
     /**
      * @param value {@link #url} (WADO-RS URI where Study is available.)
      */
-    public ImagingStudy setUrl(Uri value) { 
+    public ImagingStudy setUrl(UriType value) { 
       this.url = value;
       return this;
     }
@@ -1894,7 +1997,7 @@ public class ImagingStudy extends Resource {
         this.url = null;
       else {
         if (this.url == null)
-          this.url = new Uri();
+          this.url = new UriType();
         this.url.setValue(value);
       }
       return this;
@@ -1903,14 +2006,14 @@ public class ImagingStudy extends Resource {
     /**
      * @return {@link #numberOfSeries} (Number of Series in Study.)
      */
-    public Integer getNumberOfSeries() { 
+    public IntegerType getNumberOfSeries() { 
       return this.numberOfSeries;
     }
 
     /**
      * @param value {@link #numberOfSeries} (Number of Series in Study.)
      */
-    public ImagingStudy setNumberOfSeries(Integer value) { 
+    public ImagingStudy setNumberOfSeries(IntegerType value) { 
       this.numberOfSeries = value;
       return this;
     }
@@ -1927,7 +2030,7 @@ public class ImagingStudy extends Resource {
      */
     public ImagingStudy setNumberOfSeriesSimple(int value) { 
         if (this.numberOfSeries == null)
-          this.numberOfSeries = new Integer();
+          this.numberOfSeries = new IntegerType();
         this.numberOfSeries.setValue(value);
       return this;
     }
@@ -1935,14 +2038,14 @@ public class ImagingStudy extends Resource {
     /**
      * @return {@link #numberOfInstances} (Number of SOP Instances in Study.)
      */
-    public Integer getNumberOfInstances() { 
+    public IntegerType getNumberOfInstances() { 
       return this.numberOfInstances;
     }
 
     /**
      * @param value {@link #numberOfInstances} (Number of SOP Instances in Study.)
      */
-    public ImagingStudy setNumberOfInstances(Integer value) { 
+    public ImagingStudy setNumberOfInstances(IntegerType value) { 
       this.numberOfInstances = value;
       return this;
     }
@@ -1959,7 +2062,7 @@ public class ImagingStudy extends Resource {
      */
     public ImagingStudy setNumberOfInstancesSimple(int value) { 
         if (this.numberOfInstances == null)
-          this.numberOfInstances = new Integer();
+          this.numberOfInstances = new IntegerType();
         this.numberOfInstances.setValue(value);
       return this;
     }
@@ -1967,14 +2070,14 @@ public class ImagingStudy extends Resource {
     /**
      * @return {@link #clinicalInformation} (Diagnoses etc provided with request.)
      */
-    public String_ getClinicalInformation() { 
+    public StringType getClinicalInformation() { 
       return this.clinicalInformation;
     }
 
     /**
      * @param value {@link #clinicalInformation} (Diagnoses etc provided with request.)
      */
-    public ImagingStudy setClinicalInformation(String_ value) { 
+    public ImagingStudy setClinicalInformation(StringType value) { 
       this.clinicalInformation = value;
       return this;
     }
@@ -1994,7 +2097,7 @@ public class ImagingStudy extends Resource {
         this.clinicalInformation = null;
       else {
         if (this.clinicalInformation == null)
-          this.clinicalInformation = new String_();
+          this.clinicalInformation = new StringType();
         this.clinicalInformation.setValue(value);
       }
       return this;
@@ -2033,16 +2136,31 @@ public class ImagingStudy extends Resource {
     }
 
     /**
+     * @return {@link #interpreter} (The actual object that is the target of the reference. Who read study and interpreted the images.)
+     */
+    public Practitioner getInterpreterTarget() { 
+      return this.interpreterTarget;
+    }
+
+    /**
+     * @param value {@link #interpreter} (The actual object that is the target of the reference. Who read study and interpreted the images.)
+     */
+    public ImagingStudy setInterpreterTarget(Practitioner value) { 
+      this.interpreterTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #description} (Institution-generated description or classification of the Study (component) performed.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (Institution-generated description or classification of the Study (component) performed.)
      */
-    public ImagingStudy setDescription(String_ value) { 
+    public ImagingStudy setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -2062,7 +2180,7 @@ public class ImagingStudy extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -2134,7 +2252,7 @@ public class ImagingStudy extends Resource {
         dst.description = description == null ? null : description.copy();
         dst.series = new ArrayList<ImagingStudySeriesComponent>();
         for (ImagingStudySeriesComponent i : series)
-          dst.series.add(i.copy(dst));
+          dst.series.add(i.copy());
         return dst;
       }
 

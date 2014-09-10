@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -121,17 +121,22 @@ public class Questionnaire extends Resource {
         /**
          * Text that is displayed above the contents of the group.
          */
-        protected String_ header;
+        protected StringType header;
 
         /**
          * Additional text for the group, used for display purposes.
          */
-        protected String_ text;
+        protected StringType text;
 
         /**
          * More specific subject this section's answers are about, details the subject given in Questionnaire.
          */
         protected ResourceReference subject;
+
+        /**
+         * The actual object that is the target of the reference (More specific subject this section's answers are about, details the subject given in Questionnaire.)
+         */
+        protected Resource subjectTarget;
 
         /**
          * A sub-group within a group. The ordering of groups within this group is relevant.
@@ -142,6 +147,8 @@ public class Questionnaire extends Resource {
          * Set of questions within this group. The order of questions within the group is relevant.
          */
         protected List<QuestionComponent> question = new ArrayList<QuestionComponent>();
+
+        private static final long serialVersionUID = -2079376999L;
 
       public GroupComponent() {
         super();
@@ -165,14 +172,14 @@ public class Questionnaire extends Resource {
         /**
          * @return {@link #header} (Text that is displayed above the contents of the group.)
          */
-        public String_ getHeader() { 
+        public StringType getHeader() { 
           return this.header;
         }
 
         /**
          * @param value {@link #header} (Text that is displayed above the contents of the group.)
          */
-        public GroupComponent setHeader(String_ value) { 
+        public GroupComponent setHeader(StringType value) { 
           this.header = value;
           return this;
         }
@@ -192,7 +199,7 @@ public class Questionnaire extends Resource {
             this.header = null;
           else {
             if (this.header == null)
-              this.header = new String_();
+              this.header = new StringType();
             this.header.setValue(value);
           }
           return this;
@@ -201,14 +208,14 @@ public class Questionnaire extends Resource {
         /**
          * @return {@link #text} (Additional text for the group, used for display purposes.)
          */
-        public String_ getText() { 
+        public StringType getText() { 
           return this.text;
         }
 
         /**
          * @param value {@link #text} (Additional text for the group, used for display purposes.)
          */
-        public GroupComponent setText(String_ value) { 
+        public GroupComponent setText(StringType value) { 
           this.text = value;
           return this;
         }
@@ -228,7 +235,7 @@ public class Questionnaire extends Resource {
             this.text = null;
           else {
             if (this.text == null)
-              this.text = new String_();
+              this.text = new StringType();
             this.text.setValue(value);
           }
           return this;
@@ -246,6 +253,21 @@ public class Questionnaire extends Resource {
          */
         public GroupComponent setSubject(ResourceReference value) { 
           this.subject = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #subject} (The actual object that is the target of the reference. More specific subject this section's answers are about, details the subject given in Questionnaire.)
+         */
+        public Resource getSubjectTarget() { 
+          return this.subjectTarget;
+        }
+
+        /**
+         * @param value {@link #subject} (The actual object that is the target of the reference. More specific subject this section's answers are about, details the subject given in Questionnaire.)
+         */
+        public GroupComponent setSubjectTarget(Resource value) { 
+          this.subjectTarget = value;
           return this;
         }
 
@@ -293,7 +315,7 @@ public class Questionnaire extends Resource {
           childrenList.add(new Property("question", "", "Set of questions within this group. The order of questions within the group is relevant.", 0, java.lang.Integer.MAX_VALUE, question));
         }
 
-      public GroupComponent copy(Questionnaire e) {
+      public GroupComponent copy() {
         GroupComponent dst = new GroupComponent();
         dst.name = name == null ? null : name.copy();
         dst.header = header == null ? null : header.copy();
@@ -301,10 +323,10 @@ public class Questionnaire extends Resource {
         dst.subject = subject == null ? null : subject.copy();
         dst.group = new ArrayList<GroupComponent>();
         for (GroupComponent i : group)
-          dst.group.add(i.copy(e));
+          dst.group.add(i.copy());
         dst.question = new ArrayList<QuestionComponent>();
         for (QuestionComponent i : question)
-          dst.question.add(i.copy(e));
+          dst.question.add(i.copy());
         return dst;
       }
 
@@ -319,7 +341,7 @@ public class Questionnaire extends Resource {
         /**
          * Text of the question as it is shown to the user.
          */
-        protected String_ text;
+        protected StringType text;
 
         /**
          * Single-valued answer to the question.
@@ -337,6 +359,11 @@ public class Questionnaire extends Resource {
         protected ResourceReference options;
 
         /**
+         * The actual object that is the target of the reference (Reference to a valueset containing the possible options.)
+         */
+        protected ValueSet optionsTarget;
+
+        /**
          * Structured answer in the form of a FHIR Resource or datatype.
          */
         protected org.hl7.fhir.instance.model.Type data;
@@ -344,12 +371,14 @@ public class Questionnaire extends Resource {
         /**
          * The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.
          */
-        protected String_ remarks;
+        protected StringType remarks;
 
         /**
          * Nested group, containing nested question for this question. The order of groups within the question is relevant.
          */
         protected List<GroupComponent> group = new ArrayList<GroupComponent>();
+
+        private static final long serialVersionUID = 367238745L;
 
       public QuestionComponent() {
         super();
@@ -373,14 +402,14 @@ public class Questionnaire extends Resource {
         /**
          * @return {@link #text} (Text of the question as it is shown to the user.)
          */
-        public String_ getText() { 
+        public StringType getText() { 
           return this.text;
         }
 
         /**
          * @param value {@link #text} (Text of the question as it is shown to the user.)
          */
-        public QuestionComponent setText(String_ value) { 
+        public QuestionComponent setText(StringType value) { 
           this.text = value;
           return this;
         }
@@ -400,7 +429,7 @@ public class Questionnaire extends Resource {
             this.text = null;
           else {
             if (this.text == null)
-              this.text = new String_();
+              this.text = new StringType();
             this.text.setValue(value);
           }
           return this;
@@ -454,6 +483,21 @@ public class Questionnaire extends Resource {
         }
 
         /**
+         * @return {@link #options} (The actual object that is the target of the reference. Reference to a valueset containing the possible options.)
+         */
+        public ValueSet getOptionsTarget() { 
+          return this.optionsTarget;
+        }
+
+        /**
+         * @param value {@link #options} (The actual object that is the target of the reference. Reference to a valueset containing the possible options.)
+         */
+        public QuestionComponent setOptionsTarget(ValueSet value) { 
+          this.optionsTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #data} (Structured answer in the form of a FHIR Resource or datatype.)
          */
         public org.hl7.fhir.instance.model.Type getData() { 
@@ -471,14 +515,14 @@ public class Questionnaire extends Resource {
         /**
          * @return {@link #remarks} (The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.)
          */
-        public String_ getRemarks() { 
+        public StringType getRemarks() { 
           return this.remarks;
         }
 
         /**
          * @param value {@link #remarks} (The remark contains information about the answer given. This is additional information about the answer the author wishes to convey, but should not be used to contain information that is part of the answer itself.)
          */
-        public QuestionComponent setRemarks(String_ value) { 
+        public QuestionComponent setRemarks(StringType value) { 
           this.remarks = value;
           return this;
         }
@@ -498,7 +542,7 @@ public class Questionnaire extends Resource {
             this.remarks = null;
           else {
             if (this.remarks == null)
-              this.remarks = new String_();
+              this.remarks = new StringType();
             this.remarks.setValue(value);
           }
           return this;
@@ -533,7 +577,7 @@ public class Questionnaire extends Resource {
           childrenList.add(new Property("group", "@Questionnaire.group", "Nested group, containing nested question for this question. The order of groups within the question is relevant.", 0, java.lang.Integer.MAX_VALUE, group));
         }
 
-      public QuestionComponent copy(Questionnaire e) {
+      public QuestionComponent copy() {
         QuestionComponent dst = new QuestionComponent();
         dst.name = name == null ? null : name.copy();
         dst.text = text == null ? null : text.copy();
@@ -546,7 +590,7 @@ public class Questionnaire extends Resource {
         dst.remarks = remarks == null ? null : remarks.copy();
         dst.group = new ArrayList<GroupComponent>();
         for (GroupComponent i : group)
-          dst.group.add(i.copy(e));
+          dst.group.add(i.copy());
         return dst;
       }
 
@@ -560,7 +604,7 @@ public class Questionnaire extends Resource {
     /**
      * The date and/or time that this version of the questionnaire was authored.
      */
-    protected DateTime authored;
+    protected DateTimeType authored;
 
     /**
      * The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.
@@ -568,14 +612,29 @@ public class Questionnaire extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * Person who received the answers to the questions in the Questionnaire and recorded them in the system.
      */
     protected ResourceReference author;
 
     /**
+     * The actual object that is the target of the reference (Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
+     */
+    protected Resource authorTarget;
+
+    /**
      * The person who answered the questions about the subject. Only used when this is not the subject him/herself.
      */
     protected ResourceReference source;
+
+    /**
+     * The actual object that is the target of the reference (The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
+     */
+    protected Resource sourceTarget;
 
     /**
      * Structured name for a predefined list of questions this questionnaire is responding to.
@@ -593,15 +652,22 @@ public class Questionnaire extends Resource {
     protected ResourceReference encounter;
 
     /**
+     * The actual object that is the target of the reference (Encounter during which this questionnaire answers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.)
+     */
+    protected Encounter encounterTarget;
+
+    /**
      * A group of questions to a possibly similarly grouped set of questions in the questionnaire.
      */
     protected GroupComponent group;
+
+    private static final long serialVersionUID = -404084379L;
 
     public Questionnaire() {
       super();
     }
 
-    public Questionnaire(Enumeration<QuestionnaireStatus> status, DateTime authored) {
+    public Questionnaire(Enumeration<QuestionnaireStatus> status, DateTimeType authored) {
       super();
       this.status = status;
       this.authored = authored;
@@ -642,14 +708,14 @@ public class Questionnaire extends Resource {
     /**
      * @return {@link #authored} (The date and/or time that this version of the questionnaire was authored.)
      */
-    public DateTime getAuthored() { 
+    public DateTimeType getAuthored() { 
       return this.authored;
     }
 
     /**
      * @param value {@link #authored} (The date and/or time that this version of the questionnaire was authored.)
      */
-    public Questionnaire setAuthored(DateTime value) { 
+    public Questionnaire setAuthored(DateTimeType value) { 
       this.authored = value;
       return this;
     }
@@ -666,7 +732,7 @@ public class Questionnaire extends Resource {
      */
     public Questionnaire setAuthoredSimple(DateAndTime value) { 
         if (this.authored == null)
-          this.authored = new DateTime();
+          this.authored = new DateTimeType();
         this.authored.setValue(value);
       return this;
     }
@@ -687,6 +753,21 @@ public class Questionnaire extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The subject of the questionnaires: this is the patient that the answers apply to, but this person is not necessarily the source of information.)
+     */
+    public Questionnaire setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #author} (Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
      */
     public ResourceReference getAuthor() { 
@@ -702,6 +783,21 @@ public class Questionnaire extends Resource {
     }
 
     /**
+     * @return {@link #author} (The actual object that is the target of the reference. Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
+     */
+    public Resource getAuthorTarget() { 
+      return this.authorTarget;
+    }
+
+    /**
+     * @param value {@link #author} (The actual object that is the target of the reference. Person who received the answers to the questions in the Questionnaire and recorded them in the system.)
+     */
+    public Questionnaire setAuthorTarget(Resource value) { 
+      this.authorTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #source} (The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
      */
     public ResourceReference getSource() { 
@@ -713,6 +809,21 @@ public class Questionnaire extends Resource {
      */
     public Questionnaire setSource(ResourceReference value) { 
       this.source = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #source} (The actual object that is the target of the reference. The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
+     */
+    public Resource getSourceTarget() { 
+      return this.sourceTarget;
+    }
+
+    /**
+     * @param value {@link #source} (The actual object that is the target of the reference. The person who answered the questions about the subject. Only used when this is not the subject him/herself.)
+     */
+    public Questionnaire setSourceTarget(Resource value) { 
+      this.sourceTarget = value;
       return this;
     }
 
@@ -764,6 +875,21 @@ public class Questionnaire extends Resource {
     }
 
     /**
+     * @return {@link #encounter} (The actual object that is the target of the reference. Encounter during which this questionnaire answers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.)
+     */
+    public Encounter getEncounterTarget() { 
+      return this.encounterTarget;
+    }
+
+    /**
+     * @param value {@link #encounter} (The actual object that is the target of the reference. Encounter during which this questionnaire answers were collected. When there were multiple encounters, this is the one considered most relevant to the context of the answers.)
+     */
+    public Questionnaire setEncounterTarget(Encounter value) { 
+      this.encounterTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #group} (A group of questions to a possibly similarly grouped set of questions in the questionnaire.)
      */
     public GroupComponent getGroup() { 
@@ -803,7 +929,7 @@ public class Questionnaire extends Resource {
         for (Identifier i : identifier)
           dst.identifier.add(i.copy());
         dst.encounter = encounter == null ? null : encounter.copy();
-        dst.group = group == null ? null : group.copy(dst);
+        dst.group = group == null ? null : group.copy();
         return dst;
       }
 

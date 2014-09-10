@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -208,18 +208,25 @@ public class DiagnosticOrder extends Resource {
         /**
          * The date/time at which the event occurred.
          */
-        protected DateTime dateTime;
+        protected DateTimeType dateTime;
 
         /**
          * The person who was responsible for performing or recording the action.
          */
         protected ResourceReference actor;
 
+        /**
+         * The actual object that is the target of the reference (The person who was responsible for performing or recording the action.)
+         */
+        protected Resource actorTarget;
+
+        private static final long serialVersionUID = -2127877353L;
+
       public DiagnosticOrderEventComponent() {
         super();
       }
 
-      public DiagnosticOrderEventComponent(Enumeration<DiagnosticOrderStatus> status, DateTime dateTime) {
+      public DiagnosticOrderEventComponent(Enumeration<DiagnosticOrderStatus> status, DateTimeType dateTime) {
         super();
         this.status = status;
         this.dateTime = dateTime;
@@ -275,14 +282,14 @@ public class DiagnosticOrder extends Resource {
         /**
          * @return {@link #dateTime} (The date/time at which the event occurred.)
          */
-        public DateTime getDateTime() { 
+        public DateTimeType getDateTime() { 
           return this.dateTime;
         }
 
         /**
          * @param value {@link #dateTime} (The date/time at which the event occurred.)
          */
-        public DiagnosticOrderEventComponent setDateTime(DateTime value) { 
+        public DiagnosticOrderEventComponent setDateTime(DateTimeType value) { 
           this.dateTime = value;
           return this;
         }
@@ -299,7 +306,7 @@ public class DiagnosticOrder extends Resource {
          */
         public DiagnosticOrderEventComponent setDateTimeSimple(DateAndTime value) { 
             if (this.dateTime == null)
-              this.dateTime = new DateTime();
+              this.dateTime = new DateTimeType();
             this.dateTime.setValue(value);
           return this;
         }
@@ -319,6 +326,21 @@ public class DiagnosticOrder extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #actor} (The actual object that is the target of the reference. The person who was responsible for performing or recording the action.)
+         */
+        public Resource getActorTarget() { 
+          return this.actorTarget;
+        }
+
+        /**
+         * @param value {@link #actor} (The actual object that is the target of the reference. The person who was responsible for performing or recording the action.)
+         */
+        public DiagnosticOrderEventComponent setActorTarget(Resource value) { 
+          this.actorTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("status", "code", "The status for the event.", 0, java.lang.Integer.MAX_VALUE, status));
@@ -327,7 +349,7 @@ public class DiagnosticOrder extends Resource {
           childrenList.add(new Property("actor", "Resource(Practitioner|Device)", "The person who was responsible for performing or recording the action.", 0, java.lang.Integer.MAX_VALUE, actor));
         }
 
-      public DiagnosticOrderEventComponent copy(DiagnosticOrder e) {
+      public DiagnosticOrderEventComponent copy() {
         DiagnosticOrderEventComponent dst = new DiagnosticOrderEventComponent();
         dst.status = status == null ? null : status.copy();
         dst.description = description == null ? null : description.copy();
@@ -348,6 +370,11 @@ public class DiagnosticOrder extends Resource {
          * If the item is related to a specific speciment.
          */
         protected List<ResourceReference> specimen = new ArrayList<ResourceReference>();
+        /**
+         * The actual objects that are the target of the reference (If the item is related to a specific speciment.)
+         */
+        protected List<Specimen> specimenTarget = new ArrayList<Specimen>();
+
 
         /**
          * Anatomical location where the request test should be performed.
@@ -363,6 +390,8 @@ public class DiagnosticOrder extends Resource {
          * A summary of the events of interest that have occurred as this item of the request is processed.
          */
         protected List<DiagnosticOrderEventComponent> event = new ArrayList<DiagnosticOrderEventComponent>();
+
+        private static final long serialVersionUID = -326190686L;
 
       public DiagnosticOrderItemComponent() {
         super();
@@ -403,6 +432,23 @@ public class DiagnosticOrder extends Resource {
           ResourceReference t = new ResourceReference();
           this.specimen.add(t);
           return t;
+        }
+
+        /**
+         * @return {@link #specimen} (The actual objects that are the target of the reference. If the item is related to a specific speciment.)
+         */
+        public List<Specimen> getSpecimenTarget() { 
+          return this.specimenTarget;
+        }
+
+    // syntactic sugar
+        /**
+         * @return {@link #specimen} (Add an actual object that is the target of the reference. If the item is related to a specific speciment.)
+         */
+        public Specimen addSpecimenTarget() { 
+          Specimen r = new Specimen();
+          this.specimenTarget.add(r);
+          return r;
         }
 
         /**
@@ -482,7 +528,7 @@ public class DiagnosticOrder extends Resource {
           childrenList.add(new Property("event", "@DiagnosticOrder.event", "A summary of the events of interest that have occurred as this item of the request is processed.", 0, java.lang.Integer.MAX_VALUE, event));
         }
 
-      public DiagnosticOrderItemComponent copy(DiagnosticOrder e) {
+      public DiagnosticOrderItemComponent copy() {
         DiagnosticOrderItemComponent dst = new DiagnosticOrderItemComponent();
         dst.code = code == null ? null : code.copy();
         dst.specimen = new ArrayList<ResourceReference>();
@@ -492,7 +538,7 @@ public class DiagnosticOrder extends Resource {
         dst.status = status == null ? null : status.copy();
         dst.event = new ArrayList<DiagnosticOrderEventComponent>();
         for (DiagnosticOrderEventComponent i : event)
-          dst.event.add(i.copy(e));
+          dst.event.add(i.copy());
         return dst;
       }
 
@@ -504,9 +550,19 @@ public class DiagnosticOrder extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Who or what the investigation is to be performed on. This is usually a human patient, but diagnostic tests can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans).)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * The practitioner that holds legal responsibility for ordering the investigation.
      */
     protected ResourceReference orderer;
+
+    /**
+     * The actual object that is the target of the reference (The practitioner that holds legal responsibility for ordering the investigation.)
+     */
+    protected Practitioner ordererTarget;
 
     /**
      * Identifiers assigned to this order by the order or by the receiver.
@@ -519,14 +575,24 @@ public class DiagnosticOrder extends Resource {
     protected ResourceReference encounter;
 
     /**
+     * The actual object that is the target of the reference (An encounter that provides additional informaton about the healthcare context in which this request is made.)
+     */
+    protected Encounter encounterTarget;
+
+    /**
      * An explanation or justification for why this diagnostic investigation is being requested.
      */
-    protected String_ clinicalNotes;
+    protected StringType clinicalNotes;
 
     /**
      * One or more specimens that the diagnostic investigation is about.
      */
     protected List<ResourceReference> specimen = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (One or more specimens that the diagnostic investigation is about.)
+     */
+    protected List<Specimen> specimenTarget = new ArrayList<Specimen>();
+
 
     /**
      * The status of the order.
@@ -547,6 +613,8 @@ public class DiagnosticOrder extends Resource {
      * The specific diagnostic investigations that are requested as part of this request. Sometimes, there can only be one item per request, but in most contexts, more than one investigation can be requested.
      */
     protected List<DiagnosticOrderItemComponent> item = new ArrayList<DiagnosticOrderItemComponent>();
+
+    private static final long serialVersionUID = -424750256L;
 
     public DiagnosticOrder() {
       super();
@@ -573,6 +641,21 @@ public class DiagnosticOrder extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Who or what the investigation is to be performed on. This is usually a human patient, but diagnostic tests can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans).)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Who or what the investigation is to be performed on. This is usually a human patient, but diagnostic tests can also be requested on animals, groups of humans or animals, devices such as dialysis machines, or even locations (typically for environmental scans).)
+     */
+    public DiagnosticOrder setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #orderer} (The practitioner that holds legal responsibility for ordering the investigation.)
      */
     public ResourceReference getOrderer() { 
@@ -584,6 +667,21 @@ public class DiagnosticOrder extends Resource {
      */
     public DiagnosticOrder setOrderer(ResourceReference value) { 
       this.orderer = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #orderer} (The actual object that is the target of the reference. The practitioner that holds legal responsibility for ordering the investigation.)
+     */
+    public Practitioner getOrdererTarget() { 
+      return this.ordererTarget;
+    }
+
+    /**
+     * @param value {@link #orderer} (The actual object that is the target of the reference. The practitioner that holds legal responsibility for ordering the investigation.)
+     */
+    public DiagnosticOrder setOrdererTarget(Practitioner value) { 
+      this.ordererTarget = value;
       return this;
     }
 
@@ -620,16 +718,31 @@ public class DiagnosticOrder extends Resource {
     }
 
     /**
+     * @return {@link #encounter} (The actual object that is the target of the reference. An encounter that provides additional informaton about the healthcare context in which this request is made.)
+     */
+    public Encounter getEncounterTarget() { 
+      return this.encounterTarget;
+    }
+
+    /**
+     * @param value {@link #encounter} (The actual object that is the target of the reference. An encounter that provides additional informaton about the healthcare context in which this request is made.)
+     */
+    public DiagnosticOrder setEncounterTarget(Encounter value) { 
+      this.encounterTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #clinicalNotes} (An explanation or justification for why this diagnostic investigation is being requested.)
      */
-    public String_ getClinicalNotes() { 
+    public StringType getClinicalNotes() { 
       return this.clinicalNotes;
     }
 
     /**
      * @param value {@link #clinicalNotes} (An explanation or justification for why this diagnostic investigation is being requested.)
      */
-    public DiagnosticOrder setClinicalNotes(String_ value) { 
+    public DiagnosticOrder setClinicalNotes(StringType value) { 
       this.clinicalNotes = value;
       return this;
     }
@@ -649,7 +762,7 @@ public class DiagnosticOrder extends Resource {
         this.clinicalNotes = null;
       else {
         if (this.clinicalNotes == null)
-          this.clinicalNotes = new String_();
+          this.clinicalNotes = new StringType();
         this.clinicalNotes.setValue(value);
       }
       return this;
@@ -670,6 +783,23 @@ public class DiagnosticOrder extends Resource {
       ResourceReference t = new ResourceReference();
       this.specimen.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #specimen} (The actual objects that are the target of the reference. One or more specimens that the diagnostic investigation is about.)
+     */
+    public List<Specimen> getSpecimenTarget() { 
+      return this.specimenTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #specimen} (Add an actual object that is the target of the reference. One or more specimens that the diagnostic investigation is about.)
+     */
+    public Specimen addSpecimenTarget() { 
+      Specimen r = new Specimen();
+      this.specimenTarget.add(r);
+      return r;
     }
 
     /**
@@ -808,10 +938,10 @@ public class DiagnosticOrder extends Resource {
         dst.priority = priority == null ? null : priority.copy();
         dst.event = new ArrayList<DiagnosticOrderEventComponent>();
         for (DiagnosticOrderEventComponent i : event)
-          dst.event.add(i.copy(dst));
+          dst.event.add(i.copy());
         dst.item = new ArrayList<DiagnosticOrderItemComponent>();
         for (DiagnosticOrderItemComponent i : item)
-          dst.item.add(i.copy(dst));
+          dst.item.add(i.copy());
         return dst;
       }
 

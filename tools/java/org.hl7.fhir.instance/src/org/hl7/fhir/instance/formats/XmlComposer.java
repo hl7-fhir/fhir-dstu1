@@ -1,42 +1,37 @@
 package org.hl7.fhir.instance.formats;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
 */
-
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
-
 import org.hl7.fhir.instance.model.*;
-import org.hl7.fhir.instance.model.Integer;
-import org.hl7.fhir.instance.model.Boolean;
+import org.hl7.fhir.instance.model.IntegerType;
+import org.hl7.fhir.instance.model.BooleanType;
 import org.hl7.fhir.utilities.Utilities;
-import java.net.*;
-import java.math.*;
 
 public class XmlComposer extends XmlComposerBase {
 
@@ -65,7 +60,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeInteger(String name, Integer value) throws Exception {
+  private void composeInteger(String name, IntegerType value) throws Exception {
     if (value != null) {
       composeElementAttributes(value);
         xml.attribute("value", toString(value.getValue()));
@@ -76,7 +71,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeDateTime(String name, DateTime value) throws Exception {
+  private void composeDateTime(String name, DateTimeType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -88,7 +83,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeCode(String name, Code value) throws Exception {
+  private void composeCode(String name, CodeType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || !Utilities.noString(value.getValue()))) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -100,7 +95,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeDate(String name, Date value) throws Exception {
+  private void composeDate(String name, DateType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -112,7 +107,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeDecimal(String name, Decimal value) throws Exception {
+  private void composeDecimal(String name, DecimalType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -124,7 +119,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeUri(String name, Uri value) throws Exception {
+  private void composeUri(String name, UriType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -136,7 +131,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeId(String name, Id value) throws Exception {
+  private void composeId(String name, IdType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || !Utilities.noString(value.getValue()))) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -148,7 +143,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeBase64Binary(String name, Base64Binary value) throws Exception {
+  private void composeBase64Binary(String name, Base64BinaryType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -160,7 +155,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeOid(String name, Oid value) throws Exception {
+  private void composeOid(String name, OidType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || !Utilities.noString(value.getValue()))) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -172,7 +167,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeString(String name, String_ value) throws Exception {
+  private void composeString(String name, StringType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || !Utilities.noString(value.getValue()))) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -184,7 +179,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeBoolean(String name, Boolean value) throws Exception {
+  private void composeBoolean(String name, BooleanType value) throws Exception {
     if (value != null) {
       composeElementAttributes(value);
         xml.attribute("value", toString(value.getValue()));
@@ -195,7 +190,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeUuid(String name, Uuid value) throws Exception {
+  private void composeUuid(String name, UuidType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || !Utilities.noString(value.getValue()))) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -207,7 +202,7 @@ public class XmlComposer extends XmlComposerBase {
     }    
   }    
 
-  private void composeInstant(String name, Instant value) throws Exception {
+  private void composeInstant(String name, InstantType value) throws Exception {
     if (value != null && (!Utilities.noString(value.getXmlId()) || value.hasExtensions() || value.getValue() != null)) {
       composeElementAttributes(value);
       if (value.getValue() != null) 
@@ -504,7 +499,7 @@ public class XmlComposer extends XmlComposerBase {
       if (element.getUse() != null)
         composeEnumeration("use", element.getUse(), new Address.AddressUseEnumFactory());
       composeString("text", element.getText());
-      for (String_ e : element.getLine()) 
+      for (StringType e : element.getLine()) 
         composeString("line", e);
       composeString("city", element.getCity());
       composeString("state", element.getState());
@@ -523,13 +518,13 @@ public class XmlComposer extends XmlComposerBase {
       if (element.getUse() != null)
         composeEnumeration("use", element.getUse(), new HumanName.NameUseEnumFactory());
       composeString("text", element.getText());
-      for (String_ e : element.getFamily()) 
+      for (StringType e : element.getFamily()) 
         composeString("family", e);
-      for (String_ e : element.getGiven()) 
+      for (StringType e : element.getGiven()) 
         composeString("given", e);
-      for (String_ e : element.getPrefix()) 
+      for (StringType e : element.getPrefix()) 
         composeString("prefix", e);
-      for (String_ e : element.getSuffix()) 
+      for (StringType e : element.getSuffix()) 
         composeString("suffix", e);
       composePeriod("period", element.getPeriod());
       xml.close(FHIR_NS, name);
@@ -697,7 +692,7 @@ public class XmlComposer extends XmlComposerBase {
       composeElementAttributes(element);
       xml.open(FHIR_NS, name);
       composeBackboneElements(element);
-      for (String_ e : element.getGoal()) 
+      for (StringType e : element.getGoal()) 
         composeString("goal", e);
       if (element.getStatus() != null)
         composeEnumeration("status", element.getStatus(), new CarePlan.CarePlanActivityStatusEnumFactory());
@@ -967,7 +962,7 @@ public class XmlComposer extends XmlComposerBase {
       composeConformanceConformanceImplementationComponent("implementation", element.getImplementation());
       composeId("fhirVersion", element.getFhirVersion());
       composeBoolean("acceptUnknown", element.getAcceptUnknown());
-      for (Code e : element.getFormat()) 
+      for (CodeType e : element.getFormat()) 
         composeCode("format", e);
       for (ResourceReference e : element.getProfile()) 
         composeResourceReference("profile", e);
@@ -1019,7 +1014,7 @@ public class XmlComposer extends XmlComposerBase {
         composeConformanceConformanceRestOperationComponent("operation", e);
       for (Conformance.ConformanceRestQueryComponent e : element.getQuery()) 
         composeConformanceConformanceRestQueryComponent("query", e);
-      for (Uri e : element.getDocumentMailbox()) 
+      for (UriType e : element.getDocumentMailbox()) 
         composeUri("documentMailbox", e);
       xml.close(FHIR_NS, name);
     }
@@ -1062,7 +1057,7 @@ public class XmlComposer extends XmlComposerBase {
         composeConformanceConformanceRestResourceOperationComponent("operation", e);
       composeBoolean("readHistory", element.getReadHistory());
       composeBoolean("updateCreate", element.getUpdateCreate());
-      for (String_ e : element.getSearchInclude()) 
+      for (StringType e : element.getSearchInclude()) 
         composeString("searchInclude", e);
       for (Conformance.ConformanceRestResourceSearchParamComponent e : element.getSearchParam()) 
         composeConformanceConformanceRestResourceSearchParamComponent("searchParam", e);
@@ -1092,9 +1087,9 @@ public class XmlComposer extends XmlComposerBase {
       if (element.getType() != null)
         composeEnumeration("type", element.getType(), new Conformance.SearchParamTypeEnumFactory());
       composeString("documentation", element.getDocumentation());
-      for (Code e : element.getTarget()) 
+      for (CodeType e : element.getTarget()) 
         composeCode("target", e);
-      for (String_ e : element.getChain()) 
+      for (StringType e : element.getChain()) 
         composeString("chain", e);
       xml.close(FHIR_NS, name);
     }
@@ -1402,7 +1397,7 @@ public class XmlComposer extends XmlComposerBase {
         composeCodeableConcept("confidentiality", e);
       composeCode("primaryLanguage", element.getPrimaryLanguage());
       composeCode("mimeType", element.getMimeType());
-      for (Uri e : element.getFormat()) 
+      for (UriType e : element.getFormat()) 
         composeUri("format", e);
       composeInteger("size", element.getSize());
       composeString("hash", element.getHash());
@@ -2342,7 +2337,7 @@ public class XmlComposer extends XmlComposerBase {
         composeEnumeration("severity", element.getSeverity(), new OperationOutcome.IssueSeverityEnumFactory());
       composeCoding("type", element.getType());
       composeString("details", element.getDetails());
-      for (String_ e : element.getLocation()) 
+      for (StringType e : element.getLocation()) 
         composeString("location", e);
       xml.close(FHIR_NS, name);
     }
@@ -2723,7 +2718,7 @@ public class XmlComposer extends XmlComposerBase {
       composeString("formal", element.getFormal());
       composeString("comments", element.getComments());
       composeString("requirements", element.getRequirements());
-      for (String_ e : element.getSynonym()) 
+      for (StringType e : element.getSynonym()) 
         composeString("synonym", e);
       composeInteger("min", element.getMin());
       composeString("max", element.getMax());
@@ -2733,7 +2728,7 @@ public class XmlComposer extends XmlComposerBase {
       composeType("value", element.getValue());
       composeType("example", element.getExample());
       composeInteger("maxLength", element.getMaxLength());
-      for (Id e : element.getCondition()) 
+      for (IdType e : element.getCondition()) 
         composeId("condition", e);
       for (Profile.ElementDefinitionConstraintComponent e : element.getConstraint()) 
         composeProfileElementDefinitionConstraintComponent("constraint", e);
@@ -2810,7 +2805,7 @@ public class XmlComposer extends XmlComposerBase {
         composeEnumeration("type", element.getType(), new Profile.SearchParamTypeEnumFactory());
       composeString("documentation", element.getDocumentation());
       composeString("xpath", element.getXpath());
-      for (Code e : element.getTarget()) 
+      for (CodeType e : element.getTarget()) 
         composeCode("target", e);
       xml.close(FHIR_NS, name);
     }
@@ -2825,7 +2820,7 @@ public class XmlComposer extends XmlComposerBase {
       composeString("display", element.getDisplay());
       if (element.getContextType() != null)
         composeEnumeration("contextType", element.getContextType(), new Profile.ExtensionContextEnumFactory());
-      for (String_ e : element.getContext()) 
+      for (StringType e : element.getContext()) 
         composeString("context", e);
       composeProfileElementDefinitionComponent("definition", element.getDefinition());
       xml.close(FHIR_NS, name);
@@ -2856,7 +2851,7 @@ public class XmlComposer extends XmlComposerBase {
       composeInstant("recorded", element.getRecorded());
       composeCodeableConcept("reason", element.getReason());
       composeResourceReference("location", element.getLocation());
-      for (Uri e : element.getPolicy()) 
+      for (UriType e : element.getPolicy()) 
         composeUri("policy", e);
       for (Provenance.ProvenanceAgentComponent e : element.getAgent()) 
         composeProvenanceProvenanceAgentComponent("agent", e);
@@ -3160,7 +3155,7 @@ public class XmlComposer extends XmlComposerBase {
       xml.open(FHIR_NS, name);
       composeBackboneElements(element);
       composeResourceReference("collector", element.getCollector());
-      for (String_ e : element.getComment()) 
+      for (StringType e : element.getComment()) 
         composeString("comment", e);
       composeType("collected", element.getCollected());
       composeQuantity("quantity", element.getQuantity());
@@ -3333,7 +3328,7 @@ public class XmlComposer extends XmlComposerBase {
       composeElementAttributes(element);
       xml.open(FHIR_NS, name);
       composeBackboneElements(element);
-      for (Uri e : element.getImport()) 
+      for (UriType e : element.getImport()) 
         composeUri("import", e);
       for (ValueSet.ConceptSetComponent e : element.getInclude()) 
         composeValueSetConceptSetComponent("include", e);
@@ -3350,7 +3345,7 @@ public class XmlComposer extends XmlComposerBase {
       composeBackboneElements(element);
       composeUri("system", element.getSystem());
       composeString("version", element.getVersion());
-      for (Code e : element.getCode()) 
+      for (CodeType e : element.getCode()) 
         composeCode("code", e);
       for (ValueSet.ConceptSetFilterComponent e : element.getFilter()) 
         composeValueSetConceptSetFilterComponent("filter", e);
@@ -3502,7 +3497,6 @@ public class XmlComposer extends XmlComposerBase {
       throw new Exception("Unhanded resource type "+resource.getClass().getName());
   }
 
-  @SuppressWarnings("unchecked")
   protected void composeType(String prefix, Type type) throws Exception {
     if (type == null)
       ;
@@ -3544,32 +3538,32 @@ public class XmlComposer extends XmlComposerBase {
        composeAddress(prefix+"Address", (Address) type);
     else if (type instanceof HumanName)
        composeHumanName(prefix+"HumanName", (HumanName) type);
-    else if (type instanceof Integer)
-       composeInteger(prefix+"Integer", (Integer) type);
-    else if (type instanceof DateTime)
-       composeDateTime(prefix+"DateTime", (DateTime) type);
-    else if (type instanceof Code)
-       composeCode(prefix+"Code", (Code) type);
-    else if (type instanceof Date)
-       composeDate(prefix+"Date", (Date) type);
-    else if (type instanceof Decimal)
-       composeDecimal(prefix+"Decimal", (Decimal) type);
-    else if (type instanceof Uri)
-       composeUri(prefix+"Uri", (Uri) type);
-    else if (type instanceof Id)
-       composeId(prefix+"Id", (Id) type);
-    else if (type instanceof Base64Binary)
-       composeBase64Binary(prefix+"Base64Binary", (Base64Binary) type);
-    else if (type instanceof Oid)
-       composeOid(prefix+"Oid", (Oid) type);
-    else if (type instanceof String_)
-       composeString(prefix+"String", (String_) type);
-    else if (type instanceof Boolean)
-       composeBoolean(prefix+"Boolean", (Boolean) type);
-    else if (type instanceof Uuid)
-       composeUuid(prefix+"Uuid", (Uuid) type);
-    else if (type instanceof Instant)
-       composeInstant(prefix+"Instant", (Instant) type);
+    else if (type instanceof IntegerType)
+       composeInteger(prefix+"Integer", (IntegerType) type);
+    else if (type instanceof DateTimeType)
+       composeDateTime(prefix+"DateTime", (DateTimeType) type);
+    else if (type instanceof CodeType)
+       composeCode(prefix+"Code", (CodeType) type);
+    else if (type instanceof DateType)
+       composeDate(prefix+"Date", (DateType) type);
+    else if (type instanceof DecimalType)
+       composeDecimal(prefix+"Decimal", (DecimalType) type);
+    else if (type instanceof UriType)
+       composeUri(prefix+"Uri", (UriType) type);
+    else if (type instanceof IdType)
+       composeId(prefix+"Id", (IdType) type);
+    else if (type instanceof Base64BinaryType)
+       composeBase64Binary(prefix+"Base64Binary", (Base64BinaryType) type);
+    else if (type instanceof OidType)
+       composeOid(prefix+"Oid", (OidType) type);
+    else if (type instanceof StringType)
+       composeString(prefix+"String", (StringType) type);
+    else if (type instanceof BooleanType)
+       composeBoolean(prefix+"Boolean", (BooleanType) type);
+    else if (type instanceof UuidType)
+       composeUuid(prefix+"Uuid", (UuidType) type);
+    else if (type instanceof InstantType)
+       composeInstant(prefix+"Instant", (InstantType) type);
     else
       throw new Exception("Unhanded type");
   }

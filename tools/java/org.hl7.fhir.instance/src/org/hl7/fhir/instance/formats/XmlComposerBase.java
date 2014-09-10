@@ -1,7 +1,7 @@
 package org.hl7.fhir.instance.formats;
 
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -52,7 +52,7 @@ import org.hl7.fhir.utilities.xml.XMLWriter;
  * 
  * The two classes are separated to keep generated and manually maintained code apart.
  */
-public abstract class XmlComposerBase extends FormatUtilities implements Composer {
+public abstract class XmlComposerBase extends ComposerBase  {
 
 	protected IXMLWriter xml;
 	protected boolean htmlPretty;
@@ -143,7 +143,7 @@ public abstract class XmlComposerBase extends FormatUtilities implements Compose
       xml.element(ATOM_NS, "link", null);
     }
     if (feed.getTotalResults() != null) {
-    	xml.setDefaultNamespace("http://purl.org/atompub/tombstones/1.0");
+    	xml.setDefaultNamespace("http://a9.com/-/spec/opensearch/1.1/");
     	xml.element("totalResults", feed.getTotalResults().toString());
     	xml.setDefaultNamespace(ATOM_NS);
     }
@@ -172,6 +172,20 @@ public abstract class XmlComposerBase extends FormatUtilities implements Compose
   
 	}
 	
+  /**
+   * Compose a type to a stream (used in the spec, for example, but not normally in production)
+   */
+  public void compose(OutputStream stream, Type type) throws Exception {
+    xml = new XMLWriter(stream, "UTF-8");
+    xml.setPretty(true);
+    xml.start();
+    xml.setDefaultNamespace(FHIR_NS);
+    composeType("", type);
+    xml.close();
+  }
+
+	protected abstract void composeType(String preix, Type type) throws Exception;
+
 	private <T extends Resource>void composeEntry(AtomEntry<T> entry) throws Exception {
 		AtomEntry<T> e = entry;
 	  if (entry.isDeleted()) {
@@ -283,6 +297,8 @@ public abstract class XmlComposerBase extends FormatUtilities implements Compose
 	protected abstract void composeResource(Resource resource) throws Exception;
 
 	protected void composeElementAttributes(Element element) throws Exception {
+    for (String comment : element.getXmlComments())
+      xml.comment(comment, false);
 		if (element.getXmlId() != null) 
 			xml.attribute("id", element.getXmlId());
 	}
@@ -292,6 +308,11 @@ public abstract class XmlComposerBase extends FormatUtilities implements Compose
 	}
 
 	protected void composeXhtml(String name, XhtmlNode html) throws Exception {
+    if (!Utilities.noString(xhtmlMessage)) {
+      xml.open(XhtmlComposer.XHTML_NS, name);
+      xml.comment(xhtmlMessage, false);
+      xml.close(XhtmlComposer.XHTML_NS, name);
+    } else {
 		XhtmlComposer comp = new XhtmlComposer();
 		// name is also found in the html and should the same
 		// ? check that
@@ -300,6 +321,7 @@ public abstract class XmlComposerBase extends FormatUtilities implements Compose
 		xml.namespace(XhtmlComposer.XHTML_NS, null);
 		comp.compose(xml, html);
 		xml.setPretty(oldPretty);
+    }
 	}
 
 

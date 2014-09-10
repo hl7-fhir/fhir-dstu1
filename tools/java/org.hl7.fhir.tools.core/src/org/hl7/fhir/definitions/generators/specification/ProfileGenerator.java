@@ -53,6 +53,7 @@ import org.hl7.fhir.instance.model.Conformance;
 import org.hl7.fhir.instance.model.Enumeration;
 import org.hl7.fhir.instance.model.Factory;
 import org.hl7.fhir.instance.model.Id;
+import org.hl7.fhir.instance.model.IdType;
 import org.hl7.fhir.instance.model.Narrative;
 import org.hl7.fhir.instance.model.Narrative.NarrativeStatus;
 import org.hl7.fhir.instance.model.Profile;
@@ -95,15 +96,15 @@ public class ProfileGenerator {
     if (profile.getSource() != null)
       return profile.getSource();
     Profile p = new Profile();
-    p.setName(Factory.newString_(profile.metadata("name")));
-    p.setPublisher(Factory.newString_(profile.metadata("author.name")));
+    p.setName(Factory.newString(profile.metadata("name")));
+    p.setPublisher(Factory.newString(profile.metadata("author.name")));
     if (profile.hasMetadata("author.reference"))
       p.getTelecom().add(Factory.newContact(ContactSystem.url, profile.metadata("author.reference")));
     //  <code> opt Zero+ Coding assist with indexing and finding</code>
     if (profile.hasMetadata("intention"))
       throw new Exception("profile intention is not supported any more ("+p.getName()+")");
     if (profile.hasMetadata("description"))
-      p.setDescription(Factory.newString_(profile.metadata("description")));
+      p.setDescription(Factory.newString(profile.metadata("description")));
     if (profile.hasMetadata("evidence"))
       throw new Exception("profile evidence is not supported any more ("+p.getName()+")");
     if (profile.hasMetadata("comments"))
@@ -126,7 +127,7 @@ public class ProfileGenerator {
       c.setType(Factory.newCode(resource.getRoot().getName()));
       // we don't profile URI when we generate in this mode - we are generating an actual statement, not a re-reference
       if (!"".equals(resource.getRoot().getProfileName()))
-        c.setName(Factory.newString_(resource.getRoot().getProfileName()));
+        c.setName(Factory.newString(resource.getRoot().getProfileName()));
       // no purpose element here
       defineElement(profile, p, c, resource.getRoot(), resource.getName(), mode, containedSlices);
       List<String> names = new ArrayList<String>();
@@ -144,7 +145,7 @@ public class ProfileGenerator {
       c.setType(Factory.newCode(elem.getName()));
       // we don't profile URI when we generate in this mode - we are generating an actual statement, not a re-reference
       if (!"".equals(elem.getProfileName()))
-        c.setName(Factory.newString_(elem.getProfileName()));
+        c.setName(Factory.newString(elem.getProfileName()));
       // no purpose element here
       defineElement(profile, p, c, elem, elem.getName(), mode, containedSlices);
     }
@@ -196,7 +197,7 @@ public class ProfileGenerator {
     ProfileStructureSearchParamComponent result = new ProfileStructureSearchParamComponent();
     result.setNameSimple(i.getCode());
     result.setTypeSimple(getSearchParamType(i.getType()));
-    result.setDocumentation(Factory.newString_(i.getDescription()));
+    result.setDocumentation(Factory.newString(i.getDescription()));
     result.setXpathSimple(i.getXPath());
     s.getSearchParam().add(result);
   }
@@ -208,11 +209,11 @@ public class ProfileGenerator {
       return null;
     
     ElementDefinitionBindingComponent dst = new Profile.ElementDefinitionBindingComponent();
-    dst.setName(Factory.newString_(src.getName()));
+    dst.setName(Factory.newString(src.getName()));
     dst.setConformanceSimple(convert(src.getBindingStrength()));
     dst.setIsExtensibleSimple(src.getExtensibility() == BindingExtensibility.Extensible);
     if (src.getBinding() == Binding.Unbound)
-      dst.setDescription(Factory.newString_(src.getDefinition()));
+      dst.setDescription(Factory.newString(src.getDefinition()));
     else
       dst.setReference(buildReference(src));    
     return dst;
@@ -262,20 +263,20 @@ public class ProfileGenerator {
     ProfileExtensionDefnComponent dst = new Profile.ProfileExtensionDefnComponent();
     dst.setCode(Factory.newCode(src.getCode()));
     dst.setDisplaySimple(src.getDefinition().getShortDefn());
-    dst.getContext().add(Factory.newString_(src.getContext()));
+    dst.getContext().add(Factory.newString(src.getContext()));
     dst.setContextTypeSimple(convertContextType(src.getType()));
 
     ElementDefn dSrc = src.getDefinition();
     ElementDefinitionComponent dDst = new Profile.ElementDefinitionComponent();
     dst.setDefinition(dDst);
 
-    dDst.setShort(Factory.newString_(dSrc.getShortDefn()));
-    dDst.setFormal(Factory.newString_(dSrc.getDefinition()));
-    dDst.setComments(Factory.newString_(dSrc.getComments()));
+    dDst.setShort(Factory.newString(dSrc.getShortDefn()));
+    dDst.setFormal(Factory.newString(dSrc.getDefinition()));
+    dDst.setComments(Factory.newString(dSrc.getComments()));
     if (dSrc.getMaxCardinality() == null)
-      dDst.setMax(Factory.newString_("*"));
+      dDst.setMax(Factory.newString("*"));
     else
-      dDst.setMax(Factory.newString_(dSrc.getMaxCardinality().toString()));
+      dDst.setMax(Factory.newString(dSrc.getMaxCardinality().toString()));
     dDst.setMin(Factory.newInteger(dSrc.getMinCardinality()));
     dDst.setMustSupport(Factory.newBoolean(dSrc.isMustSupport()));
     dDst.setIsModifier(Factory.newBoolean(dSrc.isModifier()));
@@ -315,7 +316,7 @@ public class ProfileGenerator {
     Profile.ElementComponent ce = new Profile.ElementComponent();
     c.getElement().add(ce);
         
-    ce.setPath(Factory.newString_(path));
+    ce.setPath(Factory.newString(path));
     if (e.isXmlAttribute())
       ce.addRepresentationSimple(PropertyRepresentation.xmlAttr);
     
@@ -330,27 +331,27 @@ public class ProfileGenerator {
         ce.getSlicing().setRulesSimple(ResourceSlicingRules.open);
         ce = new Profile.ElementComponent();
         c.getElement().add(ce);
-        ce.setPath(Factory.newString_(path));
+        ce.setPath(Factory.newString(path));
         slices.add(path);
       }
-      ce.setName(Factory.newString_(e.getProfileName()));
+      ce.setName(Factory.newString(e.getProfileName()));
     }
     
     ce.setDefinition(new Profile.ElementDefinitionComponent());
     if (!"".equals(e.getComments()))
-      ce.getDefinition().setComments(Factory.newString_(e.getComments()));
+      ce.getDefinition().setComments(Factory.newString(e.getComments()));
     if (!"".equals(e.getShortDefn()))
-      ce.getDefinition().setShort(Factory.newString_(e.getShortDefn()));
+      ce.getDefinition().setShort(Factory.newString(e.getShortDefn()));
     if (!"".equals(e.getDefinition())) {
-      ce.getDefinition().setFormal(Factory.newString_(e.getDefinition()));
+      ce.getDefinition().setFormal(Factory.newString(e.getDefinition()));
       if ("".equals(e.getShortDefn()))
-        ce.getDefinition().setShort(Factory.newString_(e.getDefinition()));
+        ce.getDefinition().setShort(Factory.newString(e.getDefinition()));
     }
 
 
     // no purpose here
     ce.getDefinition().setMin(Factory.newInteger(e.getMinCardinality()));
-    ce.getDefinition().setMax(Factory.newString_(e.getMaxCardinality() == null ? "*" : e.getMaxCardinality().toString()));
+    ce.getDefinition().setMax(Factory.newString(e.getMaxCardinality() == null ? "*" : e.getMaxCardinality().toString()));
 
     if (e.typeCode().startsWith("@")) 
     {
@@ -385,7 +386,7 @@ public class ProfileGenerator {
     
     // ce.setConformance(getType(e.getConformance()));
     if (!"".equals(e.getCondition())) {
-      Id cond = Factory.newId(e.getCondition());
+      IdType cond = Factory.newId(e.getCondition());
       if (cond != null)
         ce.getDefinition().getCondition().add(cond);
     }
@@ -508,16 +509,16 @@ public class ProfileGenerator {
 
   private ElementComponent createBaseDefinition(Profile p, String path, ElementDefn src) throws URISyntaxException {
     ElementComponent ce = new Profile.ElementComponent();
-    ce.setPath(Factory.newString_(path+"."+src.getName()));
+    ce.setPath(Factory.newString(path+"."+src.getName()));
     ce.setDefinition(new Profile.ElementDefinitionComponent());
-    ce.getDefinition().setShort(Factory.newString_(src.getShortDefn()));
-    ce.getDefinition().setFormal(Factory.newString_(src.getDefinition()));
-    ce.getDefinition().setComments(Factory.newString_(src.getComments()));
-    ce.getDefinition().setRequirements(Factory.newString_(src.getRequirements()));
+    ce.getDefinition().setShort(Factory.newString(src.getShortDefn()));
+    ce.getDefinition().setFormal(Factory.newString(src.getDefinition()));
+    ce.getDefinition().setComments(Factory.newString(src.getComments()));
+    ce.getDefinition().setRequirements(Factory.newString(src.getRequirements()));
     for (String a : src.getAliases())
-      ce.getDefinition().getSynonym().add(Factory.newString_(a));
+      ce.getDefinition().getSynonym().add(Factory.newString(a));
     ce.getDefinition().setMin(Factory.newInteger(src.getMinCardinality()));
-    ce.getDefinition().setMax(Factory.newString_(src.getMaxCardinality() == null ? "*" : src.getMaxCardinality().toString()));
+    ce.getDefinition().setMax(Factory.newString(src.getMaxCardinality() == null ? "*" : src.getMaxCardinality().toString()));
     ce.getDefinition().getType().add(new Profile.TypeRefComponent());
     ce.getDefinition().getType().get(0).setCode(Factory.newCode(src.typeCode()));
     // this one should never be used

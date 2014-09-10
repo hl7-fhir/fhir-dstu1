@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
@@ -106,6 +106,8 @@ public class Narrative extends Element {
      * The actual narrative content, a stripped down version of XHTML.
      */
     protected XhtmlNode div;
+
+    private static final long serialVersionUID = 1463852859L;
 
     public Narrative() {
       super();

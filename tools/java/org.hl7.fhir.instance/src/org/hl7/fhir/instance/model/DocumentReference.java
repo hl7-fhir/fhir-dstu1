@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -157,6 +157,13 @@ public class DocumentReference extends Resource {
          */
         protected ResourceReference target;
 
+        /**
+         * The actual object that is the target of the reference (The target document of this relationship.)
+         */
+        protected DocumentReference targetTarget;
+
+        private static final long serialVersionUID = -548377577L;
+
       public DocumentReferenceRelatesToComponent() {
         super();
       }
@@ -214,13 +221,28 @@ public class DocumentReference extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #target} (The actual object that is the target of the reference. The target document of this relationship.)
+         */
+        public DocumentReference getTargetTarget() { 
+          return this.targetTarget;
+        }
+
+        /**
+         * @param value {@link #target} (The actual object that is the target of the reference. The target document of this relationship.)
+         */
+        public DocumentReferenceRelatesToComponent setTargetTarget(DocumentReference value) { 
+          this.targetTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("code", "code", "The type of relationship that this document has with anther document.", 0, java.lang.Integer.MAX_VALUE, code));
           childrenList.add(new Property("target", "Resource(DocumentReference)", "The target document of this relationship.", 0, java.lang.Integer.MAX_VALUE, target));
         }
 
-      public DocumentReferenceRelatesToComponent copy(DocumentReference e) {
+      public DocumentReferenceRelatesToComponent copy() {
         DocumentReferenceRelatesToComponent dst = new DocumentReferenceRelatesToComponent();
         dst.code = code == null ? null : code.copy();
         dst.target = target == null ? null : target.copy();
@@ -238,12 +260,14 @@ public class DocumentReference extends Resource {
         /**
          * Where the service end-point is located.
          */
-        protected String_ address;
+        protected StringType address;
 
         /**
          * A list of named parameters that is used in the service call.
          */
         protected List<DocumentReferenceServiceParameterComponent> parameter = new ArrayList<DocumentReferenceServiceParameterComponent>();
+
+        private static final long serialVersionUID = 1809166750L;
 
       public DocumentReferenceServiceComponent() {
         super();
@@ -272,14 +296,14 @@ public class DocumentReference extends Resource {
         /**
          * @return {@link #address} (Where the service end-point is located.)
          */
-        public String_ getAddress() { 
+        public StringType getAddress() { 
           return this.address;
         }
 
         /**
          * @param value {@link #address} (Where the service end-point is located.)
          */
-        public DocumentReferenceServiceComponent setAddress(String_ value) { 
+        public DocumentReferenceServiceComponent setAddress(StringType value) { 
           this.address = value;
           return this;
         }
@@ -299,7 +323,7 @@ public class DocumentReference extends Resource {
             this.address = null;
           else {
             if (this.address == null)
-              this.address = new String_();
+              this.address = new StringType();
             this.address.setValue(value);
           }
           return this;
@@ -329,13 +353,13 @@ public class DocumentReference extends Resource {
           childrenList.add(new Property("parameter", "", "A list of named parameters that is used in the service call.", 0, java.lang.Integer.MAX_VALUE, parameter));
         }
 
-      public DocumentReferenceServiceComponent copy(DocumentReference e) {
+      public DocumentReferenceServiceComponent copy() {
         DocumentReferenceServiceComponent dst = new DocumentReferenceServiceComponent();
         dst.type = type == null ? null : type.copy();
         dst.address = address == null ? null : address.copy();
         dst.parameter = new ArrayList<DocumentReferenceServiceParameterComponent>();
         for (DocumentReferenceServiceParameterComponent i : parameter)
-          dst.parameter.add(i.copy(e));
+          dst.parameter.add(i.copy());
         return dst;
       }
 
@@ -345,18 +369,20 @@ public class DocumentReference extends Resource {
         /**
          * The name of a parameter.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * The value of the named parameter.
          */
-        protected String_ value;
+        protected StringType value;
+
+        private static final long serialVersionUID = 395259392L;
 
       public DocumentReferenceServiceParameterComponent() {
         super();
       }
 
-      public DocumentReferenceServiceParameterComponent(String_ name) {
+      public DocumentReferenceServiceParameterComponent(StringType name) {
         super();
         this.name = name;
       }
@@ -364,14 +390,14 @@ public class DocumentReference extends Resource {
         /**
          * @return {@link #name} (The name of a parameter.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (The name of a parameter.)
          */
-        public DocumentReferenceServiceParameterComponent setName(String_ value) { 
+        public DocumentReferenceServiceParameterComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -388,7 +414,7 @@ public class DocumentReference extends Resource {
          */
         public DocumentReferenceServiceParameterComponent setNameSimple(String value) { 
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           return this;
         }
@@ -396,14 +422,14 @@ public class DocumentReference extends Resource {
         /**
          * @return {@link #value} (The value of the named parameter.)
          */
-        public String_ getValue() { 
+        public StringType getValue() { 
           return this.value;
         }
 
         /**
          * @param value {@link #value} (The value of the named parameter.)
          */
-        public DocumentReferenceServiceParameterComponent setValue(String_ value) { 
+        public DocumentReferenceServiceParameterComponent setValue(StringType value) { 
           this.value = value;
           return this;
         }
@@ -423,7 +449,7 @@ public class DocumentReference extends Resource {
             this.value = null;
           else {
             if (this.value == null)
-              this.value = new String_();
+              this.value = new StringType();
             this.value.setValue(value);
           }
           return this;
@@ -435,7 +461,7 @@ public class DocumentReference extends Resource {
           childrenList.add(new Property("value", "string", "The value of the named parameter.", 0, java.lang.Integer.MAX_VALUE, value));
         }
 
-      public DocumentReferenceServiceParameterComponent copy(DocumentReference e) {
+      public DocumentReferenceServiceParameterComponent copy() {
         DocumentReferenceServiceParameterComponent dst = new DocumentReferenceServiceParameterComponent();
         dst.name = name == null ? null : name.copy();
         dst.value = value == null ? null : value.copy();
@@ -459,6 +485,8 @@ public class DocumentReference extends Resource {
          * The kind of facility where the patient was seen.
          */
         protected CodeableConcept facilityType;
+
+        private static final long serialVersionUID = -1443761333L;
 
       public DocumentReferenceContextComponent() {
         super();
@@ -518,7 +546,7 @@ public class DocumentReference extends Resource {
           childrenList.add(new Property("facilityType", "CodeableConcept", "The kind of facility where the patient was seen.", 0, java.lang.Integer.MAX_VALUE, facilityType));
         }
 
-      public DocumentReferenceContextComponent copy(DocumentReference e) {
+      public DocumentReferenceContextComponent copy() {
         DocumentReferenceContextComponent dst = new DocumentReferenceContextComponent();
         dst.event = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : event)
@@ -546,6 +574,11 @@ public class DocumentReference extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (Who or what the document is about. The document can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure).)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * Specifies the particular kind of document (e.g. Patient Summary, Discharge Summary, Prescription, etc.).
      */
     protected CodeableConcept type;
@@ -559,6 +592,11 @@ public class DocumentReference extends Resource {
      * Identifies who is responsible for adding the information to the document.
      */
     protected List<ResourceReference> author = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Identifies who is responsible for adding the information to the document.)
+     */
+    protected List<Resource> authorTarget = new ArrayList<Resource>();
+
 
     /**
      * Identifies the organization or group who is responsible for ongoing maintenance of and access to the document.
@@ -566,9 +604,14 @@ public class DocumentReference extends Resource {
     protected ResourceReference custodian;
 
     /**
+     * The actual object that is the target of the reference (Identifies the organization or group who is responsible for ongoing maintenance of and access to the document.)
+     */
+    protected Organization custodianTarget;
+
+    /**
      * A reference to a domain or server that manages policies under which the document is accessed and/or made available.
      */
-    protected Uri policyManager;
+    protected UriType policyManager;
 
     /**
      * Which person or organization authenticates that this document is valid.
@@ -576,14 +619,19 @@ public class DocumentReference extends Resource {
     protected ResourceReference authenticator;
 
     /**
+     * The actual object that is the target of the reference (Which person or organization authenticates that this document is valid.)
+     */
+    protected Resource authenticatorTarget;
+
+    /**
      * When the document was created.
      */
-    protected DateTime created;
+    protected DateTimeType created;
 
     /**
      * When the document reference was created.
      */
-    protected Instant indexed;
+    protected InstantType indexed;
 
     /**
      * The status of this document reference.
@@ -603,7 +651,7 @@ public class DocumentReference extends Resource {
     /**
      * Human-readable description of the source document. This is sometimes known as the "title".
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * A code specifying the level of confidentiality of the XDS Document.
@@ -613,32 +661,32 @@ public class DocumentReference extends Resource {
     /**
      * The primary language in which the source document is written.
      */
-    protected Code primaryLanguage;
+    protected CodeType primaryLanguage;
 
     /**
      * The mime type of the source document.
      */
-    protected Code mimeType;
+    protected CodeType mimeType;
 
     /**
      * An identifier that identifies that the format and content of the document conforms to additional rules beyond the base format indicated in the mimeType.
      */
-    protected List<Uri> format = new ArrayList<Uri>();
+    protected List<UriType> format = new ArrayList<UriType>();
 
     /**
      * The size of the source document this reference refers to in bytes.
      */
-    protected Integer size;
+    protected IntegerType size;
 
     /**
      * A hash of the source document to ensure that changes have not occurred.
      */
-    protected String_ hash;
+    protected StringType hash;
 
     /**
      * A url at which the document can be accessed.
      */
-    protected Uri location;
+    protected UriType location;
 
     /**
      * A description of a service call that can be used to retrieve the document.
@@ -650,11 +698,13 @@ public class DocumentReference extends Resource {
      */
     protected DocumentReferenceContextComponent context;
 
+    private static final long serialVersionUID = -1872142526L;
+
     public DocumentReference() {
       super();
     }
 
-    public DocumentReference(Identifier masterIdentifier, ResourceReference subject, CodeableConcept type, Instant indexed, Enumeration<DocumentReferenceStatus> status, Code mimeType) {
+    public DocumentReference(Identifier masterIdentifier, ResourceReference subject, CodeableConcept type, InstantType indexed, Enumeration<DocumentReferenceStatus> status, CodeType mimeType) {
       super();
       this.masterIdentifier = masterIdentifier;
       this.subject = subject;
@@ -712,6 +762,21 @@ public class DocumentReference extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. Who or what the document is about. The document can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure).)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. Who or what the document is about. The document can be about a person, (patient or healthcare practitioner), a device (I.e. machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure).)
+     */
+    public DocumentReference setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #type} (Specifies the particular kind of document (e.g. Patient Summary, Discharge Summary, Prescription, etc.).)
      */
     public CodeableConcept getType() { 
@@ -759,6 +824,13 @@ public class DocumentReference extends Resource {
     }
 
     /**
+     * @return {@link #author} (The actual objects that are the target of the reference. Identifies who is responsible for adding the information to the document.)
+     */
+    public List<Resource> getAuthorTarget() { 
+      return this.authorTarget;
+    }
+
+    /**
      * @return {@link #custodian} (Identifies the organization or group who is responsible for ongoing maintenance of and access to the document.)
      */
     public ResourceReference getCustodian() { 
@@ -774,16 +846,31 @@ public class DocumentReference extends Resource {
     }
 
     /**
+     * @return {@link #custodian} (The actual object that is the target of the reference. Identifies the organization or group who is responsible for ongoing maintenance of and access to the document.)
+     */
+    public Organization getCustodianTarget() { 
+      return this.custodianTarget;
+    }
+
+    /**
+     * @param value {@link #custodian} (The actual object that is the target of the reference. Identifies the organization or group who is responsible for ongoing maintenance of and access to the document.)
+     */
+    public DocumentReference setCustodianTarget(Organization value) { 
+      this.custodianTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #policyManager} (A reference to a domain or server that manages policies under which the document is accessed and/or made available.)
      */
-    public Uri getPolicyManager() { 
+    public UriType getPolicyManager() { 
       return this.policyManager;
     }
 
     /**
      * @param value {@link #policyManager} (A reference to a domain or server that manages policies under which the document is accessed and/or made available.)
      */
-    public DocumentReference setPolicyManager(Uri value) { 
+    public DocumentReference setPolicyManager(UriType value) { 
       this.policyManager = value;
       return this;
     }
@@ -803,7 +890,7 @@ public class DocumentReference extends Resource {
         this.policyManager = null;
       else {
         if (this.policyManager == null)
-          this.policyManager = new Uri();
+          this.policyManager = new UriType();
         this.policyManager.setValue(value);
       }
       return this;
@@ -825,16 +912,31 @@ public class DocumentReference extends Resource {
     }
 
     /**
+     * @return {@link #authenticator} (The actual object that is the target of the reference. Which person or organization authenticates that this document is valid.)
+     */
+    public Resource getAuthenticatorTarget() { 
+      return this.authenticatorTarget;
+    }
+
+    /**
+     * @param value {@link #authenticator} (The actual object that is the target of the reference. Which person or organization authenticates that this document is valid.)
+     */
+    public DocumentReference setAuthenticatorTarget(Resource value) { 
+      this.authenticatorTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #created} (When the document was created.)
      */
-    public DateTime getCreated() { 
+    public DateTimeType getCreated() { 
       return this.created;
     }
 
     /**
      * @param value {@link #created} (When the document was created.)
      */
-    public DocumentReference setCreated(DateTime value) { 
+    public DocumentReference setCreated(DateTimeType value) { 
       this.created = value;
       return this;
     }
@@ -854,7 +956,7 @@ public class DocumentReference extends Resource {
         this.created = null;
       else {
         if (this.created == null)
-          this.created = new DateTime();
+          this.created = new DateTimeType();
         this.created.setValue(value);
       }
       return this;
@@ -863,14 +965,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #indexed} (When the document reference was created.)
      */
-    public Instant getIndexed() { 
+    public InstantType getIndexed() { 
       return this.indexed;
     }
 
     /**
      * @param value {@link #indexed} (When the document reference was created.)
      */
-    public DocumentReference setIndexed(Instant value) { 
+    public DocumentReference setIndexed(InstantType value) { 
       this.indexed = value;
       return this;
     }
@@ -887,7 +989,7 @@ public class DocumentReference extends Resource {
      */
     public DocumentReference setIndexedSimple(DateAndTime value) { 
         if (this.indexed == null)
-          this.indexed = new Instant();
+          this.indexed = new InstantType();
         this.indexed.setValue(value);
       return this;
     }
@@ -959,14 +1061,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #description} (Human-readable description of the source document. This is sometimes known as the "title".)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (Human-readable description of the source document. This is sometimes known as the "title".)
      */
-    public DocumentReference setDescription(String_ value) { 
+    public DocumentReference setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -986,7 +1088,7 @@ public class DocumentReference extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -1012,14 +1114,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #primaryLanguage} (The primary language in which the source document is written.)
      */
-    public Code getPrimaryLanguage() { 
+    public CodeType getPrimaryLanguage() { 
       return this.primaryLanguage;
     }
 
     /**
      * @param value {@link #primaryLanguage} (The primary language in which the source document is written.)
      */
-    public DocumentReference setPrimaryLanguage(Code value) { 
+    public DocumentReference setPrimaryLanguage(CodeType value) { 
       this.primaryLanguage = value;
       return this;
     }
@@ -1039,7 +1141,7 @@ public class DocumentReference extends Resource {
         this.primaryLanguage = null;
       else {
         if (this.primaryLanguage == null)
-          this.primaryLanguage = new Code();
+          this.primaryLanguage = new CodeType();
         this.primaryLanguage.setValue(value);
       }
       return this;
@@ -1048,14 +1150,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #mimeType} (The mime type of the source document.)
      */
-    public Code getMimeType() { 
+    public CodeType getMimeType() { 
       return this.mimeType;
     }
 
     /**
      * @param value {@link #mimeType} (The mime type of the source document.)
      */
-    public DocumentReference setMimeType(Code value) { 
+    public DocumentReference setMimeType(CodeType value) { 
       this.mimeType = value;
       return this;
     }
@@ -1072,7 +1174,7 @@ public class DocumentReference extends Resource {
      */
     public DocumentReference setMimeTypeSimple(String value) { 
         if (this.mimeType == null)
-          this.mimeType = new Code();
+          this.mimeType = new CodeType();
         this.mimeType.setValue(value);
       return this;
     }
@@ -1080,7 +1182,7 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #format} (An identifier that identifies that the format and content of the document conforms to additional rules beyond the base format indicated in the mimeType.)
      */
-    public List<Uri> getFormat() { 
+    public List<UriType> getFormat() { 
       return this.format;
     }
 
@@ -1088,8 +1190,8 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #format} (An identifier that identifies that the format and content of the document conforms to additional rules beyond the base format indicated in the mimeType.)
      */
-    public Uri addFormat() { 
-      Uri t = new Uri();
+    public UriType addFormat() { 
+      UriType t = new UriType();
       this.format.add(t);
       return t;
     }
@@ -1097,24 +1199,34 @@ public class DocumentReference extends Resource {
     /**
      * @param value {@link #format} (An identifier that identifies that the format and content of the document conforms to additional rules beyond the base format indicated in the mimeType.)
      */
-    public Uri addFormatSimple(String value) { 
-      Uri t = new Uri();
+    public UriType addFormatSimple(String value) { 
+      UriType t = new UriType();
       t.setValue(value);
       this.format.add(t);
       return t;
     }
 
     /**
+     * @param value {@link #format} (An identifier that identifies that the format and content of the document conforms to additional rules beyond the base format indicated in the mimeType.)
+     */
+    public boolean hasFormatSimple(String value) { 
+      for (UriType v : this.format)
+        if (v.getValue().equals(value))
+          return true;
+      return false;
+    }
+
+    /**
      * @return {@link #size} (The size of the source document this reference refers to in bytes.)
      */
-    public Integer getSize() { 
+    public IntegerType getSize() { 
       return this.size;
     }
 
     /**
      * @param value {@link #size} (The size of the source document this reference refers to in bytes.)
      */
-    public DocumentReference setSize(Integer value) { 
+    public DocumentReference setSize(IntegerType value) { 
       this.size = value;
       return this;
     }
@@ -1134,7 +1246,7 @@ public class DocumentReference extends Resource {
         this.size = null;
       else {
         if (this.size == null)
-          this.size = new Integer();
+          this.size = new IntegerType();
         this.size.setValue(value);
       }
       return this;
@@ -1143,14 +1255,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #hash} (A hash of the source document to ensure that changes have not occurred.)
      */
-    public String_ getHash() { 
+    public StringType getHash() { 
       return this.hash;
     }
 
     /**
      * @param value {@link #hash} (A hash of the source document to ensure that changes have not occurred.)
      */
-    public DocumentReference setHash(String_ value) { 
+    public DocumentReference setHash(StringType value) { 
       this.hash = value;
       return this;
     }
@@ -1170,7 +1282,7 @@ public class DocumentReference extends Resource {
         this.hash = null;
       else {
         if (this.hash == null)
-          this.hash = new String_();
+          this.hash = new StringType();
         this.hash.setValue(value);
       }
       return this;
@@ -1179,14 +1291,14 @@ public class DocumentReference extends Resource {
     /**
      * @return {@link #location} (A url at which the document can be accessed.)
      */
-    public Uri getLocation() { 
+    public UriType getLocation() { 
       return this.location;
     }
 
     /**
      * @param value {@link #location} (A url at which the document can be accessed.)
      */
-    public DocumentReference setLocation(Uri value) { 
+    public DocumentReference setLocation(UriType value) { 
       this.location = value;
       return this;
     }
@@ -1206,7 +1318,7 @@ public class DocumentReference extends Resource {
         this.location = null;
       else {
         if (this.location == null)
-          this.location = new Uri();
+          this.location = new UriType();
         this.location.setValue(value);
       }
       return this;
@@ -1291,21 +1403,21 @@ public class DocumentReference extends Resource {
         dst.docStatus = docStatus == null ? null : docStatus.copy();
         dst.relatesTo = new ArrayList<DocumentReferenceRelatesToComponent>();
         for (DocumentReferenceRelatesToComponent i : relatesTo)
-          dst.relatesTo.add(i.copy(dst));
+          dst.relatesTo.add(i.copy());
         dst.description = description == null ? null : description.copy();
         dst.confidentiality = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : confidentiality)
           dst.confidentiality.add(i.copy());
         dst.primaryLanguage = primaryLanguage == null ? null : primaryLanguage.copy();
         dst.mimeType = mimeType == null ? null : mimeType.copy();
-        dst.format = new ArrayList<Uri>();
-        for (Uri i : format)
+        dst.format = new ArrayList<UriType>();
+        for (UriType i : format)
           dst.format.add(i.copy());
         dst.size = size == null ? null : size.copy();
         dst.hash = hash == null ? null : hash.copy();
         dst.location = location == null ? null : location.copy();
-        dst.service = service == null ? null : service.copy(dst);
-        dst.context = context == null ? null : context.copy(dst);
+        dst.service = service == null ? null : service.copy();
+        dst.context = context == null ? null : context.copy();
         return dst;
       }
 

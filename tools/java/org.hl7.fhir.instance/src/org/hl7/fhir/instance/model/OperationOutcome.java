@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -110,12 +110,14 @@ public class OperationOutcome extends Resource {
         /**
          * Additional description of the issue.
          */
-        protected String_ details;
+        protected StringType details;
 
         /**
          * A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.
          */
-        protected List<String_> location = new ArrayList<String_>();
+        protected List<StringType> location = new ArrayList<StringType>();
+
+        private static final long serialVersionUID = 1582980307L;
 
       public OperationOutcomeIssueComponent() {
         super();
@@ -176,14 +178,14 @@ public class OperationOutcome extends Resource {
         /**
          * @return {@link #details} (Additional description of the issue.)
          */
-        public String_ getDetails() { 
+        public StringType getDetails() { 
           return this.details;
         }
 
         /**
          * @param value {@link #details} (Additional description of the issue.)
          */
-        public OperationOutcomeIssueComponent setDetails(String_ value) { 
+        public OperationOutcomeIssueComponent setDetails(StringType value) { 
           this.details = value;
           return this;
         }
@@ -203,7 +205,7 @@ public class OperationOutcome extends Resource {
             this.details = null;
           else {
             if (this.details == null)
-              this.details = new String_();
+              this.details = new StringType();
             this.details.setValue(value);
           }
           return this;
@@ -212,7 +214,7 @@ public class OperationOutcome extends Resource {
         /**
          * @return {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
          */
-        public List<String_> getLocation() { 
+        public List<StringType> getLocation() { 
           return this.location;
         }
 
@@ -220,8 +222,8 @@ public class OperationOutcome extends Resource {
         /**
          * @return {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
          */
-        public String_ addLocation() { 
-          String_ t = new String_();
+        public StringType addLocation() { 
+          StringType t = new StringType();
           this.location.add(t);
           return t;
         }
@@ -229,11 +231,21 @@ public class OperationOutcome extends Resource {
         /**
          * @param value {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
          */
-        public String_ addLocationSimple(String value) { 
-          String_ t = new String_();
+        public StringType addLocationSimple(String value) { 
+          StringType t = new StringType();
           t.setValue(value);
           this.location.add(t);
           return t;
+        }
+
+        /**
+         * @param value {@link #location} (A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.)
+         */
+        public boolean hasLocationSimple(String value) { 
+          for (StringType v : this.location)
+            if (v.getValue().equals(value))
+              return true;
+          return false;
         }
 
         protected void listChildren(List<Property> childrenList) {
@@ -244,13 +256,13 @@ public class OperationOutcome extends Resource {
           childrenList.add(new Property("location", "string", "A simple XPath limited to element names, repetition indicators and the default child access that identifies one of the elements in the resource that caused this issue to be raised.", 0, java.lang.Integer.MAX_VALUE, location));
         }
 
-      public OperationOutcomeIssueComponent copy(OperationOutcome e) {
+      public OperationOutcomeIssueComponent copy() {
         OperationOutcomeIssueComponent dst = new OperationOutcomeIssueComponent();
         dst.severity = severity == null ? null : severity.copy();
         dst.type = type == null ? null : type.copy();
         dst.details = details == null ? null : details.copy();
-        dst.location = new ArrayList<String_>();
-        for (String_ i : location)
+        dst.location = new ArrayList<StringType>();
+        for (StringType i : location)
           dst.location.add(i.copy());
         return dst;
       }
@@ -261,6 +273,8 @@ public class OperationOutcome extends Resource {
      * An error, warning or information message that results from a system action.
      */
     protected List<OperationOutcomeIssueComponent> issue = new ArrayList<OperationOutcomeIssueComponent>();
+
+    private static final long serialVersionUID = 820547604L;
 
     public OperationOutcome() {
       super();
@@ -292,7 +306,7 @@ public class OperationOutcome extends Resource {
         OperationOutcome dst = new OperationOutcome();
         dst.issue = new ArrayList<OperationOutcomeIssueComponent>();
         for (OperationOutcomeIssueComponent i : issue)
-          dst.issue.add(i.copy(dst));
+          dst.issue.add(i.copy());
         return dst;
       }
 

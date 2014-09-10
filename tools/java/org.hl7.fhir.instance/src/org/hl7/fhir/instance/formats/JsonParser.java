@@ -1,49 +1,46 @@
 package org.hl7.fhir.instance.formats;
 
 /*
-  Copyright (c) 2011-2013, HL7, Inc.
-  All rights reserved.
-  
-  Redistribution and use in source and binary forms, with or without modification, 
-  are permitted provided that the following conditions are met:
-  
-   * Redistributions of source code must retain the above copyright notice, this 
-     list of conditions and the following disclaimer.
-   * Redistributions in binary form must reproduce the above copyright notice, 
-     this list of conditions and the following disclaimer in the documentation 
-     and/or other materials provided with the distribution.
-   * Neither the name of HL7 nor the names of its contributors may be used to 
-     endorse or promote products derived from this software without specific 
-     prior written permission.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
-  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
-  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
-  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
-  POSSIBILITY OF SUCH DAMAGE.
-  
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
 */
-
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
-
-import org.hl7.fhir.instance.model.Integer;
-import org.hl7.fhir.instance.model.DateTime;
-import org.hl7.fhir.instance.model.Code;
-import org.hl7.fhir.instance.model.Date;
-import org.hl7.fhir.instance.model.Decimal;
-import org.hl7.fhir.instance.model.Uri;
-import org.hl7.fhir.instance.model.Id;
-import org.hl7.fhir.instance.model.Base64Binary;
-import org.hl7.fhir.instance.model.Oid;
-import org.hl7.fhir.instance.model.String_;
-import org.hl7.fhir.instance.model.Boolean;
-import org.hl7.fhir.instance.model.Uuid;
-import org.hl7.fhir.instance.model.Instant;
+import org.hl7.fhir.instance.model.IntegerType;
+import org.hl7.fhir.instance.model.DateTimeType;
+import org.hl7.fhir.instance.model.CodeType;
+import org.hl7.fhir.instance.model.DateType;
+import org.hl7.fhir.instance.model.DecimalType;
+import org.hl7.fhir.instance.model.UriType;
+import org.hl7.fhir.instance.model.IdType;
+import org.hl7.fhir.instance.model.Base64BinaryType;
+import org.hl7.fhir.instance.model.OidType;
+import org.hl7.fhir.instance.model.StringType;
+import org.hl7.fhir.instance.model.BooleanType;
+import org.hl7.fhir.instance.model.UuidType;
+import org.hl7.fhir.instance.model.InstantType;
 import org.hl7.fhir.instance.model.*;
 import org.hl7.fhir.utilities.Utilities;
 import com.google.gson.JsonObject;
@@ -83,92 +80,92 @@ public class JsonParser extends JsonParserBase {
     return res;
   }
 
-  private Integer parseInteger(java.lang.Long v) throws Exception {
-    Integer res = new Integer();
+  private IntegerType parseInteger(java.lang.Long v) throws Exception {
+    IntegerType res = new IntegerType();
     if (v != null)
       res.setValue(parseIntegerPrimitive(v));
     return res;
   }
 
-  private DateTime parseDateTime(String v) throws Exception {
-    DateTime res = new DateTime();
+  private DateTimeType parseDateTime(String v) throws Exception {
+    DateTimeType res = new DateTimeType();
     if (v != null)
       res.setValue(parseDateTimePrimitive(v));
     return res;
   }
 
-  private Code parseCode(String v) throws Exception {
-    Code res = new Code();
+  private CodeType parseCode(String v) throws Exception {
+    CodeType res = new CodeType();
     if (v != null)
       res.setValue(parseCodePrimitive(v));
     return res;
   }
 
-  private Date parseDate(String v) throws Exception {
-    Date res = new Date();
+  private DateType parseDate(String v) throws Exception {
+    DateType res = new DateType();
     if (v != null)
       res.setValue(parseDatePrimitive(v));
     return res;
   }
 
-  private Decimal parseDecimal(java.math.BigDecimal v) throws Exception {
-    Decimal res = new Decimal();
+  private DecimalType parseDecimal(java.math.BigDecimal v) throws Exception {
+    DecimalType res = new DecimalType();
     if (v != null)
       res.setValue(parseDecimalPrimitive(v));
     return res;
   }
 
-  private Uri parseUri(String v) throws Exception {
-    Uri res = new Uri();
+  private UriType parseUri(String v) throws Exception {
+    UriType res = new UriType();
     if (v != null)
       res.setValue(parseUriPrimitive(v));
     return res;
   }
 
-  private Id parseId(String v) throws Exception {
-    Id res = new Id();
+  private IdType parseId(String v) throws Exception {
+    IdType res = new IdType();
     if (v != null)
       res.setValue(parseIdPrimitive(v));
     return res;
   }
 
-  private Base64Binary parseBase64Binary(String v) throws Exception {
-    Base64Binary res = new Base64Binary();
+  private Base64BinaryType parseBase64Binary(String v) throws Exception {
+    Base64BinaryType res = new Base64BinaryType();
     if (v != null)
       res.setValue(parseBase64BinaryPrimitive(v));
     return res;
   }
 
-  private Oid parseOid(String v) throws Exception {
-    Oid res = new Oid();
+  private OidType parseOid(String v) throws Exception {
+    OidType res = new OidType();
     if (v != null)
       res.setValue(parseOidPrimitive(v));
     return res;
   }
 
-  private String_ parseString(String v) throws Exception {
-    String_ res = new String_();
+  private StringType parseString(String v) throws Exception {
+    StringType res = new StringType();
     if (v != null)
       res.setValue(parseStringPrimitive(v));
     return res;
   }
 
-  private Boolean parseBoolean(java.lang.Boolean v) throws Exception {
-    Boolean res = new Boolean();
+  private BooleanType parseBoolean(java.lang.Boolean v) throws Exception {
+    BooleanType res = new BooleanType();
     if (v != null)
       res.setValue(parseBooleanPrimitive(v));
     return res;
   }
 
-  private Uuid parseUuid(String v) throws Exception {
-    Uuid res = new Uuid();
+  private UuidType parseUuid(String v) throws Exception {
+    UuidType res = new UuidType();
     if (v != null)
       res.setValue(parseUuidPrimitive(v));
     return res;
   }
 
-  private Instant parseInstant(String v) throws Exception {
-    Instant res = new Instant();
+  private InstantType parseInstant(String v) throws Exception {
+    InstantType res = new InstantType();
     if (v != null)
       res.setValue(parseInstantPrimitive(v));
     return res;
@@ -5866,79 +5863,79 @@ public class JsonParser extends JsonParserBase {
     else if (json.has(prefix+"HumanName"))
       return parseHumanName(json.getAsJsonObject(prefix+"HumanName"));
     else if (json.has(prefix+"Integer") || json.has("_"+prefix+"Integer")) {
-      Type t = json.has(prefix+"Integer") ? parseInteger(json.get(prefix+"Integer").getAsLong()) : new Integer();
+      Type t = json.has(prefix+"Integer") ? parseInteger(json.get(prefix+"Integer").getAsLong()) : new IntegerType();
       if (json.has("_"+prefix+"Integer"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Integer"), t);
       return t;
     }
     else if (json.has(prefix+"DateTime") || json.has("_"+prefix+"DateTime")) {
-      Type t = json.has(prefix+"DateTime") ? parseDateTime(json.get(prefix+"DateTime").getAsString()) : new DateTime();
+      Type t = json.has(prefix+"DateTime") ? parseDateTime(json.get(prefix+"DateTime").getAsString()) : new DateTimeType();
       if (json.has("_"+prefix+"DateTime"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"DateTime"), t);
       return t;
     }
     else if (json.has(prefix+"Code") || json.has("_"+prefix+"Code")) {
-      Type t = json.has(prefix+"Code") ? parseCode(json.get(prefix+"Code").getAsString()) : new Code();
+      Type t = json.has(prefix+"Code") ? parseCode(json.get(prefix+"Code").getAsString()) : new CodeType();
       if (json.has("_"+prefix+"Code"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Code"), t);
       return t;
     }
     else if (json.has(prefix+"Date") || json.has("_"+prefix+"Date")) {
-      Type t = json.has(prefix+"Date") ? parseDate(json.get(prefix+"Date").getAsString()) : new Date();
+      Type t = json.has(prefix+"Date") ? parseDate(json.get(prefix+"Date").getAsString()) : new DateType();
       if (json.has("_"+prefix+"Date"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Date"), t);
       return t;
     }
     else if (json.has(prefix+"Decimal") || json.has("_"+prefix+"Decimal")) {
-      Type t = json.has(prefix+"Decimal") ? parseDecimal(json.get(prefix+"Decimal").getAsBigDecimal()) : new Decimal();
+      Type t = json.has(prefix+"Decimal") ? parseDecimal(json.get(prefix+"Decimal").getAsBigDecimal()) : new DecimalType();
       if (json.has("_"+prefix+"Decimal"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Decimal"), t);
       return t;
     }
     else if (json.has(prefix+"Uri") || json.has("_"+prefix+"Uri")) {
-      Type t = json.has(prefix+"Uri") ? parseUri(json.get(prefix+"Uri").getAsString()) : new Uri();
+      Type t = json.has(prefix+"Uri") ? parseUri(json.get(prefix+"Uri").getAsString()) : new UriType();
       if (json.has("_"+prefix+"Uri"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Uri"), t);
       return t;
     }
     else if (json.has(prefix+"Id") || json.has("_"+prefix+"Id")) {
-      Type t = json.has(prefix+"Id") ? parseId(json.get(prefix+"Id").getAsString()) : new Id();
+      Type t = json.has(prefix+"Id") ? parseId(json.get(prefix+"Id").getAsString()) : new IdType();
       if (json.has("_"+prefix+"Id"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Id"), t);
       return t;
     }
     else if (json.has(prefix+"Base64Binary") || json.has("_"+prefix+"Base64Binary")) {
-      Type t = json.has(prefix+"Base64Binary") ? parseBase64Binary(json.get(prefix+"Base64Binary").getAsString()) : new Base64Binary();
+      Type t = json.has(prefix+"Base64Binary") ? parseBase64Binary(json.get(prefix+"Base64Binary").getAsString()) : new Base64BinaryType();
       if (json.has("_"+prefix+"Base64Binary"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Base64Binary"), t);
       return t;
     }
     else if (json.has(prefix+"Oid") || json.has("_"+prefix+"Oid")) {
-      Type t = json.has(prefix+"Oid") ? parseOid(json.get(prefix+"Oid").getAsString()) : new Oid();
+      Type t = json.has(prefix+"Oid") ? parseOid(json.get(prefix+"Oid").getAsString()) : new OidType();
       if (json.has("_"+prefix+"Oid"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Oid"), t);
       return t;
     }
     else if (json.has(prefix+"String") || json.has("_"+prefix+"String")) {
-      Type t = json.has(prefix+"String") ? parseString(json.get(prefix+"String").getAsString()) : new String_();
+      Type t = json.has(prefix+"String") ? parseString(json.get(prefix+"String").getAsString()) : new StringType();
       if (json.has("_"+prefix+"String"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"String"), t);
       return t;
     }
     else if (json.has(prefix+"Boolean") || json.has("_"+prefix+"Boolean")) {
-      Type t = json.has(prefix+"Boolean") ? parseBoolean(json.get(prefix+"Boolean").getAsBoolean()) : new Boolean();
+      Type t = json.has(prefix+"Boolean") ? parseBoolean(json.get(prefix+"Boolean").getAsBoolean()) : new BooleanType();
       if (json.has("_"+prefix+"Boolean"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Boolean"), t);
       return t;
     }
     else if (json.has(prefix+"Uuid") || json.has("_"+prefix+"Uuid")) {
-      Type t = json.has(prefix+"Uuid") ? parseUuid(json.get(prefix+"Uuid").getAsString()) : new Uuid();
+      Type t = json.has(prefix+"Uuid") ? parseUuid(json.get(prefix+"Uuid").getAsString()) : new UuidType();
       if (json.has("_"+prefix+"Uuid"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Uuid"), t);
       return t;
     }
     else if (json.has(prefix+"Instant") || json.has("_"+prefix+"Instant")) {
-      Type t = json.has(prefix+"Instant") ? parseInstant(json.get(prefix+"Instant").getAsString()) : new Instant();
+      Type t = json.has(prefix+"Instant") ? parseInstant(json.get(prefix+"Instant").getAsString()) : new InstantType();
       if (json.has("_"+prefix+"Instant"))
         parseElementProperties(json.getAsJsonObject("_"+prefix+"Instant"), t);
       return t;

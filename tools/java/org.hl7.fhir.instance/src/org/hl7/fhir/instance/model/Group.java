@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -126,13 +126,15 @@ public class Group extends Resource {
         /**
          * If true, indicates the characteristic is one that is NOT held by members of the group.
          */
-        protected Boolean exclude;
+        protected BooleanType exclude;
+
+        private static final long serialVersionUID = 803478031L;
 
       public GroupCharacteristicComponent() {
         super();
       }
 
-      public GroupCharacteristicComponent(CodeableConcept code, Type value, Boolean exclude) {
+      public GroupCharacteristicComponent(CodeableConcept code, Type value, BooleanType exclude) {
         super();
         this.code = code;
         this.value = value;
@@ -172,14 +174,14 @@ public class Group extends Resource {
         /**
          * @return {@link #exclude} (If true, indicates the characteristic is one that is NOT held by members of the group.)
          */
-        public Boolean getExclude() { 
+        public BooleanType getExclude() { 
           return this.exclude;
         }
 
         /**
          * @param value {@link #exclude} (If true, indicates the characteristic is one that is NOT held by members of the group.)
          */
-        public GroupCharacteristicComponent setExclude(Boolean value) { 
+        public GroupCharacteristicComponent setExclude(BooleanType value) { 
           this.exclude = value;
           return this;
         }
@@ -196,7 +198,7 @@ public class Group extends Resource {
          */
         public GroupCharacteristicComponent setExcludeSimple(boolean value) { 
             if (this.exclude == null)
-              this.exclude = new Boolean();
+              this.exclude = new BooleanType();
             this.exclude.setValue(value);
           return this;
         }
@@ -208,7 +210,7 @@ public class Group extends Resource {
           childrenList.add(new Property("exclude", "boolean", "If true, indicates the characteristic is one that is NOT held by members of the group.", 0, java.lang.Integer.MAX_VALUE, exclude));
         }
 
-      public GroupCharacteristicComponent copy(Group e) {
+      public GroupCharacteristicComponent copy() {
         GroupCharacteristicComponent dst = new GroupCharacteristicComponent();
         dst.code = code == null ? null : code.copy();
         dst.value = value == null ? null : value.copy();
@@ -231,7 +233,7 @@ public class Group extends Resource {
     /**
      * If true, indicates that the resource refers to a specific group of real individuals.  If false, the group defines a set of intended individuals.
      */
-    protected Boolean actual;
+    protected BooleanType actual;
 
     /**
      * Provides a specific type of resource the group includes.  E.g. "cow", "syringe", etc.
@@ -241,12 +243,12 @@ public class Group extends Resource {
     /**
      * A label assigned to the group for human identification and communication.
      */
-    protected String_ name;
+    protected StringType name;
 
     /**
      * A count of the number of resource instances that are part of the group.
      */
-    protected Integer quantity;
+    protected IntegerType quantity;
 
     /**
      * Identifies the traits shared by members of the group.
@@ -257,12 +259,19 @@ public class Group extends Resource {
      * Identifies the resource instances that are members of the group.
      */
     protected List<ResourceReference> member = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Identifies the resource instances that are members of the group.)
+     */
+    protected List<Resource> memberTarget = new ArrayList<Resource>();
+
+
+    private static final long serialVersionUID = -1925725072L;
 
     public Group() {
       super();
     }
 
-    public Group(Enumeration<GroupType> type, Boolean actual) {
+    public Group(Enumeration<GroupType> type, BooleanType actual) {
       super();
       this.type = type;
       this.actual = actual;
@@ -318,14 +327,14 @@ public class Group extends Resource {
     /**
      * @return {@link #actual} (If true, indicates that the resource refers to a specific group of real individuals.  If false, the group defines a set of intended individuals.)
      */
-    public Boolean getActual() { 
+    public BooleanType getActual() { 
       return this.actual;
     }
 
     /**
      * @param value {@link #actual} (If true, indicates that the resource refers to a specific group of real individuals.  If false, the group defines a set of intended individuals.)
      */
-    public Group setActual(Boolean value) { 
+    public Group setActual(BooleanType value) { 
       this.actual = value;
       return this;
     }
@@ -342,7 +351,7 @@ public class Group extends Resource {
      */
     public Group setActualSimple(boolean value) { 
         if (this.actual == null)
-          this.actual = new Boolean();
+          this.actual = new BooleanType();
         this.actual.setValue(value);
       return this;
     }
@@ -365,14 +374,14 @@ public class Group extends Resource {
     /**
      * @return {@link #name} (A label assigned to the group for human identification and communication.)
      */
-    public String_ getName() { 
+    public StringType getName() { 
       return this.name;
     }
 
     /**
      * @param value {@link #name} (A label assigned to the group for human identification and communication.)
      */
-    public Group setName(String_ value) { 
+    public Group setName(StringType value) { 
       this.name = value;
       return this;
     }
@@ -392,7 +401,7 @@ public class Group extends Resource {
         this.name = null;
       else {
         if (this.name == null)
-          this.name = new String_();
+          this.name = new StringType();
         this.name.setValue(value);
       }
       return this;
@@ -401,14 +410,14 @@ public class Group extends Resource {
     /**
      * @return {@link #quantity} (A count of the number of resource instances that are part of the group.)
      */
-    public Integer getQuantity() { 
+    public IntegerType getQuantity() { 
       return this.quantity;
     }
 
     /**
      * @param value {@link #quantity} (A count of the number of resource instances that are part of the group.)
      */
-    public Group setQuantity(Integer value) { 
+    public Group setQuantity(IntegerType value) { 
       this.quantity = value;
       return this;
     }
@@ -428,7 +437,7 @@ public class Group extends Resource {
         this.quantity = null;
       else {
         if (this.quantity == null)
-          this.quantity = new Integer();
+          this.quantity = new IntegerType();
         this.quantity.setValue(value);
       }
       return this;
@@ -468,6 +477,13 @@ public class Group extends Resource {
       return t;
     }
 
+    /**
+     * @return {@link #member} (The actual objects that are the target of the reference. Identifies the resource instances that are members of the group.)
+     */
+    public List<Resource> getMemberTarget() { 
+      return this.memberTarget;
+    }
+
       protected void listChildren(List<Property> childrenList) {
         super.listChildren(childrenList);
         childrenList.add(new Property("identifier", "Identifier", "A unique business identifier for this group.", 0, java.lang.Integer.MAX_VALUE, identifier));
@@ -490,7 +506,7 @@ public class Group extends Resource {
         dst.quantity = quantity == null ? null : quantity.copy();
         dst.characteristic = new ArrayList<GroupCharacteristicComponent>();
         for (GroupCharacteristicComponent i : characteristic)
-          dst.characteristic.add(i.copy(dst));
+          dst.characteristic.add(i.copy());
         dst.member = new ArrayList<ResourceReference>();
         for (ResourceReference i : member)
           dst.member.add(i.copy());

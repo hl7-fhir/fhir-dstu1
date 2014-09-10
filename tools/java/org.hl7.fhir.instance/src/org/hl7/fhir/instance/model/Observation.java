@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -297,6 +297,8 @@ public class Observation extends Resource {
          */
         protected Range age;
 
+        private static final long serialVersionUID = -1022858860L;
+
       public ObservationReferenceRangeComponent() {
         super();
       }
@@ -369,7 +371,7 @@ public class Observation extends Resource {
           childrenList.add(new Property("age", "Range", "The age at which this reference range is applicable. This is a neonatal age (e.g. number of weeks at term) if the meaning says so.", 0, java.lang.Integer.MAX_VALUE, age));
         }
 
-      public ObservationReferenceRangeComponent copy(Observation e) {
+      public ObservationReferenceRangeComponent copy() {
         ObservationReferenceRangeComponent dst = new ObservationReferenceRangeComponent();
         dst.low = low == null ? null : low.copy();
         dst.high = high == null ? null : high.copy();
@@ -390,6 +392,13 @@ public class Observation extends Resource {
          * A reference to the observation that is related to this observation.
          */
         protected ResourceReference target;
+
+        /**
+         * The actual object that is the target of the reference (A reference to the observation that is related to this observation.)
+         */
+        protected Observation targetTarget;
+
+        private static final long serialVersionUID = -984646850L;
 
       public ObservationRelatedComponent() {
         super();
@@ -451,13 +460,28 @@ public class Observation extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #target} (The actual object that is the target of the reference. A reference to the observation that is related to this observation.)
+         */
+        public Observation getTargetTarget() { 
+          return this.targetTarget;
+        }
+
+        /**
+         * @param value {@link #target} (The actual object that is the target of the reference. A reference to the observation that is related to this observation.)
+         */
+        public ObservationRelatedComponent setTargetTarget(Observation value) { 
+          this.targetTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("type", "code", "A code specifying the kind of relationship that exists with the target observation.", 0, java.lang.Integer.MAX_VALUE, type));
           childrenList.add(new Property("target", "Resource(Observation)", "A reference to the observation that is related to this observation.", 0, java.lang.Integer.MAX_VALUE, target));
         }
 
-      public ObservationRelatedComponent copy(Observation e) {
+      public ObservationRelatedComponent copy() {
         ObservationRelatedComponent dst = new ObservationRelatedComponent();
         dst.type = type == null ? null : type.copy();
         dst.target = target == null ? null : target.copy();
@@ -484,7 +508,7 @@ public class Observation extends Resource {
     /**
      * May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.
      */
-    protected String_ comments;
+    protected StringType comments;
 
     /**
      * The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the "physiologically relevant time". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.
@@ -494,7 +518,7 @@ public class Observation extends Resource {
     /**
      * Date/Time this was made available.
      */
-    protected Instant issued;
+    protected InstantType issued;
 
     /**
      * The status of the result value.
@@ -527,14 +551,29 @@ public class Observation extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The thing the observation is being made about.)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * The specimen that was used when this observation was made.
      */
     protected ResourceReference specimen;
 
     /**
+     * The actual object that is the target of the reference (The specimen that was used when this observation was made.)
+     */
+    protected Specimen specimenTarget;
+
+    /**
      * Who was responsible for asserting the observed value as "true".
      */
     protected List<ResourceReference> performer = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Who was responsible for asserting the observed value as "true".)
+     */
+    protected List<Resource> performerTarget = new ArrayList<Resource>();
+
 
     /**
      * Guidance on how to interpret the value by comparison to a normal or recommended range.
@@ -545,6 +584,8 @@ public class Observation extends Resource {
      * Related observations - either components, or previous observations, or statements of derivation.
      */
     protected List<ObservationRelatedComponent> related = new ArrayList<ObservationRelatedComponent>();
+
+    private static final long serialVersionUID = -1854863907L;
 
     public Observation() {
       super();
@@ -605,14 +646,14 @@ public class Observation extends Resource {
     /**
      * @return {@link #comments} (May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.)
      */
-    public String_ getComments() { 
+    public StringType getComments() { 
       return this.comments;
     }
 
     /**
      * @param value {@link #comments} (May include statements about significant, unexpected or unreliable values, or information about the source of the value where this may be relevant to the interpretation of the result.)
      */
-    public Observation setComments(String_ value) { 
+    public Observation setComments(StringType value) { 
       this.comments = value;
       return this;
     }
@@ -632,7 +673,7 @@ public class Observation extends Resource {
         this.comments = null;
       else {
         if (this.comments == null)
-          this.comments = new String_();
+          this.comments = new StringType();
         this.comments.setValue(value);
       }
       return this;
@@ -656,14 +697,14 @@ public class Observation extends Resource {
     /**
      * @return {@link #issued} (Date/Time this was made available.)
      */
-    public Instant getIssued() { 
+    public InstantType getIssued() { 
       return this.issued;
     }
 
     /**
      * @param value {@link #issued} (Date/Time this was made available.)
      */
-    public Observation setIssued(Instant value) { 
+    public Observation setIssued(InstantType value) { 
       this.issued = value;
       return this;
     }
@@ -683,7 +724,7 @@ public class Observation extends Resource {
         this.issued = null;
       else {
         if (this.issued == null)
-          this.issued = new Instant();
+          this.issued = new InstantType();
         this.issued.setValue(value);
       }
       return this;
@@ -814,6 +855,21 @@ public class Observation extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The thing the observation is being made about.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The thing the observation is being made about.)
+     */
+    public Observation setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #specimen} (The specimen that was used when this observation was made.)
      */
     public ResourceReference getSpecimen() { 
@@ -825,6 +881,21 @@ public class Observation extends Resource {
      */
     public Observation setSpecimen(ResourceReference value) { 
       this.specimen = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #specimen} (The actual object that is the target of the reference. The specimen that was used when this observation was made.)
+     */
+    public Specimen getSpecimenTarget() { 
+      return this.specimenTarget;
+    }
+
+    /**
+     * @param value {@link #specimen} (The actual object that is the target of the reference. The specimen that was used when this observation was made.)
+     */
+    public Observation setSpecimenTarget(Specimen value) { 
+      this.specimenTarget = value;
       return this;
     }
 
@@ -843,6 +914,13 @@ public class Observation extends Resource {
       ResourceReference t = new ResourceReference();
       this.performer.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #performer} (The actual objects that are the target of the reference. Who was responsible for asserting the observed value as "true".)
+     */
+    public List<Resource> getPerformerTarget() { 
+      return this.performerTarget;
     }
 
     /**
@@ -919,10 +997,10 @@ public class Observation extends Resource {
           dst.performer.add(i.copy());
         dst.referenceRange = new ArrayList<ObservationReferenceRangeComponent>();
         for (ObservationReferenceRangeComponent i : referenceRange)
-          dst.referenceRange.add(i.copy(dst));
+          dst.referenceRange.add(i.copy());
         dst.related = new ArrayList<ObservationRelatedComponent>();
         for (ObservationRelatedComponent i : related)
-          dst.related.add(i.copy(dst));
+          dst.related.add(i.copy());
         return dst;
       }
 

@@ -1,5 +1,34 @@
 package org.hl7.fhir.instance.validation;
 
+/*
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,6 +47,7 @@ import javax.xml.validation.SchemaFactory;
 import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.model.OperationOutcome;
 import org.hl7.fhir.instance.model.OperationOutcome.IssueSeverity;
+import org.hl7.fhir.instance.model.Profile;
 import org.hl7.fhir.instance.model.Resource;
 import org.hl7.fhir.instance.utils.NarrativeGenerator;
 import org.hl7.fhir.instance.validation.ValidationMessage.Source;
@@ -41,9 +71,19 @@ public class ValidationEngine {
   private List<ValidationMessage> outputs;  
   private OperationOutcome outcome;
 	private boolean noSchematron;
+	private Profile profile;
+	private String profileURI;
 
 
-  public void process() throws Exception {
+  public String getProfileURI() {
+		return profileURI;
+	}
+
+	public void setProfileURI(String profileURI) {
+		this.profileURI = profileURI;
+	}
+
+	public void process() throws Exception {
     outputs = new ArrayList<ValidationMessage>();
     Schema schema = readSchema();
 
@@ -76,7 +116,7 @@ public class ValidationEngine {
     builder.setErrorHandler(new ValidationErrorHandler(outputs));
     doc = builder.parse(new ByteArrayInputStream(source));
 
-    outputs.addAll(new InstanceValidator(definitions, null).validateInstance(doc.getDocumentElement()));
+    outputs.addAll(new InstanceValidator(definitions, null).validateInstance(doc.getDocumentElement(), profile, profileURI));
 
     Resource r = new XmlParser().parse(new ByteArrayInputStream(source));
         
@@ -172,6 +212,14 @@ public class ValidationEngine {
 	public void setNoSchematron(boolean noSchematron) {
 		this.noSchematron = noSchematron;
 	}
+
+  public Profile getProfile() {
+    return profile;
+  }
+
+  public void setProfile(Profile profile) {
+    this.profile = profile;
+  }
 
 
 }

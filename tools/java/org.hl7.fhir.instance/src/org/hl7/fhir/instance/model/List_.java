@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -97,17 +97,24 @@ public class List_ extends Resource {
         /**
          * True if this item is marked as deleted in the list.
          */
-        protected Boolean deleted;
+        protected BooleanType deleted;
 
         /**
          * When this item was added to the list.
          */
-        protected DateTime date;
+        protected DateTimeType date;
 
         /**
          * A reference to the actual resource from which data was derived.
          */
         protected ResourceReference item;
+
+        /**
+         * The actual object that is the target of the reference (A reference to the actual resource from which data was derived.)
+         */
+        protected Resource itemTarget;
+
+        private static final long serialVersionUID = -1728647377L;
 
       public ListEntryComponent() {
         super();
@@ -138,14 +145,14 @@ public class List_ extends Resource {
         /**
          * @return {@link #deleted} (True if this item is marked as deleted in the list.)
          */
-        public Boolean getDeleted() { 
+        public BooleanType getDeleted() { 
           return this.deleted;
         }
 
         /**
          * @param value {@link #deleted} (True if this item is marked as deleted in the list.)
          */
-        public ListEntryComponent setDeleted(Boolean value) { 
+        public ListEntryComponent setDeleted(BooleanType value) { 
           this.deleted = value;
           return this;
         }
@@ -165,7 +172,7 @@ public class List_ extends Resource {
             this.deleted = null;
           else {
             if (this.deleted == null)
-              this.deleted = new Boolean();
+              this.deleted = new BooleanType();
             this.deleted.setValue(value);
           }
           return this;
@@ -174,14 +181,14 @@ public class List_ extends Resource {
         /**
          * @return {@link #date} (When this item was added to the list.)
          */
-        public DateTime getDate() { 
+        public DateTimeType getDate() { 
           return this.date;
         }
 
         /**
          * @param value {@link #date} (When this item was added to the list.)
          */
-        public ListEntryComponent setDate(DateTime value) { 
+        public ListEntryComponent setDate(DateTimeType value) { 
           this.date = value;
           return this;
         }
@@ -201,7 +208,7 @@ public class List_ extends Resource {
             this.date = null;
           else {
             if (this.date == null)
-              this.date = new DateTime();
+              this.date = new DateTimeType();
             this.date.setValue(value);
           }
           return this;
@@ -222,6 +229,21 @@ public class List_ extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #item} (The actual object that is the target of the reference. A reference to the actual resource from which data was derived.)
+         */
+        public Resource getItemTarget() { 
+          return this.itemTarget;
+        }
+
+        /**
+         * @param value {@link #item} (The actual object that is the target of the reference. A reference to the actual resource from which data was derived.)
+         */
+        public ListEntryComponent setItemTarget(Resource value) { 
+          this.itemTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("flag", "CodeableConcept", "The flag allows the system constructing the list to make one or more statements about the role and significance of the item in the list.", 0, java.lang.Integer.MAX_VALUE, flag));
@@ -230,7 +252,7 @@ public class List_ extends Resource {
           childrenList.add(new Property("item", "Resource(Any)", "A reference to the actual resource from which data was derived.", 0, java.lang.Integer.MAX_VALUE, item));
         }
 
-      public ListEntryComponent copy(List_ e) {
+      public ListEntryComponent copy() {
         ListEntryComponent dst = new ListEntryComponent();
         dst.flag = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : flag)
@@ -259,19 +281,29 @@ public class List_ extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The common subject (or patient) of the resources that are in the list, if there is one.)
+     */
+    protected Resource subjectTarget;
+
+    /**
      * The entity responsible for deciding what the contents of the list were.
      */
     protected ResourceReference source;
 
     /**
+     * The actual object that is the target of the reference (The entity responsible for deciding what the contents of the list were.)
+     */
+    protected Resource sourceTarget;
+
+    /**
      * The date that the list was prepared.
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * Whether items in the list have a meaningful order.
      */
-    protected Boolean ordered;
+    protected BooleanType ordered;
 
     /**
      * How this list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted.
@@ -287,6 +319,8 @@ public class List_ extends Resource {
      * If the list is empty, why the list is empty.
      */
     protected CodeableConcept emptyReason;
+
+    private static final long serialVersionUID = -1401650190L;
 
     public List_() {
       super();
@@ -345,6 +379,21 @@ public class List_ extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The common subject (or patient) of the resources that are in the list, if there is one.)
+     */
+    public Resource getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The common subject (or patient) of the resources that are in the list, if there is one.)
+     */
+    public List_ setSubjectTarget(Resource value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #source} (The entity responsible for deciding what the contents of the list were.)
      */
     public ResourceReference getSource() { 
@@ -360,16 +409,31 @@ public class List_ extends Resource {
     }
 
     /**
+     * @return {@link #source} (The actual object that is the target of the reference. The entity responsible for deciding what the contents of the list were.)
+     */
+    public Resource getSourceTarget() { 
+      return this.sourceTarget;
+    }
+
+    /**
+     * @param value {@link #source} (The actual object that is the target of the reference. The entity responsible for deciding what the contents of the list were.)
+     */
+    public List_ setSourceTarget(Resource value) { 
+      this.sourceTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #date} (The date that the list was prepared.)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The date that the list was prepared.)
      */
-    public List_ setDate(DateTime value) { 
+    public List_ setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -389,7 +453,7 @@ public class List_ extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -398,14 +462,14 @@ public class List_ extends Resource {
     /**
      * @return {@link #ordered} (Whether items in the list have a meaningful order.)
      */
-    public Boolean getOrdered() { 
+    public BooleanType getOrdered() { 
       return this.ordered;
     }
 
     /**
      * @param value {@link #ordered} (Whether items in the list have a meaningful order.)
      */
-    public List_ setOrdered(Boolean value) { 
+    public List_ setOrdered(BooleanType value) { 
       this.ordered = value;
       return this;
     }
@@ -425,7 +489,7 @@ public class List_ extends Resource {
         this.ordered = null;
       else {
         if (this.ordered == null)
-          this.ordered = new Boolean();
+          this.ordered = new BooleanType();
         this.ordered.setValue(value);
       }
       return this;
@@ -521,7 +585,7 @@ public class List_ extends Resource {
         dst.mode = mode == null ? null : mode.copy();
         dst.entry = new ArrayList<ListEntryComponent>();
         for (ListEntryComponent i : entry)
-          dst.entry.add(i.copy(dst));
+          dst.entry.add(i.copy());
         dst.emptyReason = emptyReason == null ? null : emptyReason.copy();
         return dst;
       }

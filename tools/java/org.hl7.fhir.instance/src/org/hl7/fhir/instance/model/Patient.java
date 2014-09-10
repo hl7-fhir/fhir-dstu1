@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -118,6 +118,13 @@ public class Patient extends Resource {
          * Organization on behalf of which the contact is acting or for which the contact is working.
          */
         protected ResourceReference organization;
+
+        /**
+         * The actual object that is the target of the reference (Organization on behalf of which the contact is acting or for which the contact is working.)
+         */
+        protected Organization organizationTarget;
+
+        private static final long serialVersionUID = -384461371L;
 
       public ContactComponent() {
         super();
@@ -217,6 +224,21 @@ public class Patient extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #organization} (The actual object that is the target of the reference. Organization on behalf of which the contact is acting or for which the contact is working.)
+         */
+        public Organization getOrganizationTarget() { 
+          return this.organizationTarget;
+        }
+
+        /**
+         * @param value {@link #organization} (The actual object that is the target of the reference. Organization on behalf of which the contact is acting or for which the contact is working.)
+         */
+        public ContactComponent setOrganizationTarget(Organization value) { 
+          this.organizationTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("relationship", "CodeableConcept", "The nature of the relationship between the patient and the contact person.", 0, java.lang.Integer.MAX_VALUE, relationship));
@@ -227,7 +249,7 @@ public class Patient extends Resource {
           childrenList.add(new Property("organization", "Resource(Organization)", "Organization on behalf of which the contact is acting or for which the contact is working.", 0, java.lang.Integer.MAX_VALUE, organization));
         }
 
-      public ContactComponent copy(Patient e) {
+      public ContactComponent copy() {
         ContactComponent dst = new ContactComponent();
         dst.relationship = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : relationship)
@@ -259,6 +281,8 @@ public class Patient extends Resource {
          * Indicates the current state of the animal's reproductive organs.
          */
         protected CodeableConcept genderStatus;
+
+        private static final long serialVersionUID = -549738382L;
 
       public AnimalComponent() {
         super();
@@ -321,7 +345,7 @@ public class Patient extends Resource {
           childrenList.add(new Property("genderStatus", "CodeableConcept", "Indicates the current state of the animal's reproductive organs.", 0, java.lang.Integer.MAX_VALUE, genderStatus));
         }
 
-      public AnimalComponent copy(Patient e) {
+      public AnimalComponent copy() {
         AnimalComponent dst = new AnimalComponent();
         dst.species = species == null ? null : species.copy();
         dst.breed = breed == null ? null : breed.copy();
@@ -338,9 +362,16 @@ public class Patient extends Resource {
         protected ResourceReference other;
 
         /**
+         * The actual object that is the target of the reference (The other patient resource that the link refers to.)
+         */
+        protected Patient otherTarget;
+
+        /**
          * The type of link between this patient resource and another patient resource.
          */
         protected Enumeration<LinkType> type;
+
+        private static final long serialVersionUID = 383172000L;
 
       public PatientLinkComponent() {
         super();
@@ -364,6 +395,21 @@ public class Patient extends Resource {
          */
         public PatientLinkComponent setOther(ResourceReference value) { 
           this.other = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #other} (The actual object that is the target of the reference. The other patient resource that the link refers to.)
+         */
+        public Patient getOtherTarget() { 
+          return this.otherTarget;
+        }
+
+        /**
+         * @param value {@link #other} (The actual object that is the target of the reference. The other patient resource that the link refers to.)
+         */
+        public PatientLinkComponent setOtherTarget(Patient value) { 
+          this.otherTarget = value;
           return this;
         }
 
@@ -405,7 +451,7 @@ public class Patient extends Resource {
           childrenList.add(new Property("type", "code", "The type of link between this patient resource and another patient resource.", 0, java.lang.Integer.MAX_VALUE, type));
         }
 
-      public PatientLinkComponent copy(Patient e) {
+      public PatientLinkComponent copy() {
         PatientLinkComponent dst = new PatientLinkComponent();
         dst.other = other == null ? null : other.copy();
         dst.type = type == null ? null : type.copy();
@@ -437,7 +483,7 @@ public class Patient extends Resource {
     /**
      * The date and time of birth for the individual.
      */
-    protected DateTime birthDate;
+    protected DateTimeType birthDate;
 
     /**
      * Indicates if the individual is deceased or not.
@@ -483,11 +529,21 @@ public class Patient extends Resource {
      * Patient's nominated care provider.
      */
     protected List<ResourceReference> careProvider = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Patient's nominated care provider.)
+     */
+    protected List<Resource> careProviderTarget = new ArrayList<Resource>();
+
 
     /**
      * Organization that is the custodian of the patient record.
      */
     protected ResourceReference managingOrganization;
+
+    /**
+     * The actual object that is the target of the reference (Organization that is the custodian of the patient record.)
+     */
+    protected Organization managingOrganizationTarget;
 
     /**
      * Link to another patient resource that concerns the same actual person.
@@ -497,7 +553,9 @@ public class Patient extends Resource {
     /**
      * Whether this patient record is in active use.
      */
-    protected Boolean active;
+    protected BooleanType active;
+
+    private static final long serialVersionUID = -19272494L;
 
     public Patient() {
       super();
@@ -572,14 +630,14 @@ public class Patient extends Resource {
     /**
      * @return {@link #birthDate} (The date and time of birth for the individual.)
      */
-    public DateTime getBirthDate() { 
+    public DateTimeType getBirthDate() { 
       return this.birthDate;
     }
 
     /**
      * @param value {@link #birthDate} (The date and time of birth for the individual.)
      */
-    public Patient setBirthDate(DateTime value) { 
+    public Patient setBirthDate(DateTimeType value) { 
       this.birthDate = value;
       return this;
     }
@@ -599,7 +657,7 @@ public class Patient extends Resource {
         this.birthDate = null;
       else {
         if (this.birthDate == null)
-          this.birthDate = new DateTime();
+          this.birthDate = new DateTimeType();
         this.birthDate.setValue(value);
       }
       return this;
@@ -751,6 +809,13 @@ public class Patient extends Resource {
     }
 
     /**
+     * @return {@link #careProvider} (The actual objects that are the target of the reference. Patient's nominated care provider.)
+     */
+    public List<Resource> getCareProviderTarget() { 
+      return this.careProviderTarget;
+    }
+
+    /**
      * @return {@link #managingOrganization} (Organization that is the custodian of the patient record.)
      */
     public ResourceReference getManagingOrganization() { 
@@ -762,6 +827,21 @@ public class Patient extends Resource {
      */
     public Patient setManagingOrganization(ResourceReference value) { 
       this.managingOrganization = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #managingOrganization} (The actual object that is the target of the reference. Organization that is the custodian of the patient record.)
+     */
+    public Organization getManagingOrganizationTarget() { 
+      return this.managingOrganizationTarget;
+    }
+
+    /**
+     * @param value {@link #managingOrganization} (The actual object that is the target of the reference. Organization that is the custodian of the patient record.)
+     */
+    public Patient setManagingOrganizationTarget(Organization value) { 
+      this.managingOrganizationTarget = value;
       return this;
     }
 
@@ -785,14 +865,14 @@ public class Patient extends Resource {
     /**
      * @return {@link #active} (Whether this patient record is in active use.)
      */
-    public Boolean getActive() { 
+    public BooleanType getActive() { 
       return this.active;
     }
 
     /**
      * @param value {@link #active} (Whether this patient record is in active use.)
      */
-    public Patient setActive(Boolean value) { 
+    public Patient setActive(BooleanType value) { 
       this.active = value;
       return this;
     }
@@ -812,7 +892,7 @@ public class Patient extends Resource {
         this.active = null;
       else {
         if (this.active == null)
-          this.active = new Boolean();
+          this.active = new BooleanType();
         this.active.setValue(value);
       }
       return this;
@@ -863,8 +943,8 @@ public class Patient extends Resource {
           dst.photo.add(i.copy());
         dst.contact = new ArrayList<ContactComponent>();
         for (ContactComponent i : contact)
-          dst.contact.add(i.copy(dst));
-        dst.animal = animal == null ? null : animal.copy(dst);
+          dst.contact.add(i.copy());
+        dst.animal = animal == null ? null : animal.copy();
         dst.communication = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : communication)
           dst.communication.add(i.copy());
@@ -874,7 +954,7 @@ public class Patient extends Resource {
         dst.managingOrganization = managingOrganization == null ? null : managingOrganization.copy();
         dst.link = new ArrayList<PatientLinkComponent>();
         for (PatientLinkComponent i : link)
-          dst.link.add(i.copy(dst));
+          dst.link.add(i.copy());
         dst.active = active == null ? null : active.copy();
         return dst;
       }

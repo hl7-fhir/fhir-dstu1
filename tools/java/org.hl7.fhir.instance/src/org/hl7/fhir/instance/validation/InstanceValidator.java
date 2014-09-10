@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-
 import org.hl7.fhir.instance.formats.XmlParser;
 import org.hl7.fhir.instance.model.Address;
 import org.hl7.fhir.instance.model.AtomEntry;
@@ -41,9 +40,9 @@ import org.hl7.fhir.instance.model.Resource;
 import org.hl7.fhir.instance.model.ResourceReference;
 import org.hl7.fhir.instance.model.SampledData;
 import org.hl7.fhir.instance.model.Schedule;
-import org.hl7.fhir.instance.model.String_;
+import org.hl7.fhir.instance.model.StringType;
 import org.hl7.fhir.instance.model.Type;
-import org.hl7.fhir.instance.model.Uri;
+import org.hl7.fhir.instance.model.UriType;
 import org.hl7.fhir.instance.model.ValueSet;
 import org.hl7.fhir.instance.model.ValueSet.ValueSetDefineConceptComponent;
 import org.hl7.fhir.instance.model.ValueSet.ValueSetExpansionContainsComponent;
@@ -203,30 +202,39 @@ public class InstanceValidator extends BaseValidator {
     }
   }
 
-  public void validateInstance(List<ValidationMessage> errors, Element elem) throws Exception {
+  public void validateInstance(List<ValidationMessage> errors, Element elem, Profile profile) throws Exception {
     boolean feedHasAuthor = XMLUtil.getNamedChild(elem, "author") != null;
     if (elem.getLocalName().equals("feed")) {
-      ChildIterator ci = new ChildIterator("", elem);
-      while (ci.next()) {
-        if (ci.name().equals("category"))
-          validateTag(ci.path(), ci.element(), false);
-        else if (ci.name().equals("id"))
-          validateId(errors, ci.path(), ci.element(), true);
-        else if (ci.name().equals("link"))
-          validateLink(errors, ci.path(), ci.element(), false);
-        else if (ci.name().equals("entry")) 
-          validateAtomEntry(errors, ci.path(), ci.element(), feedHasAuthor);
-      }
+    	// for now, if the user specified a profile, and it's a feed, we refuse
+    	if (rule(errors, "exception", "feed", profile == null, "Cannot validate a feed against a specified profile (TODO: re-assess this)")) {
+    		ChildIterator ci = new ChildIterator("", elem);
+    		while (ci.next()) {
+    			if (ci.name().equals("category"))
+    				validateTag(ci.path(), ci.element(), false);
+    			else if (ci.name().equals("id"))
+    				validateId(errors, ci.path(), ci.element(), true);
+    			else if (ci.name().equals("link"))
+    				validateLink(errors, ci.path(), ci.element(), false);
+    			else if (ci.name().equals("entry")) 
+    				validateAtomEntry(errors, ci.path(), ci.element(), feedHasAuthor);
+    		}
+    	}
     }
     else
-      validate(errors, "", elem);
+      validate(errors, "", elem, profile);
   }
 
   public List<ValidationMessage> validateInstance(Element elem) throws Exception {
     List<ValidationMessage> errors = new ArrayList<ValidationMessage>();
-    validateInstance(errors, elem);      
+    validateInstance(errors, elem, null);      
     return errors;
   }
+
+  public List<ValidationMessage> validateInstance(Element elem, Profile profile) throws Exception {
+	    List<ValidationMessage> errors = new ArrayList<ValidationMessage>();
+	    validateInstance(errors, elem, profile);      
+	    return errors;
+	  }
 
   private void validateAtomEntry(List<ValidationMessage> errors, String path, Element element, boolean feedHasAuthor) throws Exception {
     rule(errors, "invalid", path, XMLUtil.getNamedChild(element, "title") != null, "Entry must have a title");
@@ -245,16 +253,16 @@ public class InstanceValidator extends BaseValidator {
         validateLink(errors, ci.path(), ci.element(), true);
       else if (ci.name().equals("content")) {
         Element r = XMLUtil.getFirstChild(ci.element());
-        validate(errors, ci.path()+"/f:"+r.getLocalName(), r);
+        validate(errors, ci.path()+"/f:"+r.getLocalName(), r, null);
       }
     }
   }
 
-  private void validate(List<ValidationMessage> errors, String path, Element elem) throws Exception {
+  private void validate(List<ValidationMessage> errors, String path, Element elem, Profile profile) throws Exception {
     if (elem.getLocalName().equals("Binary"))
       validateBinary(elem);
     else {
-      Profile p = getProfileForType(elem.getLocalName());
+      Profile p = profile != null ? profile : getProfileForType(elem.getLocalName());
       ProfileStructureComponent s = getStructureForType(p, elem.getLocalName());
       if (rule(errors, "invalid", elem.getLocalName(), s != null, "Unknown Resource Type "+elem.getLocalName())) {
         validateElement(errors, p, s, path+"/f:"+elem.getLocalName(), s.getElement().get(0), null, null, elem, elem.getLocalName());
@@ -472,13 +480,13 @@ public class InstanceValidator extends BaseValidator {
   private void checkExtensionContext(List<ValidationMessage> errors, String path, ProfileExtensionDefnComponent definition, ElementComponent container, String parentType, String extensionParent) {
 	  if (definition.getContextTypeSimple() == ExtensionContext.datatype) {
 	  	boolean ok = false;
-	  	for (String_ ct : definition.getContext()) 
+	  	for (StringType ct : definition.getContext()) 
 	  		if (ct.getValue().equals("*") || ct.getValue().equals(parentType))
 	  				ok = true;
 	  	rule(errors, "structure", path, ok, "This extension is not allowed to be used with the type "+parentType);
 	  } else if (definition.getContextTypeSimple() == ExtensionContext.extension) {
       boolean ok = false;
-      for (String_ ct : definition.getContext()) 
+      for (StringType ct : definition.getContext()) 
         if (ct.getValue().equals("*") || ct.getValue().equals(extensionParent))
             ok = true;
       rule(errors, "structure", path, ok, "This extension is not allowed to be used with the extension '"+extensionParent+"'");
@@ -488,7 +496,7 @@ public class InstanceValidator extends BaseValidator {
       boolean ok = false;
       String simplePath = simplifyPath(path);
       CommaSeparatedStringBuilder b = new CommaSeparatedStringBuilder();
-      for (String_ ct : definition.getContext()) {
+      for (StringType ct : definition.getContext()) {
         b.append(ct.getValue());
         if (ct.getValue().equals("*") || ct.getValue().equals(parentType) || simplePath.equals(ct.getValue()) || simplePath.endsWith("."+ct.getValue()))
             ok = true;
@@ -581,7 +589,7 @@ public class InstanceValidator extends BaseValidator {
 
   private void validateContains(List<ValidationMessage> errors, String path, ElementComponent child, ElementComponent context, Element element) throws Exception {
     Element e = XMLUtil.getFirstChild(element);
-    validate(errors, path, e);    
+    validate(errors, path, e, null);    
   }
 
   private boolean typeIsPrimitive(String t) {
@@ -683,8 +691,8 @@ public class InstanceValidator extends BaseValidator {
 
 
   private ValueSet resolveBindingReference(Type reference) {
-    if (reference instanceof Uri)
-      return valuesets.get(((Uri) reference).getValue().toString());
+    if (reference instanceof UriType)
+      return valuesets.get(((UriType) reference).getValue().toString());
     else if (reference instanceof ResourceReference)
       return valuesets.get(((ResourceReference) reference).getReferenceSimple());
     else
@@ -764,8 +772,8 @@ public class InstanceValidator extends BaseValidator {
   private String describeReference(Type reference) {
     if (reference == null)
       return "null";
-    if (reference instanceof Uri)
-      return ((Uri)reference).getValue();
+    if (reference instanceof UriType)
+      return ((UriType)reference).getValue();
     if (reference instanceof ResourceReference)
       return ((ResourceReference)reference).getReference().getValue();
     return "??";
@@ -1071,32 +1079,32 @@ public class InstanceValidator extends BaseValidator {
 	  	rule(errors, "value", path, false, "Mising element "+propName);
 		else {
 			String value = focus.getAttribute("value");
-			if (fixed instanceof org.hl7.fhir.instance.model.Boolean)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Boolean) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Boolean) fixed).getStringValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Integer)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Integer) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Integer) fixed).getStringValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Decimal)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Decimal) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Decimal) fixed).getStringValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Base64Binary)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Base64Binary) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Base64Binary) fixed).getStringValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Instant)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Instant) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Instant) fixed).getStringValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.String_)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.String_) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.String_) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Uri)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Uri) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Uri) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Date)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Date) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Date) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.DateTime)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.DateTime) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.DateTime) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Oid)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Oid) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Oid) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Uuid)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Uuid) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Uuid) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Code)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Code) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Code) fixed).getValue()+"'");
-			else if (fixed instanceof org.hl7.fhir.instance.model.Id)
-				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Id) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Id) fixed).getValue()+"'");
+			if (fixed instanceof org.hl7.fhir.instance.model.BooleanType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.BooleanType) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.BooleanType) fixed).getStringValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.IntegerType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.IntegerType) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.IntegerType) fixed).getStringValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.DecimalType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.DecimalType) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.DecimalType) fixed).getStringValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.Base64BinaryType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.Base64BinaryType) fixed).getStringValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.Base64BinaryType) fixed).getStringValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.InstantType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.InstantType) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.InstantType) fixed).getStringValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.StringType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.StringType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.StringType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.UriType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.UriType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.UriType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.DateType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.DateType) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.DateType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.DateTimeType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.DateTimeType) fixed).getValue().toString(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.DateTimeType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.OidType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.OidType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.OidType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.UuidType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.UuidType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.UuidType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.CodeType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.CodeType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.CodeType) fixed).getValue()+"'");
+			else if (fixed instanceof org.hl7.fhir.instance.model.IdType)
+				rule(errors, "value", path, check(((org.hl7.fhir.instance.model.IdType) fixed).getValue(), value), "Value is '"+value+"' but must be '"+((org.hl7.fhir.instance.model.IdType) fixed).getValue()+"'");
 			else if (fixed instanceof Quantity)
 				checkQuantity(errors, path, focus, (Quantity) fixed);
 			else if (fixed instanceof Address)

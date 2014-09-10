@@ -1,6 +1,6 @@
 package org.hl7.fhir.instance.formats;
 /*
-Copyright (c) 2011-2013, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -44,9 +44,9 @@ import org.hl7.fhir.utilities.Utilities;
 import org.hl7.fhir.utilities.xhtml.XhtmlNode;
 import org.hl7.fhir.utilities.xhtml.XhtmlParser;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
 /**
  * General parser for JSON content. You instantiate an JsonParser of these, but you 
  * actually use parse or parseGeneral defined on this class
@@ -144,9 +144,9 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
     if (json.has("category") && !json.get("category").isJsonNull()) {
     	for (JsonElement t : json.getAsJsonArray("category")) {
     		JsonObject cat = t.getAsJsonObject();
-    		if (cat.has("term") && cat.has("scheme") && !cat.get("term").isJsonNull() && !cat.get("scheme").isJsonNull())
-    			res.getTags().add(new AtomCategory(cat.get("scheme").getAsString(), cat.get("term").getAsString(), cat.has("label") ? cat.get("label").getAsString() : null));
-    	}
+      if (cat.has("term") && cat.has("scheme"))
+        res.getTags().add(new AtomCategory(cat.get("scheme").getAsString(), cat.get("term").getAsString(), cat.has("label") ? cat.get("label").getAsString() : null));
+    }
     }
     JsonArray array = json.getAsJsonArray("entry");
     if (array != null) {
@@ -162,6 +162,7 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
     links.put(json.get("rel").getAsString(), json.get("href").getAsString());    
   }
 
+  @SuppressWarnings("unchecked")
   private <T extends Resource> AtomEntry<T> parseEntry(JsonObject json) throws Exception {
     AtomEntry<T> res = new AtomEntry<T>();
     if (json.has("title") && !json.get("title").isJsonNull())
@@ -188,8 +189,8 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
     if (json.has("category") && !json.get("category").isJsonNull()) {
     	for (JsonElement t : json.getAsJsonArray("category")) {
     		JsonObject cat = t.getAsJsonObject();
-    		if (cat.has("term") && cat.has("scheme") && !cat.get("term").isJsonNull() && !cat.get("scheme").isJsonNull())
-    			res.getTags().add(new AtomCategory(cat.get("scheme").getAsString(), cat.get("term").getAsString(), cat.has("label") ? cat.get("label").getAsString() : null));
+      if (cat.has("term") && cat.has("scheme") && !cat.get("term").isJsonNull() && !cat.get("scheme").isJsonNull())
+        res.getTags().add(new AtomCategory(cat.get("scheme").getAsString(), cat.get("term").getAsString(), cat.has("label") ? cat.get("label").getAsString() : null));
     	}
     }
     if (json.has("summary") && !json.get("summary").isJsonNull())

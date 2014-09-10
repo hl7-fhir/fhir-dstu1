@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -135,23 +135,25 @@ public class Location extends Resource {
         /**
          * Longitude. The value domain and the interpretation are the same as for the text of the longitude element in KML (see notes below).
          */
-        protected Decimal longitude;
+        protected DecimalType longitude;
 
         /**
          * Latitude. The value domain and the interpretation are the same as for the text of the latitude element in KML (see notes below).
          */
-        protected Decimal latitude;
+        protected DecimalType latitude;
 
         /**
          * Altitude. The value domain and the interpretation are the same as for the text of the altitude element in KML (see notes below).
          */
-        protected Decimal altitude;
+        protected DecimalType altitude;
+
+        private static final long serialVersionUID = -74276134L;
 
       public LocationPositionComponent() {
         super();
       }
 
-      public LocationPositionComponent(Decimal longitude, Decimal latitude) {
+      public LocationPositionComponent(DecimalType longitude, DecimalType latitude) {
         super();
         this.longitude = longitude;
         this.latitude = latitude;
@@ -160,14 +162,14 @@ public class Location extends Resource {
         /**
          * @return {@link #longitude} (Longitude. The value domain and the interpretation are the same as for the text of the longitude element in KML (see notes below).)
          */
-        public Decimal getLongitude() { 
+        public DecimalType getLongitude() { 
           return this.longitude;
         }
 
         /**
          * @param value {@link #longitude} (Longitude. The value domain and the interpretation are the same as for the text of the longitude element in KML (see notes below).)
          */
-        public LocationPositionComponent setLongitude(Decimal value) { 
+        public LocationPositionComponent setLongitude(DecimalType value) { 
           this.longitude = value;
           return this;
         }
@@ -184,7 +186,7 @@ public class Location extends Resource {
          */
         public LocationPositionComponent setLongitudeSimple(BigDecimal value) { 
             if (this.longitude == null)
-              this.longitude = new Decimal();
+              this.longitude = new DecimalType();
             this.longitude.setValue(value);
           return this;
         }
@@ -192,14 +194,14 @@ public class Location extends Resource {
         /**
          * @return {@link #latitude} (Latitude. The value domain and the interpretation are the same as for the text of the latitude element in KML (see notes below).)
          */
-        public Decimal getLatitude() { 
+        public DecimalType getLatitude() { 
           return this.latitude;
         }
 
         /**
          * @param value {@link #latitude} (Latitude. The value domain and the interpretation are the same as for the text of the latitude element in KML (see notes below).)
          */
-        public LocationPositionComponent setLatitude(Decimal value) { 
+        public LocationPositionComponent setLatitude(DecimalType value) { 
           this.latitude = value;
           return this;
         }
@@ -216,7 +218,7 @@ public class Location extends Resource {
          */
         public LocationPositionComponent setLatitudeSimple(BigDecimal value) { 
             if (this.latitude == null)
-              this.latitude = new Decimal();
+              this.latitude = new DecimalType();
             this.latitude.setValue(value);
           return this;
         }
@@ -224,14 +226,14 @@ public class Location extends Resource {
         /**
          * @return {@link #altitude} (Altitude. The value domain and the interpretation are the same as for the text of the altitude element in KML (see notes below).)
          */
-        public Decimal getAltitude() { 
+        public DecimalType getAltitude() { 
           return this.altitude;
         }
 
         /**
          * @param value {@link #altitude} (Altitude. The value domain and the interpretation are the same as for the text of the altitude element in KML (see notes below).)
          */
-        public LocationPositionComponent setAltitude(Decimal value) { 
+        public LocationPositionComponent setAltitude(DecimalType value) { 
           this.altitude = value;
           return this;
         }
@@ -251,7 +253,7 @@ public class Location extends Resource {
             this.altitude = null;
           else {
             if (this.altitude == null)
-              this.altitude = new Decimal();
+              this.altitude = new DecimalType();
             this.altitude.setValue(value);
           }
           return this;
@@ -264,7 +266,7 @@ public class Location extends Resource {
           childrenList.add(new Property("altitude", "decimal", "Altitude. The value domain and the interpretation are the same as for the text of the altitude element in KML (see notes below).", 0, java.lang.Integer.MAX_VALUE, altitude));
         }
 
-      public LocationPositionComponent copy(Location e) {
+      public LocationPositionComponent copy() {
         LocationPositionComponent dst = new LocationPositionComponent();
         dst.longitude = longitude == null ? null : longitude.copy();
         dst.latitude = latitude == null ? null : latitude.copy();
@@ -282,12 +284,12 @@ public class Location extends Resource {
     /**
      * Name of the location as used by humans. Does not need to be unique.
      */
-    protected String_ name;
+    protected StringType name;
 
     /**
      * Description of the Location, which helps in finding or referencing the place.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * Indicates the type of function performed at the location.
@@ -320,6 +322,11 @@ public class Location extends Resource {
     protected ResourceReference managingOrganization;
 
     /**
+     * The actual object that is the target of the reference (The organization that is responsible for the provisioning and upkeep of the location.)
+     */
+    protected Organization managingOrganizationTarget;
+
+    /**
      * active | suspended | inactive.
      */
     protected Enumeration<LocationStatus> status;
@@ -330,9 +337,16 @@ public class Location extends Resource {
     protected ResourceReference partOf;
 
     /**
+     * The actual object that is the target of the reference (Another Location which this Location is physically part of.)
+     */
+    protected Location partOfTarget;
+
+    /**
      * Indicates whether a resource instance represents a specific location or a class of locations.
      */
     protected Enumeration<LocationMode> mode;
+
+    private static final long serialVersionUID = 784899904L;
 
     public Location() {
       super();
@@ -356,14 +370,14 @@ public class Location extends Resource {
     /**
      * @return {@link #name} (Name of the location as used by humans. Does not need to be unique.)
      */
-    public String_ getName() { 
+    public StringType getName() { 
       return this.name;
     }
 
     /**
      * @param value {@link #name} (Name of the location as used by humans. Does not need to be unique.)
      */
-    public Location setName(String_ value) { 
+    public Location setName(StringType value) { 
       this.name = value;
       return this;
     }
@@ -383,7 +397,7 @@ public class Location extends Resource {
         this.name = null;
       else {
         if (this.name == null)
-          this.name = new String_();
+          this.name = new StringType();
         this.name.setValue(value);
       }
       return this;
@@ -392,14 +406,14 @@ public class Location extends Resource {
     /**
      * @return {@link #description} (Description of the Location, which helps in finding or referencing the place.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (Description of the Location, which helps in finding or referencing the place.)
      */
-    public Location setDescription(String_ value) { 
+    public Location setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -419,7 +433,7 @@ public class Location extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -518,6 +532,21 @@ public class Location extends Resource {
     }
 
     /**
+     * @return {@link #managingOrganization} (The actual object that is the target of the reference. The organization that is responsible for the provisioning and upkeep of the location.)
+     */
+    public Organization getManagingOrganizationTarget() { 
+      return this.managingOrganizationTarget;
+    }
+
+    /**
+     * @param value {@link #managingOrganization} (The actual object that is the target of the reference. The organization that is responsible for the provisioning and upkeep of the location.)
+     */
+    public Location setManagingOrganizationTarget(Organization value) { 
+      this.managingOrganizationTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #status} (active | suspended | inactive.)
      */
     public Enumeration<LocationStatus> getStatus() { 
@@ -565,6 +594,21 @@ public class Location extends Resource {
      */
     public Location setPartOf(ResourceReference value) { 
       this.partOf = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #partOf} (The actual object that is the target of the reference. Another Location which this Location is physically part of.)
+     */
+    public Location getPartOfTarget() { 
+      return this.partOfTarget;
+    }
+
+    /**
+     * @param value {@link #partOf} (The actual object that is the target of the reference. Another Location which this Location is physically part of.)
+     */
+    public Location setPartOfTarget(Location value) { 
+      this.partOfTarget = value;
       return this;
     }
 
@@ -631,7 +675,7 @@ public class Location extends Resource {
           dst.telecom.add(i.copy());
         dst.address = address == null ? null : address.copy();
         dst.physicalType = physicalType == null ? null : physicalType.copy();
-        dst.position = position == null ? null : position.copy(dst);
+        dst.position = position == null ? null : position.copy();
         dst.managingOrganization = managingOrganization == null ? null : managingOrganization.copy();
         dst.status = status == null ? null : status.copy();
         dst.partOf = partOf == null ? null : partOf.copy();

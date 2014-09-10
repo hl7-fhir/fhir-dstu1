@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -104,17 +104,17 @@ public class Identifier extends Type {
     /**
      * A text string for the identifier that can be displayed to a human so they can recognize the identifier.
      */
-    protected String_ label;
+    protected StringType label;
 
     /**
      * Establishes the namespace in which set of possible id values is unique.
      */
-    protected Uri system;
+    protected UriType system;
 
     /**
      * The portion of the identifier typically displayed to the user and which is unique within the context of the system.
      */
-    protected String_ value;
+    protected StringType value;
 
     /**
      * Time period during which identifier is/was valid for use.
@@ -125,6 +125,13 @@ public class Identifier extends Type {
      * Organization that issued/manages the identifier.
      */
     protected ResourceReference assigner;
+
+    /**
+     * The actual object that is the target of the reference (Organization that issued/manages the identifier.)
+     */
+    protected Organization assignerTarget;
+
+    private static final long serialVersionUID = -892620253L;
 
     public Identifier() {
       super();
@@ -169,14 +176,14 @@ public class Identifier extends Type {
     /**
      * @return {@link #label} (A text string for the identifier that can be displayed to a human so they can recognize the identifier.)
      */
-    public String_ getLabel() { 
+    public StringType getLabel() { 
       return this.label;
     }
 
     /**
      * @param value {@link #label} (A text string for the identifier that can be displayed to a human so they can recognize the identifier.)
      */
-    public Identifier setLabel(String_ value) { 
+    public Identifier setLabel(StringType value) { 
       this.label = value;
       return this;
     }
@@ -196,7 +203,7 @@ public class Identifier extends Type {
         this.label = null;
       else {
         if (this.label == null)
-          this.label = new String_();
+          this.label = new StringType();
         this.label.setValue(value);
       }
       return this;
@@ -205,14 +212,14 @@ public class Identifier extends Type {
     /**
      * @return {@link #system} (Establishes the namespace in which set of possible id values is unique.)
      */
-    public Uri getSystem() { 
+    public UriType getSystem() { 
       return this.system;
     }
 
     /**
      * @param value {@link #system} (Establishes the namespace in which set of possible id values is unique.)
      */
-    public Identifier setSystem(Uri value) { 
+    public Identifier setSystem(UriType value) { 
       this.system = value;
       return this;
     }
@@ -232,7 +239,7 @@ public class Identifier extends Type {
         this.system = null;
       else {
         if (this.system == null)
-          this.system = new Uri();
+          this.system = new UriType();
         this.system.setValue(value);
       }
       return this;
@@ -241,14 +248,14 @@ public class Identifier extends Type {
     /**
      * @return {@link #value} (The portion of the identifier typically displayed to the user and which is unique within the context of the system.)
      */
-    public String_ getValue() { 
+    public StringType getValue() { 
       return this.value;
     }
 
     /**
      * @param value {@link #value} (The portion of the identifier typically displayed to the user and which is unique within the context of the system.)
      */
-    public Identifier setValue(String_ value) { 
+    public Identifier setValue(StringType value) { 
       this.value = value;
       return this;
     }
@@ -268,7 +275,7 @@ public class Identifier extends Type {
         this.value = null;
       else {
         if (this.value == null)
-          this.value = new String_();
+          this.value = new StringType();
         this.value.setValue(value);
       }
       return this;
@@ -301,6 +308,21 @@ public class Identifier extends Type {
      */
     public Identifier setAssigner(ResourceReference value) { 
       this.assigner = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #assigner} (The actual object that is the target of the reference. Organization that issued/manages the identifier.)
+     */
+    public Organization getAssignerTarget() { 
+      return this.assignerTarget;
+    }
+
+    /**
+     * @param value {@link #assigner} (The actual object that is the target of the reference. Organization that issued/manages the identifier.)
+     */
+    public Identifier setAssignerTarget(Organization value) { 
+      this.assignerTarget = value;
       return this;
     }
 

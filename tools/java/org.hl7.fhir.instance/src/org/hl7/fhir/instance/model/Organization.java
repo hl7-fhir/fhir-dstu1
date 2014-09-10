@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -63,6 +63,8 @@ public class Organization extends Resource {
          * Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.
          */
         protected CodeableConcept gender;
+
+        private static final long serialVersionUID = 2147286938L;
 
       public OrganizationContactComponent() {
         super();
@@ -154,7 +156,7 @@ public class Organization extends Resource {
           childrenList.add(new Property("gender", "CodeableConcept", "Administrative Gender - the gender that the person is considered to have for administration and record keeping purposes.", 0, java.lang.Integer.MAX_VALUE, gender));
         }
 
-      public OrganizationContactComponent copy(Organization e) {
+      public OrganizationContactComponent copy() {
         OrganizationContactComponent dst = new OrganizationContactComponent();
         dst.purpose = purpose == null ? null : purpose.copy();
         dst.name = name == null ? null : name.copy();
@@ -176,7 +178,7 @@ public class Organization extends Resource {
     /**
      * A name associated with the organization.
      */
-    protected String_ name;
+    protected StringType name;
 
     /**
      * The kind of organization that this is.
@@ -199,6 +201,11 @@ public class Organization extends Resource {
     protected ResourceReference partOf;
 
     /**
+     * The actual object that is the target of the reference (The organization of which this organization forms a part.)
+     */
+    protected Organization partOfTarget;
+
+    /**
      * Contact for the organization for a certain purpose.
      */
     protected List<OrganizationContactComponent> contact = new ArrayList<OrganizationContactComponent>();
@@ -207,11 +214,18 @@ public class Organization extends Resource {
      * Location(s) the organization uses to provide services.
      */
     protected List<ResourceReference> location = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Location(s) the organization uses to provide services.)
+     */
+    protected List<Location> locationTarget = new ArrayList<Location>();
+
 
     /**
      * Whether the organization's record is still in active use.
      */
-    protected Boolean active;
+    protected BooleanType active;
+
+    private static final long serialVersionUID = -603382635L;
 
     public Organization() {
       super();
@@ -237,14 +251,14 @@ public class Organization extends Resource {
     /**
      * @return {@link #name} (A name associated with the organization.)
      */
-    public String_ getName() { 
+    public StringType getName() { 
       return this.name;
     }
 
     /**
      * @param value {@link #name} (A name associated with the organization.)
      */
-    public Organization setName(String_ value) { 
+    public Organization setName(StringType value) { 
       this.name = value;
       return this;
     }
@@ -264,7 +278,7 @@ public class Organization extends Resource {
         this.name = null;
       else {
         if (this.name == null)
-          this.name = new String_();
+          this.name = new StringType();
         this.name.setValue(value);
       }
       return this;
@@ -335,6 +349,21 @@ public class Organization extends Resource {
     }
 
     /**
+     * @return {@link #partOf} (The actual object that is the target of the reference. The organization of which this organization forms a part.)
+     */
+    public Organization getPartOfTarget() { 
+      return this.partOfTarget;
+    }
+
+    /**
+     * @param value {@link #partOf} (The actual object that is the target of the reference. The organization of which this organization forms a part.)
+     */
+    public Organization setPartOfTarget(Organization value) { 
+      this.partOfTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #contact} (Contact for the organization for a certain purpose.)
      */
     public List<OrganizationContactComponent> getContact() { 
@@ -369,16 +398,33 @@ public class Organization extends Resource {
     }
 
     /**
+     * @return {@link #location} (The actual objects that are the target of the reference. Location(s) the organization uses to provide services.)
+     */
+    public List<Location> getLocationTarget() { 
+      return this.locationTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #location} (Add an actual object that is the target of the reference. Location(s) the organization uses to provide services.)
+     */
+    public Location addLocationTarget() { 
+      Location r = new Location();
+      this.locationTarget.add(r);
+      return r;
+    }
+
+    /**
      * @return {@link #active} (Whether the organization's record is still in active use.)
      */
-    public Boolean getActive() { 
+    public BooleanType getActive() { 
       return this.active;
     }
 
     /**
      * @param value {@link #active} (Whether the organization's record is still in active use.)
      */
-    public Organization setActive(Boolean value) { 
+    public Organization setActive(BooleanType value) { 
       this.active = value;
       return this;
     }
@@ -398,7 +444,7 @@ public class Organization extends Resource {
         this.active = null;
       else {
         if (this.active == null)
-          this.active = new Boolean();
+          this.active = new BooleanType();
         this.active.setValue(value);
       }
       return this;
@@ -433,7 +479,7 @@ public class Organization extends Resource {
         dst.partOf = partOf == null ? null : partOf.copy();
         dst.contact = new ArrayList<OrganizationContactComponent>();
         for (OrganizationContactComponent i : contact)
-          dst.contact.add(i.copy(dst));
+          dst.contact.add(i.copy());
         dst.location = new ArrayList<ResourceReference>();
         for (ResourceReference i : location)
           dst.location.add(i.copy());

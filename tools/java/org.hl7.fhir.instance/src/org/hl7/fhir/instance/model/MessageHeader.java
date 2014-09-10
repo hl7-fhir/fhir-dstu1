@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -92,7 +92,7 @@ public class MessageHeader extends Resource {
         /**
          * The id of the message that this message is a response to.
          */
-        protected Id identifier;
+        protected IdType identifier;
 
         /**
          * Code that identifies the type of response to the message - whether it was successful or not, and whether it should be resent or not.
@@ -104,11 +104,18 @@ public class MessageHeader extends Resource {
          */
         protected ResourceReference details;
 
+        /**
+         * The actual object that is the target of the reference (Full details of any issues found in the message.)
+         */
+        protected OperationOutcome detailsTarget;
+
+        private static final long serialVersionUID = -1631054369L;
+
       public MessageHeaderResponseComponent() {
         super();
       }
 
-      public MessageHeaderResponseComponent(Id identifier, Enumeration<ResponseCode> code) {
+      public MessageHeaderResponseComponent(IdType identifier, Enumeration<ResponseCode> code) {
         super();
         this.identifier = identifier;
         this.code = code;
@@ -117,14 +124,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #identifier} (The id of the message that this message is a response to.)
          */
-        public Id getIdentifier() { 
+        public IdType getIdentifier() { 
           return this.identifier;
         }
 
         /**
          * @param value {@link #identifier} (The id of the message that this message is a response to.)
          */
-        public MessageHeaderResponseComponent setIdentifier(Id value) { 
+        public MessageHeaderResponseComponent setIdentifier(IdType value) { 
           this.identifier = value;
           return this;
         }
@@ -141,7 +148,7 @@ public class MessageHeader extends Resource {
          */
         public MessageHeaderResponseComponent setIdentifierSimple(String value) { 
             if (this.identifier == null)
-              this.identifier = new Id();
+              this.identifier = new IdType();
             this.identifier.setValue(value);
           return this;
         }
@@ -193,6 +200,21 @@ public class MessageHeader extends Resource {
           return this;
         }
 
+        /**
+         * @return {@link #details} (The actual object that is the target of the reference. Full details of any issues found in the message.)
+         */
+        public OperationOutcome getDetailsTarget() { 
+          return this.detailsTarget;
+        }
+
+        /**
+         * @param value {@link #details} (The actual object that is the target of the reference. Full details of any issues found in the message.)
+         */
+        public MessageHeaderResponseComponent setDetailsTarget(OperationOutcome value) { 
+          this.detailsTarget = value;
+          return this;
+        }
+
         protected void listChildren(List<Property> childrenList) {
           super.listChildren(childrenList);
           childrenList.add(new Property("identifier", "id", "The id of the message that this message is a response to.", 0, java.lang.Integer.MAX_VALUE, identifier));
@@ -200,7 +222,7 @@ public class MessageHeader extends Resource {
           childrenList.add(new Property("details", "Resource(OperationOutcome)", "Full details of any issues found in the message.", 0, java.lang.Integer.MAX_VALUE, details));
         }
 
-      public MessageHeaderResponseComponent copy(MessageHeader e) {
+      public MessageHeaderResponseComponent copy() {
         MessageHeaderResponseComponent dst = new MessageHeaderResponseComponent();
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.code = code == null ? null : code.copy();
@@ -214,17 +236,17 @@ public class MessageHeader extends Resource {
         /**
          * Human-readable name for the target system.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * May include configuration or other information useful in debugging.
          */
-        protected String_ software;
+        protected StringType software;
 
         /**
          * Can convey versions of multiple systems in situations where a message passes through multiple hands.
          */
-        protected String_ version;
+        protected StringType version;
 
         /**
          * An e-mail, phone, website or other contact point to use to resolve issues with message communications.
@@ -234,13 +256,15 @@ public class MessageHeader extends Resource {
         /**
          * Identifies the routing target to send acknowledgements to.
          */
-        protected Uri endpoint;
+        protected UriType endpoint;
+
+        private static final long serialVersionUID = 2095309634L;
 
       public MessageSourceComponent() {
         super();
       }
 
-      public MessageSourceComponent(String_ software, Uri endpoint) {
+      public MessageSourceComponent(StringType software, UriType endpoint) {
         super();
         this.software = software;
         this.endpoint = endpoint;
@@ -249,14 +273,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #name} (Human-readable name for the target system.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (Human-readable name for the target system.)
          */
-        public MessageSourceComponent setName(String_ value) { 
+        public MessageSourceComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -276,7 +300,7 @@ public class MessageHeader extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -285,14 +309,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #software} (May include configuration or other information useful in debugging.)
          */
-        public String_ getSoftware() { 
+        public StringType getSoftware() { 
           return this.software;
         }
 
         /**
          * @param value {@link #software} (May include configuration or other information useful in debugging.)
          */
-        public MessageSourceComponent setSoftware(String_ value) { 
+        public MessageSourceComponent setSoftware(StringType value) { 
           this.software = value;
           return this;
         }
@@ -309,7 +333,7 @@ public class MessageHeader extends Resource {
          */
         public MessageSourceComponent setSoftwareSimple(String value) { 
             if (this.software == null)
-              this.software = new String_();
+              this.software = new StringType();
             this.software.setValue(value);
           return this;
         }
@@ -317,14 +341,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #version} (Can convey versions of multiple systems in situations where a message passes through multiple hands.)
          */
-        public String_ getVersion() { 
+        public StringType getVersion() { 
           return this.version;
         }
 
         /**
          * @param value {@link #version} (Can convey versions of multiple systems in situations where a message passes through multiple hands.)
          */
-        public MessageSourceComponent setVersion(String_ value) { 
+        public MessageSourceComponent setVersion(StringType value) { 
           this.version = value;
           return this;
         }
@@ -344,7 +368,7 @@ public class MessageHeader extends Resource {
             this.version = null;
           else {
             if (this.version == null)
-              this.version = new String_();
+              this.version = new StringType();
             this.version.setValue(value);
           }
           return this;
@@ -368,14 +392,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #endpoint} (Identifies the routing target to send acknowledgements to.)
          */
-        public Uri getEndpoint() { 
+        public UriType getEndpoint() { 
           return this.endpoint;
         }
 
         /**
          * @param value {@link #endpoint} (Identifies the routing target to send acknowledgements to.)
          */
-        public MessageSourceComponent setEndpoint(Uri value) { 
+        public MessageSourceComponent setEndpoint(UriType value) { 
           this.endpoint = value;
           return this;
         }
@@ -392,7 +416,7 @@ public class MessageHeader extends Resource {
          */
         public MessageSourceComponent setEndpointSimple(String value) { 
             if (this.endpoint == null)
-              this.endpoint = new Uri();
+              this.endpoint = new UriType();
             this.endpoint.setValue(value);
           return this;
         }
@@ -406,7 +430,7 @@ public class MessageHeader extends Resource {
           childrenList.add(new Property("endpoint", "uri", "Identifies the routing target to send acknowledgements to.", 0, java.lang.Integer.MAX_VALUE, endpoint));
         }
 
-      public MessageSourceComponent copy(MessageHeader e) {
+      public MessageSourceComponent copy() {
         MessageSourceComponent dst = new MessageSourceComponent();
         dst.name = name == null ? null : name.copy();
         dst.software = software == null ? null : software.copy();
@@ -422,7 +446,7 @@ public class MessageHeader extends Resource {
         /**
          * Human-readable name for the source system.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Identifies the target end system in situations where the initial message transmission is to an intermediary system.
@@ -430,15 +454,22 @@ public class MessageHeader extends Resource {
         protected ResourceReference target;
 
         /**
+         * The actual object that is the target of the reference (Identifies the target end system in situations where the initial message transmission is to an intermediary system.)
+         */
+        protected Device targetTarget;
+
+        /**
          * Indicates where the message should be routed to.
          */
-        protected Uri endpoint;
+        protected UriType endpoint;
+
+        private static final long serialVersionUID = 1209429009L;
 
       public MessageDestinationComponent() {
         super();
       }
 
-      public MessageDestinationComponent(Uri endpoint) {
+      public MessageDestinationComponent(UriType endpoint) {
         super();
         this.endpoint = endpoint;
       }
@@ -446,14 +477,14 @@ public class MessageHeader extends Resource {
         /**
          * @return {@link #name} (Human-readable name for the source system.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (Human-readable name for the source system.)
          */
-        public MessageDestinationComponent setName(String_ value) { 
+        public MessageDestinationComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -473,7 +504,7 @@ public class MessageHeader extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -495,16 +526,31 @@ public class MessageHeader extends Resource {
         }
 
         /**
+         * @return {@link #target} (The actual object that is the target of the reference. Identifies the target end system in situations where the initial message transmission is to an intermediary system.)
+         */
+        public Device getTargetTarget() { 
+          return this.targetTarget;
+        }
+
+        /**
+         * @param value {@link #target} (The actual object that is the target of the reference. Identifies the target end system in situations where the initial message transmission is to an intermediary system.)
+         */
+        public MessageDestinationComponent setTargetTarget(Device value) { 
+          this.targetTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #endpoint} (Indicates where the message should be routed to.)
          */
-        public Uri getEndpoint() { 
+        public UriType getEndpoint() { 
           return this.endpoint;
         }
 
         /**
          * @param value {@link #endpoint} (Indicates where the message should be routed to.)
          */
-        public MessageDestinationComponent setEndpoint(Uri value) { 
+        public MessageDestinationComponent setEndpoint(UriType value) { 
           this.endpoint = value;
           return this;
         }
@@ -521,7 +567,7 @@ public class MessageHeader extends Resource {
          */
         public MessageDestinationComponent setEndpointSimple(String value) { 
             if (this.endpoint == null)
-              this.endpoint = new Uri();
+              this.endpoint = new UriType();
             this.endpoint.setValue(value);
           return this;
         }
@@ -533,7 +579,7 @@ public class MessageHeader extends Resource {
           childrenList.add(new Property("endpoint", "uri", "Indicates where the message should be routed to.", 0, java.lang.Integer.MAX_VALUE, endpoint));
         }
 
-      public MessageDestinationComponent copy(MessageHeader e) {
+      public MessageDestinationComponent copy() {
         MessageDestinationComponent dst = new MessageDestinationComponent();
         dst.name = name == null ? null : name.copy();
         dst.target = target == null ? null : target.copy();
@@ -546,12 +592,12 @@ public class MessageHeader extends Resource {
     /**
      * The identifier of this message.
      */
-    protected Id identifier;
+    protected IdType identifier;
 
     /**
      * The time that the message was sent.
      */
-    protected Instant timestamp;
+    protected InstantType timestamp;
 
     /**
      * Code that identifies the event this message represents and connects it with it's definition. Events defined as part of the FHIR specification have the system value "http://hl7.org/fhir/message-type".
@@ -579,9 +625,19 @@ public class MessageHeader extends Resource {
     protected ResourceReference enterer;
 
     /**
+     * The actual object that is the target of the reference (The person or device that performed the data entry leading to this message. Where there is more than one candidate, pick the most proximal to the message. Can provide other enterers in extensions.)
+     */
+    protected Practitioner entererTarget;
+
+    /**
      * The logical author of the message - the person or device that decided the described event should happen. Where there is more than one candidate, pick the most proximal to the MessageHeader. Can provide other authors in extensions.
      */
     protected ResourceReference author;
+
+    /**
+     * The actual object that is the target of the reference (The logical author of the message - the person or device that decided the described event should happen. Where there is more than one candidate, pick the most proximal to the MessageHeader. Can provide other authors in extensions.)
+     */
+    protected Practitioner authorTarget;
 
     /**
      * Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.
@@ -589,9 +645,19 @@ public class MessageHeader extends Resource {
     protected ResourceReference receiver;
 
     /**
+     * The actual object that is the target of the reference (Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.)
+     */
+    protected Resource receiverTarget;
+
+    /**
      * The person or organization that accepts overall responsibility for the contents of the message. The implication is that the message event happened under the policies of the responsible party.
      */
     protected ResourceReference responsible;
+
+    /**
+     * The actual object that is the target of the reference (The person or organization that accepts overall responsibility for the contents of the message. The implication is that the message event happened under the policies of the responsible party.)
+     */
+    protected Resource responsibleTarget;
 
     /**
      * Coded indication of the cause for the event - indicates  a reason for the occurance of the event that is a focus of this message.
@@ -602,12 +668,19 @@ public class MessageHeader extends Resource {
      * The actual data of the message - a reference to the root/focus class of the event.
      */
     protected List<ResourceReference> data = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (The actual data of the message - a reference to the root/focus class of the event.)
+     */
+    protected List<Resource> dataTarget = new ArrayList<Resource>();
+
+
+    private static final long serialVersionUID = 75462059L;
 
     public MessageHeader() {
       super();
     }
 
-    public MessageHeader(Id identifier, Instant timestamp, Coding event, MessageSourceComponent source) {
+    public MessageHeader(IdType identifier, InstantType timestamp, Coding event, MessageSourceComponent source) {
       super();
       this.identifier = identifier;
       this.timestamp = timestamp;
@@ -618,14 +691,14 @@ public class MessageHeader extends Resource {
     /**
      * @return {@link #identifier} (The identifier of this message.)
      */
-    public Id getIdentifier() { 
+    public IdType getIdentifier() { 
       return this.identifier;
     }
 
     /**
      * @param value {@link #identifier} (The identifier of this message.)
      */
-    public MessageHeader setIdentifier(Id value) { 
+    public MessageHeader setIdentifier(IdType value) { 
       this.identifier = value;
       return this;
     }
@@ -642,7 +715,7 @@ public class MessageHeader extends Resource {
      */
     public MessageHeader setIdentifierSimple(String value) { 
         if (this.identifier == null)
-          this.identifier = new Id();
+          this.identifier = new IdType();
         this.identifier.setValue(value);
       return this;
     }
@@ -650,14 +723,14 @@ public class MessageHeader extends Resource {
     /**
      * @return {@link #timestamp} (The time that the message was sent.)
      */
-    public Instant getTimestamp() { 
+    public InstantType getTimestamp() { 
       return this.timestamp;
     }
 
     /**
      * @param value {@link #timestamp} (The time that the message was sent.)
      */
-    public MessageHeader setTimestamp(Instant value) { 
+    public MessageHeader setTimestamp(InstantType value) { 
       this.timestamp = value;
       return this;
     }
@@ -674,7 +747,7 @@ public class MessageHeader extends Resource {
      */
     public MessageHeader setTimestampSimple(DateAndTime value) { 
         if (this.timestamp == null)
-          this.timestamp = new Instant();
+          this.timestamp = new InstantType();
         this.timestamp.setValue(value);
       return this;
     }
@@ -757,6 +830,21 @@ public class MessageHeader extends Resource {
     }
 
     /**
+     * @return {@link #enterer} (The actual object that is the target of the reference. The person or device that performed the data entry leading to this message. Where there is more than one candidate, pick the most proximal to the message. Can provide other enterers in extensions.)
+     */
+    public Practitioner getEntererTarget() { 
+      return this.entererTarget;
+    }
+
+    /**
+     * @param value {@link #enterer} (The actual object that is the target of the reference. The person or device that performed the data entry leading to this message. Where there is more than one candidate, pick the most proximal to the message. Can provide other enterers in extensions.)
+     */
+    public MessageHeader setEntererTarget(Practitioner value) { 
+      this.entererTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #author} (The logical author of the message - the person or device that decided the described event should happen. Where there is more than one candidate, pick the most proximal to the MessageHeader. Can provide other authors in extensions.)
      */
     public ResourceReference getAuthor() { 
@@ -768,6 +856,21 @@ public class MessageHeader extends Resource {
      */
     public MessageHeader setAuthor(ResourceReference value) { 
       this.author = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #author} (The actual object that is the target of the reference. The logical author of the message - the person or device that decided the described event should happen. Where there is more than one candidate, pick the most proximal to the MessageHeader. Can provide other authors in extensions.)
+     */
+    public Practitioner getAuthorTarget() { 
+      return this.authorTarget;
+    }
+
+    /**
+     * @param value {@link #author} (The actual object that is the target of the reference. The logical author of the message - the person or device that decided the described event should happen. Where there is more than one candidate, pick the most proximal to the MessageHeader. Can provide other authors in extensions.)
+     */
+    public MessageHeader setAuthorTarget(Practitioner value) { 
+      this.authorTarget = value;
       return this;
     }
 
@@ -787,6 +890,21 @@ public class MessageHeader extends Resource {
     }
 
     /**
+     * @return {@link #receiver} (The actual object that is the target of the reference. Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.)
+     */
+    public Resource getReceiverTarget() { 
+      return this.receiverTarget;
+    }
+
+    /**
+     * @param value {@link #receiver} (The actual object that is the target of the reference. Allows data conveyed by a message to be addressed to a particular person or department when routing to a specific application isn't sufficient.)
+     */
+    public MessageHeader setReceiverTarget(Resource value) { 
+      this.receiverTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #responsible} (The person or organization that accepts overall responsibility for the contents of the message. The implication is that the message event happened under the policies of the responsible party.)
      */
     public ResourceReference getResponsible() { 
@@ -798,6 +916,21 @@ public class MessageHeader extends Resource {
      */
     public MessageHeader setResponsible(ResourceReference value) { 
       this.responsible = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #responsible} (The actual object that is the target of the reference. The person or organization that accepts overall responsibility for the contents of the message. The implication is that the message event happened under the policies of the responsible party.)
+     */
+    public Resource getResponsibleTarget() { 
+      return this.responsibleTarget;
+    }
+
+    /**
+     * @param value {@link #responsible} (The actual object that is the target of the reference. The person or organization that accepts overall responsibility for the contents of the message. The implication is that the message event happened under the policies of the responsible party.)
+     */
+    public MessageHeader setResponsibleTarget(Resource value) { 
+      this.responsibleTarget = value;
       return this;
     }
 
@@ -833,6 +966,13 @@ public class MessageHeader extends Resource {
       return t;
     }
 
+    /**
+     * @return {@link #data} (The actual objects that are the target of the reference. The actual data of the message - a reference to the root/focus class of the event.)
+     */
+    public List<Resource> getDataTarget() { 
+      return this.dataTarget;
+    }
+
       protected void listChildren(List<Property> childrenList) {
         super.listChildren(childrenList);
         childrenList.add(new Property("identifier", "id", "The identifier of this message.", 0, java.lang.Integer.MAX_VALUE, identifier));
@@ -854,11 +994,11 @@ public class MessageHeader extends Resource {
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.timestamp = timestamp == null ? null : timestamp.copy();
         dst.event = event == null ? null : event.copy();
-        dst.response = response == null ? null : response.copy(dst);
-        dst.source = source == null ? null : source.copy(dst);
+        dst.response = response == null ? null : response.copy();
+        dst.source = source == null ? null : source.copy();
         dst.destination = new ArrayList<MessageDestinationComponent>();
         for (MessageDestinationComponent i : destination)
-          dst.destination.add(i.copy(dst));
+          dst.destination.add(i.copy());
         dst.enterer = enterer == null ? null : enterer.copy();
         dst.author = author == null ? null : author.copy();
         dst.receiver = receiver == null ? null : receiver.copy();

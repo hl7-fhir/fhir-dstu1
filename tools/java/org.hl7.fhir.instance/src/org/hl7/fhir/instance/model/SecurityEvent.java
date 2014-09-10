@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -669,7 +669,7 @@ public class SecurityEvent extends Resource {
         /**
          * The time when the event occurred on the source.
          */
-        protected Instant dateTime;
+        protected InstantType dateTime;
 
         /**
          * Indicates whether the event succeeded or failed.
@@ -679,13 +679,15 @@ public class SecurityEvent extends Resource {
         /**
          * A free text description of the outcome of the event.
          */
-        protected String_ outcomeDesc;
+        protected StringType outcomeDesc;
+
+        private static final long serialVersionUID = -456797046L;
 
       public SecurityEventEventComponent() {
         super();
       }
 
-      public SecurityEventEventComponent(CodeableConcept type, Instant dateTime) {
+      public SecurityEventEventComponent(CodeableConcept type, InstantType dateTime) {
         super();
         this.type = type;
         this.dateTime = dateTime;
@@ -762,14 +764,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #dateTime} (The time when the event occurred on the source.)
          */
-        public Instant getDateTime() { 
+        public InstantType getDateTime() { 
           return this.dateTime;
         }
 
         /**
          * @param value {@link #dateTime} (The time when the event occurred on the source.)
          */
-        public SecurityEventEventComponent setDateTime(Instant value) { 
+        public SecurityEventEventComponent setDateTime(InstantType value) { 
           this.dateTime = value;
           return this;
         }
@@ -786,7 +788,7 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventEventComponent setDateTimeSimple(DateAndTime value) { 
             if (this.dateTime == null)
-              this.dateTime = new Instant();
+              this.dateTime = new InstantType();
             this.dateTime.setValue(value);
           return this;
         }
@@ -830,14 +832,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #outcomeDesc} (A free text description of the outcome of the event.)
          */
-        public String_ getOutcomeDesc() { 
+        public StringType getOutcomeDesc() { 
           return this.outcomeDesc;
         }
 
         /**
          * @param value {@link #outcomeDesc} (A free text description of the outcome of the event.)
          */
-        public SecurityEventEventComponent setOutcomeDesc(String_ value) { 
+        public SecurityEventEventComponent setOutcomeDesc(StringType value) { 
           this.outcomeDesc = value;
           return this;
         }
@@ -857,7 +859,7 @@ public class SecurityEvent extends Resource {
             this.outcomeDesc = null;
           else {
             if (this.outcomeDesc == null)
-              this.outcomeDesc = new String_();
+              this.outcomeDesc = new StringType();
             this.outcomeDesc.setValue(value);
           }
           return this;
@@ -873,7 +875,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("outcomeDesc", "string", "A free text description of the outcome of the event.", 0, java.lang.Integer.MAX_VALUE, outcomeDesc));
         }
 
-      public SecurityEventEventComponent copy(SecurityEvent e) {
+      public SecurityEventEventComponent copy() {
         SecurityEventEventComponent dst = new SecurityEventEventComponent();
         dst.type = type == null ? null : type.copy();
         dst.subtype = new ArrayList<CodeableConcept>();
@@ -900,24 +902,29 @@ public class SecurityEvent extends Resource {
         protected ResourceReference reference;
 
         /**
+         * The actual object that is the target of the reference (Direct reference to a resource that identifies the participant.)
+         */
+        protected Resource referenceTarget;
+
+        /**
          * Unique identifier for the user actively participating in the event.
          */
-        protected String_ userId;
+        protected StringType userId;
 
         /**
          * Alternative Participant Identifier. For a human, this should be a user identifier text string from authentication system. This identifier would be one known to a common authentication system (e.g., single sign-on), if available.
          */
-        protected String_ altId;
+        protected StringType altId;
 
         /**
          * Human-meaningful name for the user.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Indicator that the user is or is not the requestor, or initiator, for the event being audited.
          */
-        protected Boolean requestor;
+        protected BooleanType requestor;
 
         /**
          * Type of media involved. Used when the event is about exporting/importing onto media.
@@ -929,11 +936,13 @@ public class SecurityEvent extends Resource {
          */
         protected SecurityEventParticipantNetworkComponent network;
 
+        private static final long serialVersionUID = 410004357L;
+
       public SecurityEventParticipantComponent() {
         super();
       }
 
-      public SecurityEventParticipantComponent(Boolean requestor) {
+      public SecurityEventParticipantComponent(BooleanType requestor) {
         super();
         this.requestor = requestor;
       }
@@ -971,16 +980,31 @@ public class SecurityEvent extends Resource {
         }
 
         /**
+         * @return {@link #reference} (The actual object that is the target of the reference. Direct reference to a resource that identifies the participant.)
+         */
+        public Resource getReferenceTarget() { 
+          return this.referenceTarget;
+        }
+
+        /**
+         * @param value {@link #reference} (The actual object that is the target of the reference. Direct reference to a resource that identifies the participant.)
+         */
+        public SecurityEventParticipantComponent setReferenceTarget(Resource value) { 
+          this.referenceTarget = value;
+          return this;
+        }
+
+        /**
          * @return {@link #userId} (Unique identifier for the user actively participating in the event.)
          */
-        public String_ getUserId() { 
+        public StringType getUserId() { 
           return this.userId;
         }
 
         /**
          * @param value {@link #userId} (Unique identifier for the user actively participating in the event.)
          */
-        public SecurityEventParticipantComponent setUserId(String_ value) { 
+        public SecurityEventParticipantComponent setUserId(StringType value) { 
           this.userId = value;
           return this;
         }
@@ -1000,7 +1024,7 @@ public class SecurityEvent extends Resource {
             this.userId = null;
           else {
             if (this.userId == null)
-              this.userId = new String_();
+              this.userId = new StringType();
             this.userId.setValue(value);
           }
           return this;
@@ -1009,14 +1033,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #altId} (Alternative Participant Identifier. For a human, this should be a user identifier text string from authentication system. This identifier would be one known to a common authentication system (e.g., single sign-on), if available.)
          */
-        public String_ getAltId() { 
+        public StringType getAltId() { 
           return this.altId;
         }
 
         /**
          * @param value {@link #altId} (Alternative Participant Identifier. For a human, this should be a user identifier text string from authentication system. This identifier would be one known to a common authentication system (e.g., single sign-on), if available.)
          */
-        public SecurityEventParticipantComponent setAltId(String_ value) { 
+        public SecurityEventParticipantComponent setAltId(StringType value) { 
           this.altId = value;
           return this;
         }
@@ -1036,7 +1060,7 @@ public class SecurityEvent extends Resource {
             this.altId = null;
           else {
             if (this.altId == null)
-              this.altId = new String_();
+              this.altId = new StringType();
             this.altId.setValue(value);
           }
           return this;
@@ -1045,14 +1069,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #name} (Human-meaningful name for the user.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (Human-meaningful name for the user.)
          */
-        public SecurityEventParticipantComponent setName(String_ value) { 
+        public SecurityEventParticipantComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -1072,7 +1096,7 @@ public class SecurityEvent extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -1081,14 +1105,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #requestor} (Indicator that the user is or is not the requestor, or initiator, for the event being audited.)
          */
-        public Boolean getRequestor() { 
+        public BooleanType getRequestor() { 
           return this.requestor;
         }
 
         /**
          * @param value {@link #requestor} (Indicator that the user is or is not the requestor, or initiator, for the event being audited.)
          */
-        public SecurityEventParticipantComponent setRequestor(Boolean value) { 
+        public SecurityEventParticipantComponent setRequestor(BooleanType value) { 
           this.requestor = value;
           return this;
         }
@@ -1105,7 +1129,7 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventParticipantComponent setRequestorSimple(boolean value) { 
             if (this.requestor == null)
-              this.requestor = new Boolean();
+              this.requestor = new BooleanType();
             this.requestor.setValue(value);
           return this;
         }
@@ -1152,7 +1176,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("network", "", "Logical network location for application activity, if the activity has a network location.", 0, java.lang.Integer.MAX_VALUE, network));
         }
 
-      public SecurityEventParticipantComponent copy(SecurityEvent e) {
+      public SecurityEventParticipantComponent copy() {
         SecurityEventParticipantComponent dst = new SecurityEventParticipantComponent();
         dst.role = new ArrayList<CodeableConcept>();
         for (CodeableConcept i : role)
@@ -1163,7 +1187,7 @@ public class SecurityEvent extends Resource {
         dst.name = name == null ? null : name.copy();
         dst.requestor = requestor == null ? null : requestor.copy();
         dst.media = media == null ? null : media.copy();
-        dst.network = network == null ? null : network.copy(e);
+        dst.network = network == null ? null : network.copy();
         return dst;
       }
 
@@ -1173,12 +1197,14 @@ public class SecurityEvent extends Resource {
         /**
          * An identifier for the network access point of the user device for the audit event.
          */
-        protected String_ identifier;
+        protected StringType identifier;
 
         /**
          * An identifier for the type of network access point that originated the audit event.
          */
         protected Enumeration<NetworkType> type;
+
+        private static final long serialVersionUID = -1946856025L;
 
       public SecurityEventParticipantNetworkComponent() {
         super();
@@ -1187,14 +1213,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #identifier} (An identifier for the network access point of the user device for the audit event.)
          */
-        public String_ getIdentifier() { 
+        public StringType getIdentifier() { 
           return this.identifier;
         }
 
         /**
          * @param value {@link #identifier} (An identifier for the network access point of the user device for the audit event.)
          */
-        public SecurityEventParticipantNetworkComponent setIdentifier(String_ value) { 
+        public SecurityEventParticipantNetworkComponent setIdentifier(StringType value) { 
           this.identifier = value;
           return this;
         }
@@ -1214,7 +1240,7 @@ public class SecurityEvent extends Resource {
             this.identifier = null;
           else {
             if (this.identifier == null)
-              this.identifier = new String_();
+              this.identifier = new StringType();
             this.identifier.setValue(value);
           }
           return this;
@@ -1262,7 +1288,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("type", "code", "An identifier for the type of network access point that originated the audit event.", 0, java.lang.Integer.MAX_VALUE, type));
         }
 
-      public SecurityEventParticipantNetworkComponent copy(SecurityEvent e) {
+      public SecurityEventParticipantNetworkComponent copy() {
         SecurityEventParticipantNetworkComponent dst = new SecurityEventParticipantNetworkComponent();
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.type = type == null ? null : type.copy();
@@ -1275,23 +1301,25 @@ public class SecurityEvent extends Resource {
         /**
          * Logical source location within the healthcare enterprise network.
          */
-        protected String_ site;
+        protected StringType site;
 
         /**
          * Identifier of the source where the event originated.
          */
-        protected String_ identifier;
+        protected StringType identifier;
 
         /**
          * Code specifying the type of source where event originated.
          */
         protected List<Coding> type = new ArrayList<Coding>();
 
+        private static final long serialVersionUID = 1938527187L;
+
       public SecurityEventSourceComponent() {
         super();
       }
 
-      public SecurityEventSourceComponent(String_ identifier) {
+      public SecurityEventSourceComponent(StringType identifier) {
         super();
         this.identifier = identifier;
       }
@@ -1299,14 +1327,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #site} (Logical source location within the healthcare enterprise network.)
          */
-        public String_ getSite() { 
+        public StringType getSite() { 
           return this.site;
         }
 
         /**
          * @param value {@link #site} (Logical source location within the healthcare enterprise network.)
          */
-        public SecurityEventSourceComponent setSite(String_ value) { 
+        public SecurityEventSourceComponent setSite(StringType value) { 
           this.site = value;
           return this;
         }
@@ -1326,7 +1354,7 @@ public class SecurityEvent extends Resource {
             this.site = null;
           else {
             if (this.site == null)
-              this.site = new String_();
+              this.site = new StringType();
             this.site.setValue(value);
           }
           return this;
@@ -1335,14 +1363,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #identifier} (Identifier of the source where the event originated.)
          */
-        public String_ getIdentifier() { 
+        public StringType getIdentifier() { 
           return this.identifier;
         }
 
         /**
          * @param value {@link #identifier} (Identifier of the source where the event originated.)
          */
-        public SecurityEventSourceComponent setIdentifier(String_ value) { 
+        public SecurityEventSourceComponent setIdentifier(StringType value) { 
           this.identifier = value;
           return this;
         }
@@ -1359,7 +1387,7 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventSourceComponent setIdentifierSimple(String value) { 
             if (this.identifier == null)
-              this.identifier = new String_();
+              this.identifier = new StringType();
             this.identifier.setValue(value);
           return this;
         }
@@ -1388,7 +1416,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("type", "Coding", "Code specifying the type of source where event originated.", 0, java.lang.Integer.MAX_VALUE, type));
         }
 
-      public SecurityEventSourceComponent copy(SecurityEvent e) {
+      public SecurityEventSourceComponent copy() {
         SecurityEventSourceComponent dst = new SecurityEventSourceComponent();
         dst.site = site == null ? null : site.copy();
         dst.identifier = identifier == null ? null : identifier.copy();
@@ -1410,6 +1438,11 @@ public class SecurityEvent extends Resource {
          * Identifies a specific instance of the participant object. The reference should always be version specific.
          */
         protected ResourceReference reference;
+
+        /**
+         * The actual object that is the target of the reference (Identifies a specific instance of the participant object. The reference should always be version specific.)
+         */
+        protected Resource referenceTarget;
 
         /**
          * Object type being audited.
@@ -1434,22 +1467,24 @@ public class SecurityEvent extends Resource {
         /**
          * An instance-specific descriptor of the Participant Object ID audited, such as a person's name.
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * Text that describes the object in more detail.
          */
-        protected String_ description;
+        protected StringType description;
 
         /**
          * The actual query for a query-type participant object.
          */
-        protected Base64Binary query;
+        protected Base64BinaryType query;
 
         /**
          * Additional Information about the Object.
          */
         protected List<SecurityEventObjectDetailComponent> detail = new ArrayList<SecurityEventObjectDetailComponent>();
+
+        private static final long serialVersionUID = -876364505L;
 
       public SecurityEventObjectComponent() {
         super();
@@ -1482,6 +1517,21 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventObjectComponent setReference(ResourceReference value) { 
           this.reference = value;
+          return this;
+        }
+
+        /**
+         * @return {@link #reference} (The actual object that is the target of the reference. Identifies a specific instance of the participant object. The reference should always be version specific.)
+         */
+        public Resource getReferenceTarget() { 
+          return this.referenceTarget;
+        }
+
+        /**
+         * @param value {@link #reference} (The actual object that is the target of the reference. Identifies a specific instance of the participant object. The reference should always be version specific.)
+         */
+        public SecurityEventObjectComponent setReferenceTarget(Resource value) { 
+          this.referenceTarget = value;
           return this;
         }
 
@@ -1611,14 +1661,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #name} (An instance-specific descriptor of the Participant Object ID audited, such as a person's name.)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (An instance-specific descriptor of the Participant Object ID audited, such as a person's name.)
          */
-        public SecurityEventObjectComponent setName(String_ value) { 
+        public SecurityEventObjectComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -1638,7 +1688,7 @@ public class SecurityEvent extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -1647,14 +1697,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #description} (Text that describes the object in more detail.)
          */
-        public String_ getDescription() { 
+        public StringType getDescription() { 
           return this.description;
         }
 
         /**
          * @param value {@link #description} (Text that describes the object in more detail.)
          */
-        public SecurityEventObjectComponent setDescription(String_ value) { 
+        public SecurityEventObjectComponent setDescription(StringType value) { 
           this.description = value;
           return this;
         }
@@ -1674,7 +1724,7 @@ public class SecurityEvent extends Resource {
             this.description = null;
           else {
             if (this.description == null)
-              this.description = new String_();
+              this.description = new StringType();
             this.description.setValue(value);
           }
           return this;
@@ -1683,14 +1733,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #query} (The actual query for a query-type participant object.)
          */
-        public Base64Binary getQuery() { 
+        public Base64BinaryType getQuery() { 
           return this.query;
         }
 
         /**
          * @param value {@link #query} (The actual query for a query-type participant object.)
          */
-        public SecurityEventObjectComponent setQuery(Base64Binary value) { 
+        public SecurityEventObjectComponent setQuery(Base64BinaryType value) { 
           this.query = value;
           return this;
         }
@@ -1710,7 +1760,7 @@ public class SecurityEvent extends Resource {
             this.query = null;
           else {
             if (this.query == null)
-              this.query = new Base64Binary();
+              this.query = new Base64BinaryType();
             this.query.setValue(value);
           }
           return this;
@@ -1747,7 +1797,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("detail", "", "Additional Information about the Object.", 0, java.lang.Integer.MAX_VALUE, detail));
         }
 
-      public SecurityEventObjectComponent copy(SecurityEvent e) {
+      public SecurityEventObjectComponent copy() {
         SecurityEventObjectComponent dst = new SecurityEventObjectComponent();
         dst.identifier = identifier == null ? null : identifier.copy();
         dst.reference = reference == null ? null : reference.copy();
@@ -1760,7 +1810,7 @@ public class SecurityEvent extends Resource {
         dst.query = query == null ? null : query.copy();
         dst.detail = new ArrayList<SecurityEventObjectDetailComponent>();
         for (SecurityEventObjectDetailComponent i : detail)
-          dst.detail.add(i.copy(e));
+          dst.detail.add(i.copy());
         return dst;
       }
 
@@ -1770,18 +1820,20 @@ public class SecurityEvent extends Resource {
         /**
          * Name of the property.
          */
-        protected String_ type;
+        protected StringType type;
 
         /**
          * Property value.
          */
-        protected Base64Binary value;
+        protected Base64BinaryType value;
+
+        private static final long serialVersionUID = 11139504L;
 
       public SecurityEventObjectDetailComponent() {
         super();
       }
 
-      public SecurityEventObjectDetailComponent(String_ type, Base64Binary value) {
+      public SecurityEventObjectDetailComponent(StringType type, Base64BinaryType value) {
         super();
         this.type = type;
         this.value = value;
@@ -1790,14 +1842,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #type} (Name of the property.)
          */
-        public String_ getType() { 
+        public StringType getType() { 
           return this.type;
         }
 
         /**
          * @param value {@link #type} (Name of the property.)
          */
-        public SecurityEventObjectDetailComponent setType(String_ value) { 
+        public SecurityEventObjectDetailComponent setType(StringType value) { 
           this.type = value;
           return this;
         }
@@ -1814,7 +1866,7 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventObjectDetailComponent setTypeSimple(String value) { 
             if (this.type == null)
-              this.type = new String_();
+              this.type = new StringType();
             this.type.setValue(value);
           return this;
         }
@@ -1822,14 +1874,14 @@ public class SecurityEvent extends Resource {
         /**
          * @return {@link #value} (Property value.)
          */
-        public Base64Binary getValue() { 
+        public Base64BinaryType getValue() { 
           return this.value;
         }
 
         /**
          * @param value {@link #value} (Property value.)
          */
-        public SecurityEventObjectDetailComponent setValue(Base64Binary value) { 
+        public SecurityEventObjectDetailComponent setValue(Base64BinaryType value) { 
           this.value = value;
           return this;
         }
@@ -1846,7 +1898,7 @@ public class SecurityEvent extends Resource {
          */
         public SecurityEventObjectDetailComponent setValueSimple(byte[] value) { 
             if (this.value == null)
-              this.value = new Base64Binary();
+              this.value = new Base64BinaryType();
             this.value.setValue(value);
           return this;
         }
@@ -1857,7 +1909,7 @@ public class SecurityEvent extends Resource {
           childrenList.add(new Property("value", "base64Binary", "Property value.", 0, java.lang.Integer.MAX_VALUE, value));
         }
 
-      public SecurityEventObjectDetailComponent copy(SecurityEvent e) {
+      public SecurityEventObjectDetailComponent copy() {
         SecurityEventObjectDetailComponent dst = new SecurityEventObjectDetailComponent();
         dst.type = type == null ? null : type.copy();
         dst.value = value == null ? null : value.copy();
@@ -1885,6 +1937,8 @@ public class SecurityEvent extends Resource {
      * Specific instances of data or objects that have been accessed.
      */
     protected List<SecurityEventObjectComponent> object = new ArrayList<SecurityEventObjectComponent>();
+
+    private static final long serialVersionUID = -216029818L;
 
     public SecurityEvent() {
       super();
@@ -1970,14 +2024,14 @@ public class SecurityEvent extends Resource {
 
       public SecurityEvent copy() {
         SecurityEvent dst = new SecurityEvent();
-        dst.event = event == null ? null : event.copy(dst);
+        dst.event = event == null ? null : event.copy();
         dst.participant = new ArrayList<SecurityEventParticipantComponent>();
         for (SecurityEventParticipantComponent i : participant)
-          dst.participant.add(i.copy(dst));
-        dst.source = source == null ? null : source.copy(dst);
+          dst.participant.add(i.copy());
+        dst.source = source == null ? null : source.copy();
         dst.object = new ArrayList<SecurityEventObjectComponent>();
         for (SecurityEventObjectComponent i : object)
-          dst.object.add(i.copy(dst));
+          dst.object.add(i.copy());
         return dst;
       }
 

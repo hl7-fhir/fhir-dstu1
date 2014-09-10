@@ -1,5 +1,36 @@
 package org.hl7.fhir.instance.client;
 
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+*/
+
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
@@ -17,6 +48,7 @@ import org.hl7.fhir.instance.model.DateAndTime;
 import org.hl7.fhir.instance.model.Resource;
 import org.hl7.fhir.instance.model.ResourceType;
 
+//Make resources address subclass of URI
 /**
  * Helper class to manage FHIR Resource URIs
  * 
@@ -61,46 +93,68 @@ public class ResourceAddress {
 		return baseServiceUri.resolve(nameForClass(resourceClass) +"/"+id+"/_history/"+version);
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id) {
-		return baseServiceUri.resolve(nameForClass(resourceClass) + "/" + id + "/_history");
-	}
-	
-	public URI resolveGetHistoryForAllResources(DateAndTime since) {
-		if (since == null)
+	public URI resolveGetHistoryForAllResources(int count) {
+		if(count > 0) {
+			return appendHttpParameter(baseServiceUri.resolve("_history"), "_count", ""+count);
+		} else {
 			return baseServiceUri.resolve("_history");
-		else
-			return appendHttpParameter(baseServiceUri.resolve("_history"), "_since", since.toString());
+		}
+}
+	
+	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id, int count) {
+		return resolveGetHistoryUriForResourceId(resourceClass, id, null, count);
 	}
 	
-	public URI resolveGetHistoryForAllResources() {
-			return baseServiceUri.resolve("_history");
+	protected <T extends Resource> URI resolveGetHistoryUriForResourceId(Class<T> resourceClass, String id, Object since, int count) {
+		Map<String,String>  parameters = getHistoryParameters(since, count);
+		return appendHttpParameters(baseServiceUri.resolve(nameForClass(resourceClass) + "/" + id + "/_history"), parameters);
 	}
 	
-	public URI resolveGetHistoryForAllResources(Calendar since) {
-		if (since == null)
-			return baseServiceUri.resolve("_history");
-		else
-			return appendHttpParameter(baseServiceUri.resolve("_history"), "_since", since.toString());
+	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, int count) {
+		Map<String,String>  parameters = getHistoryParameters(null, count);
+		return appendHttpParameters(baseServiceUri.resolve(nameForClass(resourceClass) + "/_history"), parameters);
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id, Calendar since) {
-		return appendHttpParameter(resolveGetHistoryForResourceId(resourceClass, id), "_since", getCalendarDateInIsoTimeFormat(since));
+	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, Object since, int count) {
+		Map<String,String>  parameters = getHistoryParameters(since, count);
+		return appendHttpParameters(baseServiceUri.resolve(nameForClass(resourceClass) + "/_history"), parameters);
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id, DateAndTime since) {
-		return appendHttpParameter(resolveGetHistoryForResourceId(resourceClass, id), "_since", since.toString());
+	public URI resolveGetHistoryForAllResources(Calendar since, int count) {
+		Map<String,String>  parameters = getHistoryParameters(since, count);
+		return appendHttpParameters(baseServiceUri.resolve("_history"), parameters);
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass) {
-		return baseServiceUri.resolve(nameForClass(resourceClass) + "/_history");
+	public URI resolveGetHistoryForAllResources(DateAndTime since, int count) {
+		Map<String,String>  parameters = getHistoryParameters(since, count);
+		return appendHttpParameters(baseServiceUri.resolve("_history"), parameters);
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, Calendar since) {
-		return appendHttpParameter(resolveGetHistoryForResourceType(resourceClass), "_since", getCalendarDateInIsoTimeFormat(since));
+	public Map<String,String> getHistoryParameters(Object since, int count) {
+		Map<String,String>  parameters = new HashMap<String,String>();
+		if (since != null) {
+			parameters.put("_since", since.toString());
+		}
+		if(count > 0) {
+			parameters.put("_count", ""+count);
+		}
+		return parameters;
 	}
 	
-	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, DateAndTime since) {
-		return appendHttpParameter(resolveGetHistoryForResourceType(resourceClass), "_since", since.toString());
+	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id, Calendar since, int count) {
+		return resolveGetHistoryUriForResourceId(resourceClass, id, since, count);
+	}
+	
+	public <T extends Resource> URI resolveGetHistoryForResourceId(Class<T> resourceClass, String id, DateAndTime since, int count) {
+		return resolveGetHistoryUriForResourceId(resourceClass, id, since, count);
+	}
+	
+	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, Calendar since, int count) {
+		return resolveGetHistoryForResourceType(resourceClass, getCalendarDateInIsoTimeFormat(since), count);
+	}
+	
+	public <T extends Resource> URI resolveGetHistoryForResourceType(Class<T> resourceClass, DateAndTime since, int count) {
+		return resolveGetHistoryForResourceType(resourceClass, since.toString(), count);
 	}
 	
 	public <T extends Resource> URI resolveGetAllTags() {

@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -147,14 +147,24 @@ public class OrderResponse extends Resource {
     protected ResourceReference request;
 
     /**
+     * The actual object that is the target of the reference (A reference to the order that this is in response to.)
+     */
+    protected Order requestTarget;
+
+    /**
      * The date and time at which this order response was made (created/posted).
      */
-    protected DateTime date;
+    protected DateTimeType date;
 
     /**
      * The person, organization, or device credited with making the response.
      */
     protected ResourceReference who;
+
+    /**
+     * The actual object that is the target of the reference (The person, organization, or device credited with making the response.)
+     */
+    protected Resource whoTarget;
 
     /**
      * A reference to an authority policy that is the reason for the response. Usually this is used when the order is rejected, to provide a reason for rejection.
@@ -169,12 +179,19 @@ public class OrderResponse extends Resource {
     /**
      * Additional description about the response - e.g. a text description provided by a human user when making decisions about the order.
      */
-    protected String_ description;
+    protected StringType description;
 
     /**
      * Links to resources that provide details of the outcome of performing the order. E.g. Diagnostic Reports in a response that is made to an order that referenced a diagnostic order.
      */
     protected List<ResourceReference> fulfillment = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (Links to resources that provide details of the outcome of performing the order. E.g. Diagnostic Reports in a response that is made to an order that referenced a diagnostic order.)
+     */
+    protected List<Resource> fulfillmentTarget = new ArrayList<Resource>();
+
+
+    private static final long serialVersionUID = 1422952117L;
 
     public OrderResponse() {
       super();
@@ -219,16 +236,31 @@ public class OrderResponse extends Resource {
     }
 
     /**
+     * @return {@link #request} (The actual object that is the target of the reference. A reference to the order that this is in response to.)
+     */
+    public Order getRequestTarget() { 
+      return this.requestTarget;
+    }
+
+    /**
+     * @param value {@link #request} (The actual object that is the target of the reference. A reference to the order that this is in response to.)
+     */
+    public OrderResponse setRequestTarget(Order value) { 
+      this.requestTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #date} (The date and time at which this order response was made (created/posted).)
      */
-    public DateTime getDate() { 
+    public DateTimeType getDate() { 
       return this.date;
     }
 
     /**
      * @param value {@link #date} (The date and time at which this order response was made (created/posted).)
      */
-    public OrderResponse setDate(DateTime value) { 
+    public OrderResponse setDate(DateTimeType value) { 
       this.date = value;
       return this;
     }
@@ -248,7 +280,7 @@ public class OrderResponse extends Resource {
         this.date = null;
       else {
         if (this.date == null)
-          this.date = new DateTime();
+          this.date = new DateTimeType();
         this.date.setValue(value);
       }
       return this;
@@ -266,6 +298,21 @@ public class OrderResponse extends Resource {
      */
     public OrderResponse setWho(ResourceReference value) { 
       this.who = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #who} (The actual object that is the target of the reference. The person, organization, or device credited with making the response.)
+     */
+    public Resource getWhoTarget() { 
+      return this.whoTarget;
+    }
+
+    /**
+     * @param value {@link #who} (The actual object that is the target of the reference. The person, organization, or device credited with making the response.)
+     */
+    public OrderResponse setWhoTarget(Resource value) { 
+      this.whoTarget = value;
       return this;
     }
 
@@ -319,14 +366,14 @@ public class OrderResponse extends Resource {
     /**
      * @return {@link #description} (Additional description about the response - e.g. a text description provided by a human user when making decisions about the order.)
      */
-    public String_ getDescription() { 
+    public StringType getDescription() { 
       return this.description;
     }
 
     /**
      * @param value {@link #description} (Additional description about the response - e.g. a text description provided by a human user when making decisions about the order.)
      */
-    public OrderResponse setDescription(String_ value) { 
+    public OrderResponse setDescription(StringType value) { 
       this.description = value;
       return this;
     }
@@ -346,7 +393,7 @@ public class OrderResponse extends Resource {
         this.description = null;
       else {
         if (this.description == null)
-          this.description = new String_();
+          this.description = new StringType();
         this.description.setValue(value);
       }
       return this;
@@ -367,6 +414,13 @@ public class OrderResponse extends Resource {
       ResourceReference t = new ResourceReference();
       this.fulfillment.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #fulfillment} (The actual objects that are the target of the reference. Links to resources that provide details of the outcome of performing the order. E.g. Diagnostic Reports in a response that is made to an order that referenced a diagnostic order.)
+     */
+    public List<Resource> getFulfillmentTarget() { 
+      return this.fulfillmentTarget;
     }
 
       protected void listChildren(List<Property> childrenList) {

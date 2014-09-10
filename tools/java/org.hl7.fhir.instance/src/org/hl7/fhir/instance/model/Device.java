@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -51,32 +51,32 @@ public class Device extends Resource {
     /**
      * A name of the manufacturer.
      */
-    protected String_ manufacturer;
+    protected StringType manufacturer;
 
     /**
      * The "model" - an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type.
      */
-    protected String_ model;
+    protected StringType model;
 
     /**
      * The version of the device, if the device has multiple releases under the same model, or if the device is software or carries firmware.
      */
-    protected String_ version;
+    protected StringType version;
 
     /**
      * Date of expiry of this device (if applicable).
      */
-    protected Date expiry;
+    protected DateType expiry;
 
     /**
      * FDA Mandated Unique Device Identifier. Use the human readable information (the content that the user sees, which is sometimes different to the exact syntax represented in the barcode)  - see http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm.
      */
-    protected String_ udi;
+    protected StringType udi;
 
     /**
      * Lot number assigned by the manufacturer.
      */
-    protected String_ lotNumber;
+    protected StringType lotNumber;
 
     /**
      * An organization that is responsible for the provision and ongoing maintenance of the device.
@@ -84,14 +84,29 @@ public class Device extends Resource {
     protected ResourceReference owner;
 
     /**
+     * The actual object that is the target of the reference (An organization that is responsible for the provision and ongoing maintenance of the device.)
+     */
+    protected Organization ownerTarget;
+
+    /**
      * The resource may be found in a literal location (i.e. GPS coordinates), a logical place (i.e. "in/with the patient"), or a coded location.
      */
     protected ResourceReference location;
 
     /**
+     * The actual object that is the target of the reference (The resource may be found in a literal location (i.e. GPS coordinates), a logical place (i.e. "in/with the patient"), or a coded location.)
+     */
+    protected Location locationTarget;
+
+    /**
      * Patient information, if the resource is affixed to a person.
      */
     protected ResourceReference patient;
+
+    /**
+     * The actual object that is the target of the reference (Patient information, if the resource is affixed to a person.)
+     */
+    protected Patient patientTarget;
 
     /**
      * Contact details for an organization or a particular human that is responsible for the device.
@@ -101,7 +116,9 @@ public class Device extends Resource {
     /**
      * A network address on which the device may be contacted directly.
      */
-    protected Uri url;
+    protected UriType url;
+
+    private static final long serialVersionUID = 1596756464L;
 
     public Device() {
       super();
@@ -147,14 +164,14 @@ public class Device extends Resource {
     /**
      * @return {@link #manufacturer} (A name of the manufacturer.)
      */
-    public String_ getManufacturer() { 
+    public StringType getManufacturer() { 
       return this.manufacturer;
     }
 
     /**
      * @param value {@link #manufacturer} (A name of the manufacturer.)
      */
-    public Device setManufacturer(String_ value) { 
+    public Device setManufacturer(StringType value) { 
       this.manufacturer = value;
       return this;
     }
@@ -174,7 +191,7 @@ public class Device extends Resource {
         this.manufacturer = null;
       else {
         if (this.manufacturer == null)
-          this.manufacturer = new String_();
+          this.manufacturer = new StringType();
         this.manufacturer.setValue(value);
       }
       return this;
@@ -183,14 +200,14 @@ public class Device extends Resource {
     /**
      * @return {@link #model} (The "model" - an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type.)
      */
-    public String_ getModel() { 
+    public StringType getModel() { 
       return this.model;
     }
 
     /**
      * @param value {@link #model} (The "model" - an identifier assigned by the manufacturer to identify the product by its type. This number is shared by the all devices sold as the same type.)
      */
-    public Device setModel(String_ value) { 
+    public Device setModel(StringType value) { 
       this.model = value;
       return this;
     }
@@ -210,7 +227,7 @@ public class Device extends Resource {
         this.model = null;
       else {
         if (this.model == null)
-          this.model = new String_();
+          this.model = new StringType();
         this.model.setValue(value);
       }
       return this;
@@ -219,14 +236,14 @@ public class Device extends Resource {
     /**
      * @return {@link #version} (The version of the device, if the device has multiple releases under the same model, or if the device is software or carries firmware.)
      */
-    public String_ getVersion() { 
+    public StringType getVersion() { 
       return this.version;
     }
 
     /**
      * @param value {@link #version} (The version of the device, if the device has multiple releases under the same model, or if the device is software or carries firmware.)
      */
-    public Device setVersion(String_ value) { 
+    public Device setVersion(StringType value) { 
       this.version = value;
       return this;
     }
@@ -246,7 +263,7 @@ public class Device extends Resource {
         this.version = null;
       else {
         if (this.version == null)
-          this.version = new String_();
+          this.version = new StringType();
         this.version.setValue(value);
       }
       return this;
@@ -255,14 +272,14 @@ public class Device extends Resource {
     /**
      * @return {@link #expiry} (Date of expiry of this device (if applicable).)
      */
-    public Date getExpiry() { 
+    public DateType getExpiry() { 
       return this.expiry;
     }
 
     /**
      * @param value {@link #expiry} (Date of expiry of this device (if applicable).)
      */
-    public Device setExpiry(Date value) { 
+    public Device setExpiry(DateType value) { 
       this.expiry = value;
       return this;
     }
@@ -282,7 +299,7 @@ public class Device extends Resource {
         this.expiry = null;
       else {
         if (this.expiry == null)
-          this.expiry = new Date();
+          this.expiry = new DateType();
         this.expiry.setValue(value);
       }
       return this;
@@ -291,14 +308,14 @@ public class Device extends Resource {
     /**
      * @return {@link #udi} (FDA Mandated Unique Device Identifier. Use the human readable information (the content that the user sees, which is sometimes different to the exact syntax represented in the barcode)  - see http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm.)
      */
-    public String_ getUdi() { 
+    public StringType getUdi() { 
       return this.udi;
     }
 
     /**
      * @param value {@link #udi} (FDA Mandated Unique Device Identifier. Use the human readable information (the content that the user sees, which is sometimes different to the exact syntax represented in the barcode)  - see http://www.fda.gov/MedicalDevices/DeviceRegulationandGuidance/UniqueDeviceIdentification/default.htm.)
      */
-    public Device setUdi(String_ value) { 
+    public Device setUdi(StringType value) { 
       this.udi = value;
       return this;
     }
@@ -318,7 +335,7 @@ public class Device extends Resource {
         this.udi = null;
       else {
         if (this.udi == null)
-          this.udi = new String_();
+          this.udi = new StringType();
         this.udi.setValue(value);
       }
       return this;
@@ -327,14 +344,14 @@ public class Device extends Resource {
     /**
      * @return {@link #lotNumber} (Lot number assigned by the manufacturer.)
      */
-    public String_ getLotNumber() { 
+    public StringType getLotNumber() { 
       return this.lotNumber;
     }
 
     /**
      * @param value {@link #lotNumber} (Lot number assigned by the manufacturer.)
      */
-    public Device setLotNumber(String_ value) { 
+    public Device setLotNumber(StringType value) { 
       this.lotNumber = value;
       return this;
     }
@@ -354,7 +371,7 @@ public class Device extends Resource {
         this.lotNumber = null;
       else {
         if (this.lotNumber == null)
-          this.lotNumber = new String_();
+          this.lotNumber = new StringType();
         this.lotNumber.setValue(value);
       }
       return this;
@@ -376,6 +393,21 @@ public class Device extends Resource {
     }
 
     /**
+     * @return {@link #owner} (The actual object that is the target of the reference. An organization that is responsible for the provision and ongoing maintenance of the device.)
+     */
+    public Organization getOwnerTarget() { 
+      return this.ownerTarget;
+    }
+
+    /**
+     * @param value {@link #owner} (The actual object that is the target of the reference. An organization that is responsible for the provision and ongoing maintenance of the device.)
+     */
+    public Device setOwnerTarget(Organization value) { 
+      this.ownerTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #location} (The resource may be found in a literal location (i.e. GPS coordinates), a logical place (i.e. "in/with the patient"), or a coded location.)
      */
     public ResourceReference getLocation() { 
@@ -391,6 +423,21 @@ public class Device extends Resource {
     }
 
     /**
+     * @return {@link #location} (The actual object that is the target of the reference. The resource may be found in a literal location (i.e. GPS coordinates), a logical place (i.e. "in/with the patient"), or a coded location.)
+     */
+    public Location getLocationTarget() { 
+      return this.locationTarget;
+    }
+
+    /**
+     * @param value {@link #location} (The actual object that is the target of the reference. The resource may be found in a literal location (i.e. GPS coordinates), a logical place (i.e. "in/with the patient"), or a coded location.)
+     */
+    public Device setLocationTarget(Location value) { 
+      this.locationTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #patient} (Patient information, if the resource is affixed to a person.)
      */
     public ResourceReference getPatient() { 
@@ -402,6 +449,21 @@ public class Device extends Resource {
      */
     public Device setPatient(ResourceReference value) { 
       this.patient = value;
+      return this;
+    }
+
+    /**
+     * @return {@link #patient} (The actual object that is the target of the reference. Patient information, if the resource is affixed to a person.)
+     */
+    public Patient getPatientTarget() { 
+      return this.patientTarget;
+    }
+
+    /**
+     * @param value {@link #patient} (The actual object that is the target of the reference. Patient information, if the resource is affixed to a person.)
+     */
+    public Device setPatientTarget(Patient value) { 
+      this.patientTarget = value;
       return this;
     }
 
@@ -425,14 +487,14 @@ public class Device extends Resource {
     /**
      * @return {@link #url} (A network address on which the device may be contacted directly.)
      */
-    public Uri getUrl() { 
+    public UriType getUrl() { 
       return this.url;
     }
 
     /**
      * @param value {@link #url} (A network address on which the device may be contacted directly.)
      */
-    public Device setUrl(Uri value) { 
+    public Device setUrl(UriType value) { 
       this.url = value;
       return this;
     }
@@ -452,7 +514,7 @@ public class Device extends Resource {
         this.url = null;
       else {
         if (this.url == null)
-          this.url = new Uri();
+          this.url = new UriType();
         this.url.setValue(value);
       }
       return this;

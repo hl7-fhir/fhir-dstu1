@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -42,7 +42,7 @@ public class FamilyHistory extends Resource {
         /**
          * This will either be a name or a description.  E.g. "Aunt Susan", "my cousin with the red hair".
          */
-        protected String_ name;
+        protected StringType name;
 
         /**
          * The type of relationship this person has to the patient (father, mother, brother etc.).
@@ -62,12 +62,14 @@ public class FamilyHistory extends Resource {
         /**
          * This property allows a non condition-specific note to the made about the related person. Ideally, the note would be in the condition property, but this is not always possible.
          */
-        protected String_ note;
+        protected StringType note;
 
         /**
          * The significant Conditions (or condition) that the family member had. This is a repeating section to allow a system to represent more than one condition per resource, though there is nothing stopping multiple resources - one per condition.
          */
         protected List<FamilyHistoryRelationConditionComponent> condition = new ArrayList<FamilyHistoryRelationConditionComponent>();
+
+        private static final long serialVersionUID = -234064669L;
 
       public FamilyHistoryRelationComponent() {
         super();
@@ -81,14 +83,14 @@ public class FamilyHistory extends Resource {
         /**
          * @return {@link #name} (This will either be a name or a description.  E.g. "Aunt Susan", "my cousin with the red hair".)
          */
-        public String_ getName() { 
+        public StringType getName() { 
           return this.name;
         }
 
         /**
          * @param value {@link #name} (This will either be a name or a description.  E.g. "Aunt Susan", "my cousin with the red hair".)
          */
-        public FamilyHistoryRelationComponent setName(String_ value) { 
+        public FamilyHistoryRelationComponent setName(StringType value) { 
           this.name = value;
           return this;
         }
@@ -108,7 +110,7 @@ public class FamilyHistory extends Resource {
             this.name = null;
           else {
             if (this.name == null)
-              this.name = new String_();
+              this.name = new StringType();
             this.name.setValue(value);
           }
           return this;
@@ -162,14 +164,14 @@ public class FamilyHistory extends Resource {
         /**
          * @return {@link #note} (This property allows a non condition-specific note to the made about the related person. Ideally, the note would be in the condition property, but this is not always possible.)
          */
-        public String_ getNote() { 
+        public StringType getNote() { 
           return this.note;
         }
 
         /**
          * @param value {@link #note} (This property allows a non condition-specific note to the made about the related person. Ideally, the note would be in the condition property, but this is not always possible.)
          */
-        public FamilyHistoryRelationComponent setNote(String_ value) { 
+        public FamilyHistoryRelationComponent setNote(StringType value) { 
           this.note = value;
           return this;
         }
@@ -189,7 +191,7 @@ public class FamilyHistory extends Resource {
             this.note = null;
           else {
             if (this.note == null)
-              this.note = new String_();
+              this.note = new StringType();
             this.note.setValue(value);
           }
           return this;
@@ -222,7 +224,7 @@ public class FamilyHistory extends Resource {
           childrenList.add(new Property("condition", "", "The significant Conditions (or condition) that the family member had. This is a repeating section to allow a system to represent more than one condition per resource, though there is nothing stopping multiple resources - one per condition.", 0, java.lang.Integer.MAX_VALUE, condition));
         }
 
-      public FamilyHistoryRelationComponent copy(FamilyHistory e) {
+      public FamilyHistoryRelationComponent copy() {
         FamilyHistoryRelationComponent dst = new FamilyHistoryRelationComponent();
         dst.name = name == null ? null : name.copy();
         dst.relationship = relationship == null ? null : relationship.copy();
@@ -231,7 +233,7 @@ public class FamilyHistory extends Resource {
         dst.note = note == null ? null : note.copy();
         dst.condition = new ArrayList<FamilyHistoryRelationConditionComponent>();
         for (FamilyHistoryRelationConditionComponent i : condition)
-          dst.condition.add(i.copy(e));
+          dst.condition.add(i.copy());
         return dst;
       }
 
@@ -256,7 +258,9 @@ public class FamilyHistory extends Resource {
         /**
          * An area where general notes can be placed about this specific condition.
          */
-        protected String_ note;
+        protected StringType note;
+
+        private static final long serialVersionUID = -1664709272L;
 
       public FamilyHistoryRelationConditionComponent() {
         super();
@@ -315,14 +319,14 @@ public class FamilyHistory extends Resource {
         /**
          * @return {@link #note} (An area where general notes can be placed about this specific condition.)
          */
-        public String_ getNote() { 
+        public StringType getNote() { 
           return this.note;
         }
 
         /**
          * @param value {@link #note} (An area where general notes can be placed about this specific condition.)
          */
-        public FamilyHistoryRelationConditionComponent setNote(String_ value) { 
+        public FamilyHistoryRelationConditionComponent setNote(StringType value) { 
           this.note = value;
           return this;
         }
@@ -342,7 +346,7 @@ public class FamilyHistory extends Resource {
             this.note = null;
           else {
             if (this.note == null)
-              this.note = new String_();
+              this.note = new StringType();
             this.note.setValue(value);
           }
           return this;
@@ -356,7 +360,7 @@ public class FamilyHistory extends Resource {
           childrenList.add(new Property("note", "string", "An area where general notes can be placed about this specific condition.", 0, java.lang.Integer.MAX_VALUE, note));
         }
 
-      public FamilyHistoryRelationConditionComponent copy(FamilyHistory e) {
+      public FamilyHistoryRelationConditionComponent copy() {
         FamilyHistoryRelationConditionComponent dst = new FamilyHistoryRelationConditionComponent();
         dst.type = type == null ? null : type.copy();
         dst.outcome = outcome == null ? null : outcome.copy();
@@ -378,14 +382,21 @@ public class FamilyHistory extends Resource {
     protected ResourceReference subject;
 
     /**
+     * The actual object that is the target of the reference (The person who this history concerns.)
+     */
+    protected Patient subjectTarget;
+
+    /**
      * Conveys information about family history not specific to individual relations.
      */
-    protected String_ note;
+    protected StringType note;
 
     /**
      * The related person. Each FamilyHistory resource contains the entire family history for a single person.
      */
     protected List<FamilyHistoryRelationComponent> relation = new ArrayList<FamilyHistoryRelationComponent>();
+
+    private static final long serialVersionUID = 1534109677L;
 
     public FamilyHistory() {
       super();
@@ -429,16 +440,31 @@ public class FamilyHistory extends Resource {
     }
 
     /**
+     * @return {@link #subject} (The actual object that is the target of the reference. The person who this history concerns.)
+     */
+    public Patient getSubjectTarget() { 
+      return this.subjectTarget;
+    }
+
+    /**
+     * @param value {@link #subject} (The actual object that is the target of the reference. The person who this history concerns.)
+     */
+    public FamilyHistory setSubjectTarget(Patient value) { 
+      this.subjectTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #note} (Conveys information about family history not specific to individual relations.)
      */
-    public String_ getNote() { 
+    public StringType getNote() { 
       return this.note;
     }
 
     /**
      * @param value {@link #note} (Conveys information about family history not specific to individual relations.)
      */
-    public FamilyHistory setNote(String_ value) { 
+    public FamilyHistory setNote(StringType value) { 
       this.note = value;
       return this;
     }
@@ -458,7 +484,7 @@ public class FamilyHistory extends Resource {
         this.note = null;
       else {
         if (this.note == null)
-          this.note = new String_();
+          this.note = new StringType();
         this.note.setValue(value);
       }
       return this;
@@ -498,7 +524,7 @@ public class FamilyHistory extends Resource {
         dst.note = note == null ? null : note.copy();
         dst.relation = new ArrayList<FamilyHistoryRelationComponent>();
         for (FamilyHistoryRelationComponent i : relation)
-          dst.relation.add(i.copy(dst));
+          dst.relation.add(i.copy());
         return dst;
       }
 

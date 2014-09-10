@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Jun 30, 2014 15:44+1000 for FHIR v0.0.81
+// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
 
 import java.util.*;
 
@@ -80,6 +80,8 @@ Terminologies used often pre-coordinate this term with the route and or form of 
          * The maximum total quantity of a therapeutic substance that may be administered to a subject over the period of time. E.g. 1000mg in 24 hours.
          */
         protected Ratio maxDosePerPeriod;
+
+        private static final long serialVersionUID = -2103892057L;
 
       public MedicationStatementDosageComponent() {
         super();
@@ -221,7 +223,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
           childrenList.add(new Property("maxDosePerPeriod", "Ratio", "The maximum total quantity of a therapeutic substance that may be administered to a subject over the period of time. E.g. 1000mg in 24 hours.", 0, java.lang.Integer.MAX_VALUE, maxDosePerPeriod));
         }
 
-      public MedicationStatementDosageComponent copy(MedicationStatement e) {
+      public MedicationStatementDosageComponent copy() {
         MedicationStatementDosageComponent dst = new MedicationStatementDosageComponent();
         dst.timing = timing == null ? null : timing.copy();
         dst.asNeeded = asNeeded == null ? null : asNeeded.copy();
@@ -247,9 +249,14 @@ Terminologies used often pre-coordinate this term with the route and or form of 
     protected ResourceReference patient;
 
     /**
+     * The actual object that is the target of the reference (The person or animal who is /was taking the medication.)
+     */
+    protected Patient patientTarget;
+
+    /**
      * Set this to true if the record is saying that the medication was NOT taken.
      */
-    protected Boolean wasNotGiven;
+    protected BooleanType wasNotGiven;
 
     /**
      * A code indicating why the medication was not taken.
@@ -267,14 +274,26 @@ Terminologies used often pre-coordinate this term with the route and or form of 
     protected ResourceReference medication;
 
     /**
+     * The actual object that is the target of the reference (Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.)
+     */
+    protected Medication medicationTarget;
+
+    /**
      * An identifier or a link to a resource that identifies a device used in administering the medication to the patient.
      */
     protected List<ResourceReference> device = new ArrayList<ResourceReference>();
+    /**
+     * The actual objects that are the target of the reference (An identifier or a link to a resource that identifies a device used in administering the medication to the patient.)
+     */
+    protected List<Device> deviceTarget = new ArrayList<Device>();
+
 
     /**
      * Indicates how the medication is/was used by the patient.
      */
     protected List<MedicationStatementDosageComponent> dosage = new ArrayList<MedicationStatementDosageComponent>();
+
+    private static final long serialVersionUID = 874621239L;
 
     public MedicationStatement() {
       super();
@@ -313,16 +332,31 @@ Terminologies used often pre-coordinate this term with the route and or form of 
     }
 
     /**
+     * @return {@link #patient} (The actual object that is the target of the reference. The person or animal who is /was taking the medication.)
+     */
+    public Patient getPatientTarget() { 
+      return this.patientTarget;
+    }
+
+    /**
+     * @param value {@link #patient} (The actual object that is the target of the reference. The person or animal who is /was taking the medication.)
+     */
+    public MedicationStatement setPatientTarget(Patient value) { 
+      this.patientTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #wasNotGiven} (Set this to true if the record is saying that the medication was NOT taken.)
      */
-    public Boolean getWasNotGiven() { 
+    public BooleanType getWasNotGiven() { 
       return this.wasNotGiven;
     }
 
     /**
      * @param value {@link #wasNotGiven} (Set this to true if the record is saying that the medication was NOT taken.)
      */
-    public MedicationStatement setWasNotGiven(Boolean value) { 
+    public MedicationStatement setWasNotGiven(BooleanType value) { 
       this.wasNotGiven = value;
       return this;
     }
@@ -342,7 +376,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
         this.wasNotGiven = null;
       else {
         if (this.wasNotGiven == null)
-          this.wasNotGiven = new Boolean();
+          this.wasNotGiven = new BooleanType();
         this.wasNotGiven.setValue(value);
       }
       return this;
@@ -396,6 +430,21 @@ Terminologies used often pre-coordinate this term with the route and or form of 
     }
 
     /**
+     * @return {@link #medication} (The actual object that is the target of the reference. Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.)
+     */
+    public Medication getMedicationTarget() { 
+      return this.medicationTarget;
+    }
+
+    /**
+     * @param value {@link #medication} (The actual object that is the target of the reference. Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.)
+     */
+    public MedicationStatement setMedicationTarget(Medication value) { 
+      this.medicationTarget = value;
+      return this;
+    }
+
+    /**
      * @return {@link #device} (An identifier or a link to a resource that identifies a device used in administering the medication to the patient.)
      */
     public List<ResourceReference> getDevice() { 
@@ -410,6 +459,23 @@ Terminologies used often pre-coordinate this term with the route and or form of 
       ResourceReference t = new ResourceReference();
       this.device.add(t);
       return t;
+    }
+
+    /**
+     * @return {@link #device} (The actual objects that are the target of the reference. An identifier or a link to a resource that identifies a device used in administering the medication to the patient.)
+     */
+    public List<Device> getDeviceTarget() { 
+      return this.deviceTarget;
+    }
+
+    // syntactic sugar
+    /**
+     * @return {@link #device} (Add an actual object that is the target of the reference. An identifier or a link to a resource that identifies a device used in administering the medication to the patient.)
+     */
+    public Device addDeviceTarget() { 
+      Device r = new Device();
+      this.deviceTarget.add(r);
+      return r;
     }
 
     /**
@@ -458,7 +524,7 @@ Terminologies used often pre-coordinate this term with the route and or form of 
           dst.device.add(i.copy());
         dst.dosage = new ArrayList<MedicationStatementDosageComponent>();
         for (MedicationStatementDosageComponent i : dosage)
-          dst.dosage.add(i.copy(dst));
+          dst.dosage.add(i.copy());
         return dst;
       }
 

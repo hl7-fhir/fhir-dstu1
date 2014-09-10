@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2011-2014, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
@@ -95,6 +95,7 @@ public class ToolsHelper {
   public void executeFragments(String[] args) throws Exception {
     try {
       File source = new CSFile(args[1]);
+      File dest = new CSFile(args[2]);
       if (!source.exists())        
         throw new Exception("Source File \""+source.getAbsolutePath()+"\" not found");
       XmlPullParser xpp = loadXml(new FileInputStream(source));

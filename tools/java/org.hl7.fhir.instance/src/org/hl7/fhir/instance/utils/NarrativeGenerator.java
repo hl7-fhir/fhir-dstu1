@@ -1,39 +1,52 @@
 package org.hl7.fhir.instance.utils;
 
-import java.text.SimpleDateFormat;
+/*
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.StringValueExp;
-
 import org.hl7.fhir.instance.client.FHIRClient;
 import org.hl7.fhir.instance.model.Address;
-import org.hl7.fhir.instance.model.Address.AddressUse;
 import org.hl7.fhir.instance.model.AtomEntry;
 import org.hl7.fhir.instance.model.AtomFeed;
 import org.hl7.fhir.instance.model.Attachment;
-import org.hl7.fhir.instance.model.Boolean;
-import org.hl7.fhir.instance.model.Code;
+import org.hl7.fhir.instance.model.BooleanType;
+import org.hl7.fhir.instance.model.CodeType;
 import org.hl7.fhir.instance.model.CodeableConcept;
 import org.hl7.fhir.instance.model.Coding;
 import org.hl7.fhir.instance.model.Composition;
 import org.hl7.fhir.instance.model.Composition.SectionComponent;
 import org.hl7.fhir.instance.model.ConceptMap;
-import org.hl7.fhir.instance.model.Contact.ContactUse;
-import org.hl7.fhir.instance.model.Duration;
-import org.hl7.fhir.instance.model.Enumeration;
-import org.hl7.fhir.instance.model.HumanName;
-import org.hl7.fhir.instance.model.HumanName.NameUse;
-import org.hl7.fhir.instance.model.Id;
-import org.hl7.fhir.instance.model.Identifier;
-import org.hl7.fhir.instance.model.Instant;
-import org.hl7.fhir.instance.model.Period;
-import org.hl7.fhir.instance.model.Quantity;
-import org.hl7.fhir.instance.model.Ratio;
-import org.hl7.fhir.instance.model.ResourceReference;
 import org.hl7.fhir.instance.model.ConceptMap.ConceptMapConceptComponent;
 import org.hl7.fhir.instance.model.ConceptMap.ConceptMapConceptMapComponent;
 import org.hl7.fhir.instance.model.ConceptMap.OtherConceptComponent;
@@ -46,25 +59,39 @@ import org.hl7.fhir.instance.model.Conformance.SystemRestfulOperation;
 import org.hl7.fhir.instance.model.Conformance.TypeRestfulOperation;
 import org.hl7.fhir.instance.model.Contact;
 import org.hl7.fhir.instance.model.Contact.ContactSystem;
-import org.hl7.fhir.instance.model.DateTime;
+import org.hl7.fhir.instance.model.DateTimeType;
+import org.hl7.fhir.instance.model.DateType;
+import org.hl7.fhir.instance.model.DecimalType;
+import org.hl7.fhir.instance.model.Duration;
 import org.hl7.fhir.instance.model.Element;
+import org.hl7.fhir.instance.model.Enumeration;
 import org.hl7.fhir.instance.model.Extension;
+import org.hl7.fhir.instance.model.HumanName;
+import org.hl7.fhir.instance.model.HumanName.NameUse;
+import org.hl7.fhir.instance.model.IdType;
+import org.hl7.fhir.instance.model.Identifier;
+import org.hl7.fhir.instance.model.InstantType;
+import org.hl7.fhir.instance.model.IntegerType;
 import org.hl7.fhir.instance.model.Narrative;
 import org.hl7.fhir.instance.model.Narrative.NarrativeStatus;
 import org.hl7.fhir.instance.model.OperationOutcome;
 import org.hl7.fhir.instance.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.instance.model.OperationOutcome.OperationOutcomeIssueComponent;
+import org.hl7.fhir.instance.model.Period;
 import org.hl7.fhir.instance.model.Profile;
 import org.hl7.fhir.instance.model.Profile.ElementComponent;
 import org.hl7.fhir.instance.model.Profile.ProfileStructureComponent;
 import org.hl7.fhir.instance.model.Property;
+import org.hl7.fhir.instance.model.Quantity;
+import org.hl7.fhir.instance.model.Ratio;
 import org.hl7.fhir.instance.model.Resource;
+import org.hl7.fhir.instance.model.ResourceReference;
 import org.hl7.fhir.instance.model.Schedule;
 import org.hl7.fhir.instance.model.Schedule.EventTiming;
 import org.hl7.fhir.instance.model.Schedule.ScheduleRepeatComponent;
 import org.hl7.fhir.instance.model.Schedule.UnitsOfTime;
-import org.hl7.fhir.instance.model.String_;
-import org.hl7.fhir.instance.model.Uri;
+import org.hl7.fhir.instance.model.StringType;
+import org.hl7.fhir.instance.model.UriType;
 import org.hl7.fhir.instance.model.ValueSet;
 import org.hl7.fhir.instance.model.ValueSet.ConceptSetComponent;
 import org.hl7.fhir.instance.model.ValueSet.ConceptSetFilterComponent;
@@ -263,42 +290,42 @@ public class NarrativeGenerator {
     if (e == null)
       return;
     
-    if (e instanceof String_)
-      x.addText(((String_) e).getValue());
-    else if (e instanceof Code)
-      x.addText(((Code) e).getValue());
-    else if (e instanceof Id)
-      x.addText(((Id) e).getValue());
+    if (e instanceof StringType)
+      x.addText(((StringType) e).getValue());
+    else if (e instanceof CodeType)
+      x.addText(((CodeType) e).getValue());
+    else if (e instanceof IdType)
+      x.addText(((IdType) e).getValue());
     else if (e instanceof Extension)
       x.addText("Extensions: Todo");
-    else if (e instanceof Instant)
-      x.addText(((Instant) e).getValue().toHumanDisplay());
-    else if (e instanceof DateTime)
-      x.addText(((DateTime) e).getValue().toHumanDisplay());
-    else if (e instanceof org.hl7.fhir.instance.model.Date)
-      x.addText(((org.hl7.fhir.instance.model.Date) e).getValue().toHumanDisplay());
+    else if (e instanceof InstantType)
+      x.addText(((InstantType) e).getValue().toHumanDisplay());
+    else if (e instanceof DateTimeType)
+      x.addText(((DateTimeType) e).getValue().toHumanDisplay());
+    else if (e instanceof DateType)
+      x.addText(((DateType) e).getValue().toHumanDisplay());
     else if (e instanceof Enumeration)
       x.addText(((Enumeration) e).getValue().toString()); // todo: look up a display name if there is one
-    else if (e instanceof Boolean)
-      x.addText(((Boolean) e).getValue().toString());
+    else if (e instanceof BooleanType)
+      x.addText(((BooleanType) e).getValue().toString());
     else if (e instanceof CodeableConcept) {
       renderCodeableConcept((CodeableConcept) e, x); 
     } else if (e instanceof Coding) {
       renderCoding((Coding) e, x);
     } else if (e instanceof Identifier) {
       renderIdentifier((Identifier) e, x);
-    } else if (e instanceof org.hl7.fhir.instance.model.Integer) {
-      x.addText(Integer.toString(((org.hl7.fhir.instance.model.Integer) e).getValue()));
-    } else if (e instanceof org.hl7.fhir.instance.model.Decimal) {
-      x.addText(((org.hl7.fhir.instance.model.Decimal) e).getValue().toString());
+    } else if (e instanceof IntegerType) {
+      x.addText(Integer.toString(((IntegerType) e).getValue()));
+    } else if (e instanceof DecimalType) {
+      x.addText(((DecimalType) e).getValue().toString());
     } else if (e instanceof HumanName) {
       renderHumanName((HumanName) e, x);
     } else if (e instanceof Address) {
       renderAddress((Address) e, x);
     } else if (e instanceof Contact) {
       renderContact((Contact) e, x);
-    } else if (e instanceof Uri) {
-      renderUri((Uri) e, x);
+    } else if (e instanceof UriType) {
+      renderUri((UriType) e, x);
     } else if (e instanceof Schedule) {
       renderSchedule((Schedule) e, x);
     } else if (e instanceof Quantity || e instanceof Duration) {
@@ -338,32 +365,32 @@ public class NarrativeGenerator {
     if (name.endsWith("[x]"))
       name = name.substring(0, name.length() - 3);
     
-    if (e instanceof String_) {
-      b.append(name+": "+((String_) e).getValue());
+    if (e instanceof StringType) {
+      b.append(name+": "+((StringType) e).getValue());
       return true;
-    } else if (e instanceof Code) {
-      b.append(name+": "+((Code) e).getValue());
+    } else if (e instanceof CodeType) {
+      b.append(name+": "+((CodeType) e).getValue());
       return true;
-    } else if (e instanceof Id) {
-      b.append(name+": "+((Id) e).getValue());
+    } else if (e instanceof IdType) {
+      b.append(name+": "+((IdType) e).getValue());
       return true;
-    } else if (e instanceof DateTime) {
-      b.append(name+": "+((DateTime) e).getValue().toHumanDisplay());
+    } else if (e instanceof DateTimeType) {
+      b.append(name+": "+((DateTimeType) e).getValue().toHumanDisplay());
       return true;
-    } else if (e instanceof Instant) {
-      b.append(name+": "+((Instant) e).getValue().toHumanDisplay());
+    } else if (e instanceof InstantType) {
+      b.append(name+": "+((InstantType) e).getValue().toHumanDisplay());
       return true;
     } else if (e instanceof Extension) {
       b.append("Extensions: todo");
       return true;
-    } else if (e instanceof org.hl7.fhir.instance.model.Date) {
-      b.append(name+": "+((org.hl7.fhir.instance.model.Date) e).getValue().toHumanDisplay());
+    } else if (e instanceof org.hl7.fhir.instance.model.DateType) {
+      b.append(name+": "+((org.hl7.fhir.instance.model.DateType) e).getValue().toHumanDisplay());
       return true;
     } else if (e instanceof Enumeration) {
       b.append(((Enumeration) e).getValue().toString()); // todo: look up a display name if there is one
       return true;
-    } else if (e instanceof Boolean) {
-      if (((Boolean) e).getValue()) {
+    } else if (e instanceof BooleanType) {
+      if (((BooleanType) e).getValue()) {
         b.append(name);
         return true;
       }
@@ -373,11 +400,11 @@ public class NarrativeGenerator {
     } else if (e instanceof Coding) {
       b.append(displayCoding((Coding) e));
       return true;
-    } else if (e instanceof org.hl7.fhir.instance.model.Integer) {
-      b.append(Integer.toString(((org.hl7.fhir.instance.model.Integer) e).getValue()));
+    } else if (e instanceof org.hl7.fhir.instance.model.IntegerType) {
+      b.append(Integer.toString(((org.hl7.fhir.instance.model.IntegerType) e).getValue()));
       return true;
-    } else if (e instanceof org.hl7.fhir.instance.model.Decimal) {
-      b.append(((org.hl7.fhir.instance.model.Decimal) e).getValue().toString());
+    } else if (e instanceof org.hl7.fhir.instance.model.DecimalType) {
+      b.append(((org.hl7.fhir.instance.model.DecimalType) e).getValue().toString());
       return true;
     } else if (e instanceof Identifier) {
       b.append(displayIdentifier((Identifier) e));
@@ -641,7 +668,7 @@ public class NarrativeGenerator {
     x.addText(displayContact(contact));
   }
   
-  private void renderUri(Uri uri, XhtmlNode x) {
+  private void renderUri(UriType uri, XhtmlNode x) {
     x.addTag("a").setAttribute("href", uri.getValue()).addText(uri.getValue());
   }
   
@@ -724,11 +751,11 @@ public class NarrativeGenerator {
     if (name.getText() != null)
       s.append(name.getTextSimple());
     else {
-      for (String_ p : name.getGiven()) { 
+      for (StringType p : name.getGiven()) { 
         s.append(p.getValue());
         s.append(" ");
       }
-      for (String_ p : name.getFamily()) { 
+      for (StringType p : name.getFamily()) { 
         s.append(p.getValue());
         s.append(" ");
       }
@@ -743,7 +770,7 @@ public class NarrativeGenerator {
     if (address.getText() != null)
       s.append(address.getTextSimple());
     else {
-      for (String_ p : address.getLine()) { 
+      for (StringType p : address.getLine()) { 
         s.append(p.getValue());
         s.append(" ");
       }
@@ -1340,7 +1367,7 @@ public class NarrativeGenerator {
           td.addTag("i").addText("("+mapping.getCommentsSimple()+")");
       }
     }
-    for (Code e : ToolingExtensions.getSubsumes(c)) {
+    for (CodeType e : ToolingExtensions.getSubsumes(c)) {
       hasExtensions = true;
       tr = t.addTag("tr");
       td = tr.addTag("td");
@@ -1398,7 +1425,7 @@ public class NarrativeGenerator {
     }
     XhtmlNode ul = x.addTag("ul");
     XhtmlNode li;
-    for (Uri imp : vs.getCompose().getImport()) {
+    for (UriType imp : vs.getCompose().getImport()) {
       li = ul.addTag("li");
       li.addText("Import all the codes that are part of ");
       AddVsRef(imp.getValue(), li);
@@ -1447,13 +1474,13 @@ public class NarrativeGenerator {
       
         XhtmlNode t = li.addTag("table");
         boolean hasComments = false;
-        for (Code c : inc.getCode()) {
+        for (CodeType c : inc.getCode()) {
           hasComments = hasComments || c.hasExtension(ToolingExtensions.EXT_COMMENT);
         }
         if (hasComments)
           hasExtensions = true;
         addTableHeaderRowStandard(t, hasComments, false);
-        for (Code c : inc.getCode()) {
+        for (CodeType c : inc.getCode()) {
           XhtmlNode tr = t.addTag("tr");
           tr.addTag("td").addText(c.getValue());
           ValueSetDefineConceptComponent cc = getConceptForCode(e, c.getValue(), inc.getSystemSimple());
@@ -1611,7 +1638,7 @@ public class NarrativeGenerator {
     			tr.addTag("td").addText(i.getSeverity().toString());
     			XhtmlNode td = tr.addTag("td");
     			boolean d = false;
-    			for (String_ s : i.getLocation()) {
+    			for (StringType s : i.getLocation()) {
     				if (d)
     					td.addText(", ");
     				else
@@ -1630,8 +1657,8 @@ public class NarrativeGenerator {
 
 
 	private String gen(Extension extension) throws Exception {
-		if (extension.getValue() instanceof Code)
-			return ((Code) extension.getValue()).getValue();
+		if (extension.getValue() instanceof CodeType)
+			return ((CodeType) extension.getValue()).getValue();
 		if (extension.getValue() instanceof Coding)
 			return gen((Coding) extension.getValue());
 

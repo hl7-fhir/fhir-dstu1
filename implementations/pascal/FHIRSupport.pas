@@ -120,7 +120,7 @@ Type
     }
     Property Provider : TFHIRAuthProvider read FProvider write FProvider;
 
-    {@member InnerToken
+   {@member InnerToken
       the OAuth authorization token (Don't change!)
       This is the OAuth token for the identity server
     }
