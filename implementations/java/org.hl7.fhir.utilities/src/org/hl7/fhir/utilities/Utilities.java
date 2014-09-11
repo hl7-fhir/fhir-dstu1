@@ -288,6 +288,20 @@ public class Utilities {
 
 	}
 
+	public static byte[] saxonTransform(Map<String, byte[]> files, byte[] source, byte[] xslt) throws Exception {
+		TransformerFactory f = new net.sf.saxon.TransformerFactoryImpl();
+		StreamSource xsrc = new StreamSource(new ByteArrayInputStream(xslt));
+		f.setURIResolver(new ZipURIResolver(files));
+		Transformer t = f.newTransformer(xsrc);
+
+		t.setURIResolver(new ZipURIResolver(files));
+		StreamSource src = new StreamSource(new ByteArrayInputStream(source));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		StreamResult res = new StreamResult(out);
+		t.transform(src, res);
+		return out.toByteArray();    
+	}
+
 
 	public static void saxonTransform(String xsltDir, String source, String xslt, String dest) throws Exception {
 		TransformerFactoryImpl f = new net.sf.saxon.TransformerFactoryImpl();
@@ -302,17 +316,7 @@ public class Utilities {
 	}
 
 	public static void transform(String xsltDir, String source, String xslt, String dest) throws Exception {
-		/* default java approach, but this doesn't support xslt2
-    TransformerFactory f = TransformerFactory.newInstance();
-    StreamSource xsrc = new StreamSource(new FileInputStream(xslt));
-    f.setURIResolver(new MyURIResolver(xsltDir));
-    Transformer t = f.newTransformer(xsrc);
-
-    t.setURIResolver(new MyURIResolver(xsltDir));
-    StreamSource src = new StreamSource(new FileInputStream(source));
-    StreamResult res = new StreamResult(new FileOutputStream(dest));
-    t.transform(src, res);
-		 */
+		// default java approach, but this doesn't support xslt2
 		TransformerFactory f = TransformerFactory.newInstance();
 		StreamSource xsrc = new StreamSource(new FileInputStream(xslt));
 		f.setURIResolver(new MyURIResolver(xsltDir));

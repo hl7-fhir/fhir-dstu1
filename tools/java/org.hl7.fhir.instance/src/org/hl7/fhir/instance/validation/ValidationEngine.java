@@ -94,8 +94,8 @@ public class ValidationEngine {
     	String sch = doc.getDocumentElement().getNodeName().toLowerCase();
     	if (sch.equals("feed"))
     		sch = "fhir-atom";
-    	byte[] tmp = Utilities.transform(definitions, definitions.get(sch+".sch"), definitions.get("iso_svrl_for_xslt1.xsl"));
-    	byte[] out = Utilities.transform(definitions, source, tmp);
+    	byte[] tmp = Utilities.saxonTransform(definitions, definitions.get(sch+".sch"), definitions.get("iso_svrl_for_xslt2.xsl"));
+    	byte[] out = Utilities.saxonTransform(definitions, source, tmp);
     	processSchematronOutput(out);
     }
 

@@ -1257,13 +1257,7 @@ public class Publisher {
       zip.addFileName("readme.txt", Utilities.path(page.getFolders().srcDir, "tools", "readme.txt"), false);
       zip.addFileName("org.hl7.fhir.validator.jar", Utilities.path(page.getFolders().dstDir, "org.hl7.fhir.validator.jar"), false);
       zip.addFileName("validation.zip", page.getFolders().dstDir + "validation.zip", false);
-      zip.addFiles(Utilities.path(page.getFolders().rootDir, "tools", "schematron", ""), "", ".zip", null); // saxon
-                                                                                                            // too
-                                                                                                            // -
-                                                                                                            // always
-                                                                                                            // make
-                                                                                                            // this
-                                                                                                            // last
+      // zip.addFiles(Utilities.path(page.getFolders().rootDir, "tools", "schematron", ""), "", ".zip", null); // saxon too - always make this last
       zip.close();
 
       zip = new ZipGenerator(page.getFolders().dstDir + "all-valuesets.zip");

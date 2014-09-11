@@ -96,7 +96,7 @@ public abstract class JsonParserBase extends ParserBase implements Parser {
   }
 
   protected void parseElementProperties(JsonObject json, Element e) throws Exception {
-    if (json != null && json.has("id"))
+     if (json != null && json.has("id"))
       e.setXmlId(json.get("id").getAsString());
     // work around for past issue when we used _id wrongly instead of id
     if (json != null && json.has("_id"))

@@ -154,7 +154,7 @@ public class Validator {
   private String source;
 
   ValidationEngine engine = new ValidationEngine();
-  static final String MASTER_SOURCE = "??";
+  static final String MASTER_SOURCE = "http://hl7.org/documentcenter/public/standards/FHIR/validator.zip";
 
   public void process() throws Exception {
     byte[] defn = loadDefinitions();
