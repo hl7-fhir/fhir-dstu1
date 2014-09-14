@@ -291,7 +291,7 @@ public class Publisher {
     if (hasParam(args, "-name"))
       pub.page.setPublicationType(getNamedParam(args, "-name"));
     if (pub.web) {
-      pub.page.setPublicationType("DSTU Release 1.1");
+      pub.page.setPublicationType("DSTU 1 (v0.0.82)");
       pub.page.setPublicationNotice(PageProcessor.PUB_NOTICE);
     }
     try {
