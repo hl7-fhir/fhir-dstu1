@@ -17,6 +17,7 @@
         <pathelement location="${org.hl7.fhir.utilities.location}/../../../tools/java/imports/xpp3_xpath-1.1.3.4.O.jar"/>
         <pathelement location="${org.hl7.fhir.utilities.location}/../../../tools/java/imports/xpp3-1.1.3.4.O.jar"/>
         <pathelement location="${org.hl7.fhir.utilities.location}/../../../tools/java/imports/saxon9he.jar"/>
+        <pathelement location="${org.hl7.fhir.utilities.location}/../../../tools/java/imports/junit-4.11.jar"/>
     </path>
     <path id="org.hl7.fhir.implementation.classpath">
         <pathelement location="bin"/>
