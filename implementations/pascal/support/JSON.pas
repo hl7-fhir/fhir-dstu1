@@ -1382,7 +1382,7 @@ begin
     else if node is TJsonNull then
       result := nil
     else
-      raise Exception.Create('Found a '+node.ClassName+' looking for an object');
+      raise Exception.Create('Found a '+node.ClassName.substring(5)+' looking for an object at '+FPath+'.'+name);
   end
   else
     result := nil;
@@ -1409,7 +1409,7 @@ begin
         else
           result := 'false'
       else
-        raise Exception.Create('Found a '+node.ClassName+' looking for a string');
+        raise Exception.Create('Found a '+node.ClassName.substring(5)+' looking for a string at '+FPath+'.'+name);
     end
     else
       result := '';
