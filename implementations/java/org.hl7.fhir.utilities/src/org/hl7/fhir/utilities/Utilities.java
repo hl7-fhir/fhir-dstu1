@@ -41,6 +41,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -144,6 +145,7 @@ public class Utilities {
 		String[] files = src.list();
 		for (String f : files) {
 			if (new CSFile(sourceFolder+File.separator+f).isDirectory()) {
+       if (!f.startsWith(".")) // ignore .svn...
 				copyDirectory(sourceFolder+File.separator+f, destFolder+File.separator+f, notifier);
 			} else {
 				if (notifier != null)
@@ -269,6 +271,7 @@ public class Utilities {
 
 	public static byte[] transform(Map<String, byte[]> files, byte[] source, byte[] xslt) throws Exception {
 		TransformerFactory f = TransformerFactory.newInstance();
+    f.setAttribute("http://saxon.sf.net/feature/version-warning", Boolean.FALSE);
 		StreamSource xsrc = new StreamSource(new ByteArrayInputStream(xslt));
 		f.setURIResolver(new ZipURIResolver(files));
 		Transformer t = f.newTransformer(xsrc);
@@ -630,5 +633,10 @@ public class Utilities {
 	public static boolean isAsciiChar(char ch) {
 		return ch >= ' ' && ch <= '~'; 
 	}
+
+
+  public static String makeUuidUrn() {
+    return "urn:uuid:"+UUID.randomUUID().toString().toLowerCase();
+  }
   
 }

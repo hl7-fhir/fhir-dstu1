@@ -1,5 +1,34 @@
 package org.hl7.fhir.instance.validation;
 
+/*
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -343,7 +372,7 @@ public class InstanceValidator extends BaseValidator {
 
   private ProfileStructureComponent getStructureForType(Profile r, String localName) throws Exception {
     if (r.getStructure().size() != 1 || !(r.getStructure().get(0).getTypeSimple().equals(localName) || r.getStructure().get(0).getNameSimple().equals(localName)))
-      throw new Exception("unexpected profile contents");
+      throw new Exception("unexpected profile contents = expecting name = '"+localName+"'");
     ProfileStructureComponent s = r.getStructure().get(0);
     return s;
   }
@@ -399,6 +428,19 @@ public class InstanceValidator extends BaseValidator {
       rule(errors, "invalid", path, !empty(element), "Elements must have some content (@value, @id, extensions, or children elements)");
     }
     Map<String, ElementComponent> children = getChildren(structure, definition.getPathSimple());
+    for (ElementComponent child : children.values()) {
+    	if (child.getRepresentation().isEmpty()) {
+    		List<Element> list = new ArrayList<Element>();  
+    		XMLUtil.getNamedChildrenWithWildcard(element, tail(child.getPathSimple()), list);
+    		if (child.getDefinition().getMinSimple() > 0) {
+    			rule(errors, "structure", child.getPathSimple(), list.size() > 0, "Element "+child.getPathSimple()+" is required");
+    		}
+    		if (child.getDefinition().getMaxSimple() != null && !child.getDefinition().getMaxSimple().equals("*")) {
+    			rule(errors, "structure", child.getPathSimple(), list.size() <= Integer.parseInt(child.getDefinition().getMaxSimple()), "Element "+child.getPathSimple()+" can only occur "+child.getDefinition().getMaxSimple()+" time"+(child.getDefinition().getMaxSimple().equals("1") ? "" : "s"));
+    		}
+    	}
+    }
+    
     ChildIterator ci = new ChildIterator(path, element);
     while (ci.next()) {
       ElementComponent child = children.get(ci.name());

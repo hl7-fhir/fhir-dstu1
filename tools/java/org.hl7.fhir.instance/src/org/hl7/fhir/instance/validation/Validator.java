@@ -41,10 +41,14 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.io.IOUtils;
+import org.hl7.fhir.instance.client.FHIRSimpleClient;
 import org.hl7.fhir.instance.formats.JsonParser;
 import org.hl7.fhir.instance.formats.XmlComposer;
 import org.hl7.fhir.instance.formats.XmlParser;
+import org.hl7.fhir.instance.model.OperationOutcome.IssueSeverity;
 import org.hl7.fhir.instance.model.Profile;
+import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
 
 /**
@@ -66,7 +70,7 @@ public class Validator {
       System.out.println("");
       System.out.println("JSON is not supported at this time");
       System.out.println("");
-      System.out.println("Usage: FHIRValidator.jar [source] (-defn [definitions]) (-output [output]) (-noxslt) where: ");
+      System.out.println("Usage: FHIRValidator.jar [source] (-defn [definitions]) (-profile [profile]) (-output [output]) (-noxslt) where: ");
       System.out.println("* [source] is a file name or url of the resource or bundle feed to validate");
       System.out.println("* [definitions] is the file name or url of the validation pack (validation.zip). Default: get it from hl7.org");
       System.out.println("* [profile] is an optional filename or URL for a specific profile to validate a resource");
@@ -110,7 +114,12 @@ public class Validator {
           for (ValidationMessage v : exe.outputs()) {
             System.out.println(v.summary());
           }
-          if (exe.outputs().size() == 0)
+          int count = 0;
+          for (ValidationMessage t : exe.outputs()) {
+          	if (t.getLevel() == IssueSeverity.error || t.getLevel() == IssueSeverity.fatal)
+          		count++;
+          }
+          if (count == 0)
             System.out.println(" ...success");
           else
             System.out.println(" ...failure");
@@ -123,7 +132,7 @@ public class Validator {
 
 
 
-  private void setProfile(String string) {
+  private void setProfile(String profile) {
 	  this.profile = profile;
   }
 
@@ -154,7 +163,7 @@ public class Validator {
   private String source;
 
   ValidationEngine engine = new ValidationEngine();
-  static final String MASTER_SOURCE = "??";
+  static final String MASTER_SOURCE = "http://hl7.org/documentcenter/public/standards/FHIR/validator.zip";
 
   public void process() throws Exception {
     byte[] defn = loadDefinitions();
@@ -166,21 +175,14 @@ public class Validator {
   }
 
   private Profile readProfile(byte[] content) throws Exception {
-	  try {
 		  XmlParser xml = new XmlParser(true);
 		  return (Profile) xml.parse(new ByteArrayInputStream(content));
-	  } catch (Exception e) {
-		  // well, we'll try again
-		  JsonParser json = new JsonParser();
-		  return (Profile) json.parse(new ByteArrayInputStream(content));
-
-	  }
   }
 
   private byte[] loadProfile() throws Exception {
 	  if (Utilities.noString(profile)) {
 		  return null;
-	  } else if (definitions.startsWith("https:") || definitions.startsWith("http:")) {
+	  } else if (profile.startsWith("https:") || profile.startsWith("http:")) {
 		  return loadFromUrl(profile);
 	  } else if (new File(profile).exists()) {
 		  return loadFromFile(profile);      
@@ -233,11 +235,9 @@ public class Validator {
   }
 
   private byte[] loadFromUrl(String src) throws Exception {
-    URL url = new URL(src);
-    InputStream in = url.openStream();
-    byte[] b = new byte[in.available()];
-    in.read(b);
-    return b;
+  	URL url = new URL("http://fhir.healthintersections.com.au/open/Profile/patient-name-one?_format=xml");
+    byte[] str = IOUtils.toByteArray(url.openStream());
+    return str;
   }
 
   private byte[] loadFromFile(String src) throws Exception {

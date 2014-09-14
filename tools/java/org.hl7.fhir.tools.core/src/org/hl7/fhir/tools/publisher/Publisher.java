@@ -3086,7 +3086,7 @@ public class Publisher {
     // now, finally, we validate the resource ourselves.
     // the build tool validation focuses on codes and identifiers
     List<ValidationMessage> issues = new ArrayList<ValidationMessage>();
-    validator.validateInstance(issues, root, null);
+    validator.validateInstance(issues, root, null, null);
     // if (profile != null)
     // validator.validateInstanceByProfile(issues, root, profile);
     boolean abort = false;

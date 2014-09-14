@@ -210,7 +210,7 @@ public enum ParserSecurityPolicy {
     
     for (int i = 0; i < xpp.getAttributeCount(); i++) {
       if (attributeIsOk(xpp.getName(), xpp.getAttributeName(i), xpp.getAttributeValue(i)))
-        res.getAttributes().put(xpp.getAttributeName(i), xpp.getAttributeValue(i));
+      res.getAttributes().put(xpp.getAttributeName(i), xpp.getAttributeValue(i));
     }
     int eventType = xpp.next();
     while (eventType != XmlPullParser.END_TAG) {
@@ -263,7 +263,7 @@ private boolean elementIsOk(String name) throws Exception {
 	return false;
 }
 
-private String descLoc() {
+  private String descLoc() {
     return " at line "+Integer.toString(line)+" column "+Integer.toString(col);
   }
 

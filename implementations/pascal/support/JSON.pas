@@ -173,6 +173,7 @@ Type
     Procedure Finish;
 
     Procedure Value(Const name : String; Const avalue : String); overload;
+    Procedure ValueNumber(Const name : String; Const avalue : String); overload;
     Procedure Value(Const name : String; avalue : Boolean); overload;
     Procedure Value(Const name : String; avalue : Integer); overload;
     Procedure Value(Const name : String; avalue : Int64); overload;
@@ -188,6 +189,7 @@ Type
     Procedure FinishArray;
 
     Procedure ValueInArray(Const value : String); overload;
+    Procedure ValueNumberInArray(Const value : String); overload;
     Procedure ValueInArray(value : Boolean); overload;
     Procedure ValueInArray(value : Integer); overload;
     Procedure ValueInArray(value : Int64); overload;
@@ -1068,6 +1070,16 @@ begin
     FCache := JSONString(value);
 end;
 
+procedure TJSONWriter.ValueNumberInArray(const value: String);
+begin
+  if FCache <> '' Then
+    ProduceLine(UseCache+',');
+  if value = '' then
+    ValueNullInArray
+  Else
+    FCache := value;
+end;
+
 procedure TJSONWriter.ValueInArray(value: Boolean);
 begin
   if FCache <> '' Then
@@ -1083,6 +1095,19 @@ begin
   if FCache <> '' Then
     ProduceLine(UseCache+',');
   FCache := 'null';
+end;
+
+procedure TJSONWriter.ValueNumber(const name, avalue: String);
+begin
+  if name = '' then
+    valueNumberInArray(avalue)
+  else if avalue = '' then
+    ValueNull(name)
+  Else
+  Begin
+    DoName(Name);
+    FCache := UseName + avalue;
+  End;
 end;
 
 procedure TJSONWriter.ValueInArray(value: Int64);

@@ -52,7 +52,6 @@ import org.hl7.fhir.instance.model.Resource;
 import org.hl7.fhir.instance.utils.NarrativeGenerator;
 import org.hl7.fhir.instance.validation.ValidationMessage.Source;
 import org.hl7.fhir.utilities.SchemaInputSource;
-import org.hl7.fhir.utilities.TextFile;
 import org.hl7.fhir.utilities.Utilities;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -119,7 +118,7 @@ public class ValidationEngine {
 
     outputs.addAll(new InstanceValidator(definitions, null).validateInstance(doc.getDocumentElement(), profile, profileURI));
 
-    Resource r = new XmlParser().parse(new ByteArrayInputStream(source));
+    new XmlParser().parseGeneral(new ByteArrayInputStream(source));
         
     OperationOutcome op = new OperationOutcome();
     for (ValidationMessage vm : outputs) {

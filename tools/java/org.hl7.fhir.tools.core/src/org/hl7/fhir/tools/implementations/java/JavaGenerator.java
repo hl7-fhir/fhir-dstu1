@@ -96,7 +96,7 @@ public class JavaGenerator extends BaseGenerator implements PlatformGenerator {
 
   @Override
   public String getDescription() {
-    return "Resource Definitions, XML & Json parsers, & various utilities. The java reference implementation depends on XmlPull ([[http://www.xmlpull.org/]]), the Java JSON library ([[http://json.org]]), the Apache Commons Codec library ([[http://commons.apache.org/codec/]]), and Saxon 9 (for validation). A Java client can be found at [[https://github.com/cnanjo/FhirJavaReferenceClient]]. Theis  code is also available via Maven [[http://mvnrepository.com/artifact/me.fhir/fhir-dstu1/0.0.81.2489]]";
+    return "Resource Definitions, XML & Json parsers, & various utilities. The java reference implementation depends on XmlPull ([[http://www.xmlpull.org/]]), the Java JSON library ([[http://json.org]]), the Apache Commons Codec library ([[http://commons.apache.org/codec/]]), and Saxon 9 (for validation). A Java client can be found at [[https://github.com/cnanjo/FhirJavaReferenceClient]]. This  code is also available via Maven [[http://mvnrepository.com/artifact/me.fhir/fhir-dstu1/0.0.81.2489]]";
   }
 
   @Override
@@ -341,6 +341,7 @@ public boolean compile(String rootDir, List<String> errors, Logger logger) throw
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"xpp3-1.1.3.4.O.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"gson-2.2.4.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-codec-1.3.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-io-1.2.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"saxon9.jar", names);
     
     // by adding source first, we add all the newly built classes, and these are not updated when the older stuff is included
@@ -360,7 +361,9 @@ public boolean compile(String rootDir, List<String> errors, Logger logger) throw
     names.add("META-INF/MANIFEST.MF");
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"xpp3-1.1.3.4.O.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"gson-2.2.4.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-io-1.2.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-codec-1.3.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"saxon9.jar", names);
     
     // by adding source first, we add all the newly built classes, and these are not updated when the older stuff is included
     AddToJar(jar, new File(rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"), (rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"+sc).length(), names);

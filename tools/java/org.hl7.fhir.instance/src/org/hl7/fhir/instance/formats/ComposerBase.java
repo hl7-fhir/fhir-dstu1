@@ -39,6 +39,11 @@ import org.hl7.fhir.instance.model.Resource;
 public abstract class ComposerBase extends FormatUtilities implements Composer {
 
   protected String xhtmlMessage;
+  
+  @Override
+  public void setSuppressXhtml(String message) {
+    xhtmlMessage = message;    
+  }
 
   public String composeString(Resource resource, boolean pretty) throws Exception {
     return new String(composeBytes(resource, pretty));

@@ -1,5 +1,34 @@
 package org.hl7.fhir.instance.validation;
 
+/*
+Copyright (c) 2011+, HL7, Inc
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, 
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this 
+   list of conditions and the following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, 
+   this list of conditions and the following disclaimer in the documentation 
+   and/or other materials provided with the distribution.
+ * Neither the name of HL7 nor the names of its contributors may be used to 
+   endorse or promote products derived from this software without specific 
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+*/
+
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -64,7 +93,26 @@ import org.w3c.dom.Element;
 public class InstanceValidator extends BaseValidator {
   // configuration items
 
-  public class NullExtensionResolver implements ExtensionLocatorService {
+  public class ProfileMatch {
+  	Profile profile;
+  	ProfileStructureComponent structure;
+		public ProfileMatch() {
+	    super();
+    }
+		public ProfileMatch(Profile profile, ProfileStructureComponent structure) {
+	    super();
+	    this.profile = profile;
+	    this.structure = structure;
+    }
+		public Profile getProfile() {
+			return profile;
+		}
+		public ProfileStructureComponent getStructure() {
+			return structure;
+		}
+  }
+
+	public class NullExtensionResolver implements ExtensionLocatorService {
 
     @Override
     public ExtensionLocationResponse locateExtension(String uri) {
@@ -202,68 +250,103 @@ public class InstanceValidator extends BaseValidator {
     }
   }
 
-  public void validateInstance(List<ValidationMessage> errors, Element elem, Profile profile) throws Exception {
+  public void validateInstance(List<ValidationMessage> errors, Element elem, Profile profile, String uri) throws Exception {
     boolean feedHasAuthor = XMLUtil.getNamedChild(elem, "author") != null;
     if (elem.getLocalName().equals("feed")) {
-    	// for now, if the user specified a profile, and it's a feed, we refuse
-    	if (rule(errors, "exception", "feed", profile == null, "Cannot validate a feed against a specified profile (TODO: re-assess this)")) {
-    		ChildIterator ci = new ChildIterator("", elem);
-    		while (ci.next()) {
-    			if (ci.name().equals("category"))
-    				validateTag(ci.path(), ci.element(), false);
-    			else if (ci.name().equals("id"))
-    				validateId(errors, ci.path(), ci.element(), true);
-    			else if (ci.name().equals("link"))
-    				validateLink(errors, ci.path(), ci.element(), false);
-    			else if (ci.name().equals("entry")) 
-    				validateAtomEntry(errors, ci.path(), ci.element(), feedHasAuthor);
-    		}
+    	ChildIterator ci = new ChildIterator("", elem);
+    	while (ci.next()) {
+    		if (ci.name().equals("category"))
+    			validateTag(ci.path(), ci.element(), false);
+    		else if (ci.name().equals("id"))
+    			validateId(errors, ci.path(), ci.element(), true);
+    		else if (ci.name().equals("link"))
+    			validateLink(errors, ci.path(), ci.element(), false);
+    		else if (ci.name().equals("entry")) 
+    			validateAtomEntry(errors, ci.path(), ci.element(), feedHasAuthor, profile, uri);
     	}
     }
     else
-      validate(errors, "", elem, profile);
+      validate(errors, "", elem, profile, null);
   }
 
   public List<ValidationMessage> validateInstance(Element elem) throws Exception {
     List<ValidationMessage> errors = new ArrayList<ValidationMessage>();
-    validateInstance(errors, elem, null);      
+    validateInstance(errors, elem, null, null);      
     return errors;
   }
 
-  public List<ValidationMessage> validateInstance(Element elem, Profile profile) throws Exception {
+  public List<ValidationMessage> validateInstance(Element elem, Profile profile, String uri) throws Exception {
 	    List<ValidationMessage> errors = new ArrayList<ValidationMessage>();
-	    validateInstance(errors, elem, profile);      
+	    validateInstance(errors, elem, profile, uri);      
 	    return errors;
 	  }
 
-  private void validateAtomEntry(List<ValidationMessage> errors, String path, Element element, boolean feedHasAuthor) throws Exception {
+  private void validateAtomEntry(List<ValidationMessage> errors, String path, Element element, boolean feedHasAuthor, Profile profile, String uri) throws Exception {
     rule(errors, "invalid", path, XMLUtil.getNamedChild(element, "title") != null, "Entry must have a title");
     rule(errors, "invalid", path, XMLUtil.getNamedChild(element, "updated") != null, "Entry must have a last updated time");
     rule(errors, "invalid", path, feedHasAuthor || XMLUtil.getNamedChild(element, "author") != null, "Entry must have an author because the feed doesn't");
 
 
-
     ChildIterator ci = new ChildIterator(path, element);
     while (ci.next()) {
-      if (ci.name().equals("category"))
+      if (ci.name().equals("category")) 
         validateTag(ci.path(), ci.element(), true);
       else if (ci.name().equals("id"))
         validateId(errors, ci.path(), ci.element(), true);
       else if (ci.name().equals("link"))
         validateLink(errors, ci.path(), ci.element(), true);
       else if (ci.name().equals("content")) {
+      	String puri = findProfileTag(element);
         Element r = XMLUtil.getFirstChild(ci.element());
-        validate(errors, ci.path()+"/f:"+r.getLocalName(), r, null);
+      	ProfileMatch p = findProfile(errors, path, profile, uri, puri, r);
+        validate(errors, ci.path()+"/f:"+r.getLocalName(), r, p.getProfile(), p.getStructure());
       }
     }
   }
 
-  private void validate(List<ValidationMessage> errors, String path, Element elem, Profile profile) throws Exception {
+  private ProfileMatch findProfile(List<ValidationMessage> errors, String path,  Profile profile, String uri, String puri, Element r) {
+	  if (puri == null) {
+	  	if (profile != null) {
+	  	  for (ProfileStructureComponent t : profile.getStructure()) {
+	  	  	if (t.getTypeSimple().equals(r.getLocalName())) {
+	  	  		return new ProfileMatch(profile, t);
+	  	  	}
+	  	  }
+	  	}
+	  	warning(errors, "not-found", path, false, "Resource '"+r.getLocalName()+"' not found in profile '"+uri+"'");
+	  	return new ProfileMatch();
+	  } else if (profile != null && puri.startsWith(uri+"#")) {
+	  	String fragment = puri.substring(puri.indexOf("#")+1);
+  	  for (ProfileStructureComponent t : profile.getStructure()) {
+  	  	if (t.getNameSimple().equals(fragment)) {
+  	  		return new ProfileMatch(profile, t);
+  	  	}
+  	  }
+	  	rule(errors, "not-found", path, false, "Unable to resolve profile URL '"+puri+"'");
+	  	return new ProfileMatch();
+	  } else { 
+	    throw new Error("Not implemented yet");
+	  }
+  }
+
+	private String findProfileTag(Element element) {
+  	String uri = null;
+	  List<Element> list = new ArrayList<Element>();
+	  XMLUtil.getNamedChildren(element, "category", list);
+	  for (Element c : list) {
+	  	if ("http://hl7.org/fhir/tag/profile".equals(c.getAttribute("scheme"))) {
+	  		uri = c.getAttribute("term");
+	  	}
+	  }
+	  return uri;
+  }
+
+	private void validate(List<ValidationMessage> errors, String path, Element elem, Profile profile, ProfileStructureComponent structure) throws Exception {
     if (elem.getLocalName().equals("Binary"))
       validateBinary(elem);
     else {
       Profile p = profile != null ? profile : getProfileForType(elem.getLocalName());
-      ProfileStructureComponent s = getStructureForType(p, elem.getLocalName());
+      ProfileStructureComponent s = structure != null ? structure : getStructureForType(p, elem.getLocalName());
       if (rule(errors, "invalid", elem.getLocalName(), s != null, "Unknown Resource Type "+elem.getLocalName())) {
         validateElement(errors, p, s, path+"/f:"+elem.getLocalName(), s.getElement().get(0), null, null, elem, elem.getLocalName());
         if (elem.getLocalName().equals("Query"))
@@ -289,7 +372,7 @@ public class InstanceValidator extends BaseValidator {
 
   private ProfileStructureComponent getStructureForType(Profile r, String localName) throws Exception {
     if (r.getStructure().size() != 1 || !(r.getStructure().get(0).getTypeSimple().equals(localName) || r.getStructure().get(0).getNameSimple().equals(localName)))
-      throw new Exception("unexpected profile contents");
+      throw new Exception("unexpected profile contents = expecting name = '"+localName+"'");
     ProfileStructureComponent s = r.getStructure().get(0);
     return s;
   }
@@ -345,6 +428,19 @@ public class InstanceValidator extends BaseValidator {
       rule(errors, "invalid", path, !empty(element), "Elements must have some content (@value, @id, extensions, or children elements)");
     }
     Map<String, ElementComponent> children = getChildren(structure, definition.getPathSimple());
+    for (ElementComponent child : children.values()) {
+    	if (child.getRepresentation().isEmpty()) {
+    		List<Element> list = new ArrayList<Element>();  
+    		XMLUtil.getNamedChildrenWithWildcard(element, tail(child.getPathSimple()), list);
+    		if (child.getDefinition().getMinSimple() > 0) {
+    			rule(errors, "structure", child.getPathSimple(), list.size() > 0, "Element "+child.getPathSimple()+" is required");
+    		}
+    		if (child.getDefinition().getMaxSimple() != null && !child.getDefinition().getMaxSimple().equals("*")) {
+    			rule(errors, "structure", child.getPathSimple(), list.size() <= Integer.parseInt(child.getDefinition().getMaxSimple()), "Element "+child.getPathSimple()+" can only occur "+child.getDefinition().getMaxSimple()+" time"+(child.getDefinition().getMaxSimple().equals("1") ? "" : "s"));
+    		}
+    	}
+    }
+    
     ChildIterator ci = new ChildIterator(path, element);
     while (ci.next()) {
       ElementComponent child = children.get(ci.name());
@@ -558,7 +654,7 @@ public class InstanceValidator extends BaseValidator {
     HashMap<String, ElementComponent> res = new HashMap<String, Profile.ElementComponent>(); 
     for (ElementComponent e : structure.getElement()) {
       String p = e.getPathSimple();
-      if (!Utilities.noString(e.getDefinition().getNameReferenceSimple()) && path.startsWith(p)) {
+      if (e.getDefinition() != null && !Utilities.noString(e.getDefinition().getNameReferenceSimple()) && path.startsWith(p)) {
         if (path.length() > p.length())
           return getChildren(structure, e.getDefinition().getNameReferenceSimple()+"."+path.substring(p.length()+1));
         else
@@ -589,7 +685,7 @@ public class InstanceValidator extends BaseValidator {
 
   private void validateContains(List<ValidationMessage> errors, String path, ElementComponent child, ElementComponent context, Element element) throws Exception {
     Element e = XMLUtil.getFirstChild(element);
-    validate(errors, path, e, null);    
+    validate(errors, path, e, null, null);    
   }
 
   private boolean typeIsPrimitive(String t) {

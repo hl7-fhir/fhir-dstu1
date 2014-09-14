@@ -31,7 +31,7 @@ public class SpecificationInternalClient implements FHIRClient {
   }
 
   @Override
-  public void initialize(String baseServiceUrl) throws URISyntaxException {
+  public FHIRClient initialize(String baseServiceUrl) throws URISyntaxException {
     throw new Error("initialize not supported by the internal specification client");
 
   }

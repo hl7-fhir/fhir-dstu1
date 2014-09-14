@@ -72,9 +72,18 @@ public class ValidationEngine {
   private OperationOutcome outcome;
 	private boolean noSchematron;
 	private Profile profile;
+	private String profileURI;
 
 
-  public void process() throws Exception {
+  public String getProfileURI() {
+		return profileURI;
+	}
+
+	public void setProfileURI(String profileURI) {
+		this.profileURI = profileURI;
+	}
+
+	public void process() throws Exception {
     outputs = new ArrayList<ValidationMessage>();
     Schema schema = readSchema();
 
@@ -107,9 +116,9 @@ public class ValidationEngine {
     builder.setErrorHandler(new ValidationErrorHandler(outputs));
     doc = builder.parse(new ByteArrayInputStream(source));
 
-    outputs.addAll(new InstanceValidator(definitions, null).validateInstance(doc.getDocumentElement(), profile));
+    outputs.addAll(new InstanceValidator(definitions, null).validateInstance(doc.getDocumentElement(), profile, profileURI));
 
-    Resource r = new XmlParser().parse(new ByteArrayInputStream(source));
+    new XmlParser().parseGeneral(new ByteArrayInputStream(source));
         
     OperationOutcome op = new OperationOutcome();
     for (ValidationMessage vm : outputs) {

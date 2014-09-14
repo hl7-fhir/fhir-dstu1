@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Wed, Aug 27, 2014 23:05+1000 for FHIR v0.0.81
+// Generated on Sun, Sep 14, 2014 17:46+1000 for FHIR v0.0.82
 
 public class ResourceFactory extends Factory {
 

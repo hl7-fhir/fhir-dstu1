@@ -464,7 +464,7 @@ public class JavaParserJsonGenerator extends JavaBaseGenerator {
     write("    "+reg.toString().substring(9));
     write("    else if (t.equals(\"Binary\"))\r\n");
     write("      return parseBinary(json);\r\n");
-    write("    throw new Exception(\"Unknown.Unrecognised resource type\");\r\n");
+    write("    throw new Exception(\"Unknown.Unrecognised resource type '\"+t+\"' (in property 'resourceType')\");\r\n");
     write("  }\r\n\r\n");
     write("  protected Type parseType(String prefix, JsonObject json) throws Exception {\r\n");
     write("    "+regt.toString().substring(9));
