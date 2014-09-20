@@ -21,14 +21,14 @@ on Feb-3 2014. The date at the foot of the pages is more recent because of
 ongoing releases to the FHIR version. Subsequent releases:
 </p>
 <ul>
- <li><a name="h20140828">Sept 15, 2014</a> <b>0.0.82</b>: Fix error in JSON examples, update to the <a href="license.html">license and trademark terms</a>, and updated reference implementations. 
+ <li><a name="h20140828">Sept 21, 2014</a> <b>0.0.82</b>: Fix error in JSON examples, update to the <a href="license.html">license and trademark terms</a>, and updated reference implementations. 
    <ul>
      <li>The license has been changed to a Creative Commons license (instead of the one adapted from OMG). There is no change in the intent or effect of the license. The use of the FHIR related trademarks has been clarified</li>
      <li>Java Reference Implementation: Fix major bug in reading/writing JSON instances: the json equivalent for xml:id is specified as "id" but the java reference implementation had been using "_id". 
        <b>This is a breaking changed for users of the JSON representation using the Java reference implementation.</b>. Note also that this means that 
        <b>all the example JSON instances in the specification were wrong</b>; these have also been fixed in this update. </li>
      <li>Java Reference Implementation: rename primitive types from X to XType (or String_ to StringType). Fix bug in parser related to xml whitespace parsing. Add UCUM support. Many improvements to the validation jar (including profile based validation). Link to Maven explicitly</li>
-     <li>Pascal Reference Implementation: many minor fixes to supporting code</li>
+     <li>Pascal Reference Implementation: many minor fixes to supporting code, and flip *ST properties to be the main property and use *Object for the underlying object</li>
    </ul>
  </li>
  <li><a name="h20140508">May-8 2014</a>: Change version to 0.0.81 (from 0.80) to align with <a href="http://hl7.org/implement/standards/FHIR-Develop/history.html#rules">new versioning policy</a>, <a href="security.html#narrative">security alert</a> about Narrative, clarify <a href="dstu.html">rules around the status of content</a>, and reference implementation updates
