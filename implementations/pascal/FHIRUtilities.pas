@@ -1,7 +1,7 @@
 unit FHIRUtilities;
 
 {
-Copyright (c) 2011-2014, HL7, Inc
+Copyright (c) 2011+, HL7, Inc
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
@@ -168,14 +168,14 @@ type
   {$IFNDEF FHIR-DSTU}
   TFhirConceptMapElementHelper = class helper (TFhirElementHelper) for TFhirConceptMapElement
   public
-    function system : TFhirUri;
-    function systemST : String;
+    function systemObject : TFhirUri;
+    function system : String;
   end;
 
   TFhirConceptMapElementDependsOnHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementDependsOn
   public
-    function concept : TFhirUri;
-    function conceptST : String;
+    function conceptObject : TFhirUri;
+    function concept : String;
   end;
 
   TFhirConceptMapHelper = class helper (TFhirElementHelper) for TFhirConceptMap
@@ -185,8 +185,8 @@ type
 
   TFhirConceptMapElementMapHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementMap
   public
-    function system : TFhirUri;
-    function systemST : String;
+    function systemObject : TFhirUri;
+    function system : String;
   end;
   {$ENDIF}
 
@@ -333,22 +333,15 @@ begin
   try
     while iter.More do
     begin
-      if StringStartsWith(iter.Current.Type_, 'Resource(') and (iter.Current.Obj <> nil) then
-      begin
-        if not StringStartsWith(TFhirResourceReference(iter.current.obj).referenceST, '#') then
-          list.add(iter.Current.Obj.Link)
-      end
-      else if StringStartsWith(iter.Current.Type_, 'Resource(') and (iter.Current.List <> nil) then
+      if StringStartsWith(iter.Current.Type_, 'Resource(') then
       begin
         for i := 0 to iter.Current.List.count - 1 do
-          if not StringStartsWith(TFhirResourceReference(iter.current.list[i]).referenceST, '#') then
+          if not StringStartsWith(TFhirResourceReference(iter.current.list[i]).reference, '#') then
             list.add(iter.Current.list[i].Link)
       end
       else if iter.Current.Type_ = 'Resource' then
-        iterateReferences(TFhirResource(iter.current.obj), list)
-      else if iter.Current.Obj <> nil then
-        iterateReferences(iter.Current.Obj, list)
-      else if iter.Current.list <> nil then
+        iterateReferences(TFhirResource(iter.current.list[0]), list)
+      else
         for i := 0 to iter.Current.list.Count - 1 Do
           iterateReferences(iter.Current.list[i], list);
       iter.Next;
@@ -372,16 +365,10 @@ begin
   try
     while iter.More do
     begin
-      if (iter.Current.Type_ = 'Attachment') and (iter.Current.Obj <> nil) then
-        list.add(iter.Current.Obj.Link)
-      { 0.07todo
-      else if StringStartsWith(iter.Current.Type_, 'Resource(') and (iter.Current.Obj <> nil) and (TFhirResourceReference(iter.current.obj).value <> nil) then
-        iterateAttachments(TFhirResourceReference(iter.current.obj).value, list)
-      }  
-      else if iter.Current.Obj <> nil then
-        iterateAttachments(iter.Current.Obj, list)
-      else if iter.Current.list <> nil then
-        for i := 0 to iter.Current.list.Count - 1 Do
+      for i := 0 to iter.Current.List.Count - 1 do
+        if (iter.Current.Type_ = 'Attachment') then
+          list.add(iter.Current.list[i].Link)
+        else
           iterateAttachments(iter.Current.list[i], list);
       iter.Next;
     end;
@@ -446,18 +433,18 @@ end;
 
 function asUTCMin(value : TFhirPeriod) : TDateTime;
 begin
-  if (value = nil) or (value.startST = nil) then
+  if (value = nil) or (value.start = nil) then
     result := MIN_DATE
   else
-    result := value.startST.AsUTCDateTimeMin;
+    result := value.start.AsUTCDateTimeMin;
 end;
 
 function asUTCMax(value : TFhirPeriod) : TDateTime;
 begin
-  if (value = nil) or (value.end_ST = nil) then
+  if (value = nil) or (value.end_ = nil) then
     result := MAX_DATE
   else
-    result := value.end_ST.AsUTCDateTimeMax;
+    result := value.end_.AsUTCDateTimeMax;
 end;
 
 function asUTCMin(value : TFhirSchedule) : TDateTime;
@@ -490,10 +477,10 @@ begin
       for i := 0 to value.eventList.count - 1 do
         result := DateTimeMax(result, AsUTCMax(value.eventList[i]));
   end
-  else if (value.repeat_.end_ST <> nil) then
-    result := asUTCMax(value.repeat_.end_)
-  else if (value.repeat_.countST <> '') and (value.eventList.Count > 0) and
-    (value.repeat_.frequencyST <> '') and (value.repeat_.durationST <> '') and (value.repeat_.unitsST <> UnitsOfTimeNull) then
+  else if (value.repeat_.end_ <> nil) then
+    result := asUTCMax(value.repeat_.end_Object)
+  else if (value.repeat_.count <> '') and (value.eventList.Count > 0) and
+    (value.repeat_.frequency <> '') and (value.repeat_.duration <> '') and (value.repeat_.units <> UnitsOfTimeNull) then
   begin
     result := MIN_DATE;
     for i := 0 to value.eventList.count - 1 do
@@ -502,7 +489,7 @@ begin
       result := MAX_DATE
     else
     begin
-      case value.repeat_.unitsST of
+      case value.repeat_.units of
         UnitsOfTimeS : duration := DATETIME_SECOND_ONE;
         UnitsOfTimeMin : duration := DATETIME_MINUTE_ONE;
         UnitsOfTimeH : duration := DATETIME_HOUR_ONE;
@@ -511,9 +498,9 @@ begin
         UnitsOfTimeMo : duration := 30;
         UnitsOfTimeA : duration := 365 // todo - how to correct for leap years?;
       else
-        raise exception.create('unknown duration units "'+value.repeat_.units.value+'"');
+        raise exception.create('unknown duration units "'+value.repeat_.unitsObject.value+'"');
       end;
-      result := result + (StrToInt(value.repeat_.countST) * duration / StrToInt(value.repeat_.frequencyST));
+      result := result + (StrToInt(value.repeat_.count) * duration / StrToInt(value.repeat_.frequency));
     end;
   end
   else
@@ -527,7 +514,7 @@ begin
   result := nil;
   for i := 0 to feed.entries.count - 1 do
   begin
-    if feed.entries[i].id = ref.referenceST then
+    if feed.entries[i].id = ref.reference then
     begin
       result := feed.entries[i].resource;
       break;
@@ -541,7 +528,7 @@ var
 begin
   result := nil;
   for i := 0 to resource.containedList.Count - 1 do
-    if ('#'+resource.containedList[i].xmlId = ref.referenceST) then
+    if ('#'+resource.containedList[i].xmlId = ref.reference) then
     begin
       result := resource.containedList[i];
       exit;
@@ -566,11 +553,11 @@ begin
   outcome := TFhirOperationOutcome.create;
   try
     outcome.text := TFhirNarrative.create;
-    outcome.text.statusST := NarrativeStatusGenerated;
+    outcome.text.status := NarrativeStatusGenerated;
     outcome.text.div_ := ParseXhtml(lang, '<div><p>'+FormatTextToHTML(message)+'</p></div>', xppReject);
     report := outcome.issueList.Append;
-    report.severityST := issueSeverityError;
-    report.details := TFHIRString.create(message);
+    report.severity := issueSeverityError;
+    report.details := message;
     result := outcome.Link;
   finally
     outcome.free;
@@ -591,7 +578,7 @@ begin
   for i := 0 to element.ExtensionList.count - 1 do
   begin
     ex := element.ExtensionList[i];
-    if ex.urlST = url then
+    if ex.url = url then
     begin
       result := ex;
       exit;
@@ -603,10 +590,10 @@ function gen(coding : TFHIRCoding):String; overload;
 begin
   if (coding = nil) then
      result := ''
-  else if (coding.Display <> nil) then
-    result := coding.DisplayST
-  else if (coding.Code <> nil) then
-    result := coding.CodeST
+  else if (coding.DisplayObject <> nil) then
+    result := coding.Display
+  else if (coding.CodeObject <> nil) then
+    result := coding.Code
   else
     result := '';
 end;
@@ -643,7 +630,7 @@ begin
     for i := 0 to op.issueList.count - 1 do
     begin
       issue := op.issueList[i];
-      success := success and (issue.SeverityST = IssueSeverityInformation);
+      success := success and (issue.Severity = IssueSeverityInformation);
       hasSource := hasSource or (hasExtension(issue, 'http://hl7.org/fhir/tools#issue-source'));
       hasType := hasType or (issue.Type_ <> nil);
     end;
@@ -665,7 +652,7 @@ begin
       begin
         issue := op.issueList[i];
         tr := tbl.addTag('tr');
-        tr.addTag('td').addText(CODES_TFhirIssueSeverity[issue.severityST]);
+        tr.addTag('td').addText(CODES_TFhirIssueSeverity[issue.severity]);
         td := tr.addTag('td');
         d := false;
         for j := 0 to issue.locationList.count -1 do
@@ -677,7 +664,7 @@ begin
              d := true;
            td.addText(s.Value);
         end;
-        tr.addTag('td').addText(issue.detailsST);
+        tr.addTag('td').addText(issue.details);
         if (hasType) then
           tr.addTag('td').addText(gen(issue.Type_));
         if (hasSource) then
@@ -688,9 +675,9 @@ begin
       op.Text := TFhirNarrative.create;
     op.Text.div_ := x.link;
     if hasSource then
-      op.Text.statusST := NarrativeStatusExtensions
+      op.Text.status := NarrativeStatusExtensions
     else
-      op.Text.statusST := NarrativeStatusGenerated;
+      op.Text.status := NarrativeStatusGenerated;
   finally
     x.free;
   end;
@@ -738,11 +725,11 @@ begin
   tr := t.addTag('tr');
   td := tr.addTag('td');
   s := StringpadLeft('', '.', indent*2);
-  td.addText(s+c.CodeST);
+  td.addText(s+c.Code);
   td := tr.addTag('td');
-  td.addText(c.DisplayST);
+  td.addText(c.Display);
   td := tr.addTag('td');
-  td.addText(c.DefinitionST);
+  td.addText(c.Definition);
   for i := 0 to c.ConceptList.count - 1 do
     addDefineRowToTable(t, c.conceptList[i], indent+1);
 end;
@@ -756,14 +743,14 @@ begin
   tr := t.addTag('tr');
   td := tr.addTag('td');
   s := StringpadLeft('', '.', indent*2);
-  if c.codeST = '' then
+  if c.code = '' then
     td.addText(s+'+')
   else
-    td.addText(s+c.CodeST);
+    td.addText(s+c.Code);
   td := tr.addTag('td');
-  td.addText(c.SystemST);
+  td.addText(c.System);
   td := tr.addTag('td');
-  td.addText(c.DisplayST);
+  td.addText(c.Display);
   for i := 0 to c.containsList.count - 1 do
     addContainsRowToTable(t, c.containsList[i], indent+1);
 end;
@@ -774,7 +761,7 @@ var
   i : integer;
 begin
   p := x.addTag('p');
-  p.addText('This value set defines it''s own terms in the system '+vs.Define.SystemST);
+  p.addText('This value set defines it''s own terms in the system '+vs.Define.System);
   t := x.addTag('table');
   addTableHeaderRowStandard(t);
   for i := 0 to vs.Define.ConceptList.Count - 1 do
@@ -788,9 +775,9 @@ var
   i : integer;
 begin
   h := x.addTag('h2');
-  h.addText('Expansion for '+vs.NameST);
+  h.addText('Expansion for '+vs.Name);
   p := x.addTag('p');
-  p.addText(vs.DescriptionST);
+  p.addText(vs.Description);
   p := x.addTag('p');
   p.addText('This value set is an expansion, and includes the following terms in the expansion');
   t := x.addTag('table');
@@ -818,9 +805,9 @@ begin
     else
     begin
       h := x.addTag('h2');
-      h.addText(vs.NameST);
+      h.addText(vs.Name);
       p := x.addTag('p');
-      p.addText(vs.DescriptionST);
+      p.addText(vs.Description);
       if (vs.Define <> nil) then
         generateDefinition(x, vs);
       if (vs.Compose <> nil) then
@@ -830,7 +817,7 @@ begin
     if (vs.Text = nil) then
       vs.Text := TFhirNarrative.create;
     vs.Text.div_ := x.link;
-    vs.Text.statusST := NarrativeStatusGenerated;
+    vs.Text.status := NarrativeStatusGenerated;
   finally
     x.free;
   end;
@@ -843,8 +830,8 @@ begin
   result := '';
   if contacts <> nil then
     for i := 0 to contacts.Count - 1 do
-      if contacts[i].systemST = ContactSystemEmail then
-        result := contacts[i].valueST;
+      if contacts[i].system = ContactSystemEmail then
+        result := contacts[i].value;
 end;
 
 function HumanNameAsText(name : TFhirHumanName):String;
@@ -853,8 +840,8 @@ var
 begin
   if name = nil then
     result := ''
-  else if name.textST <> '' then
-    result := name.textST
+  else if name.text <> '' then
+    result := name.text
   else
   begin
     result := '';
@@ -926,9 +913,9 @@ end;
 
   procedure generateComposition(x : TFhirTFhirXHtmlNode; vs : TFHIRValueSet, Map<String, AtomEntry> codeSystems) throws Exception begin
     TFhirXHtmlNode h := x.addTag('h2');
-    h.addText(vs.NameST);
+    h.addText(vs.Name);
     TFhirXHtmlNode p := x.addTag('p');
-    p.addText(vs.DescriptionST);
+    p.addText(vs.Description);
     p := x.addTag('p');
     p.addText('This value set includes terms defined in other code systems, using the following rules:');
     TFhirXHtmlNode ul := x.addTag('ul');
@@ -948,7 +935,7 @@ end;
   procedure genInclude(TFhirXHtmlNode ul, ConceptSetComponent inc, String type, Map<String, AtomEntry> codeSystems) throws Exception begin
     TFhirXHtmlNode li;
     li := ul.addTag('li');
-    AtomEntry e := codeSystems.(inc.SystemST.toString);
+    AtomEntry e := codeSystems.(inc.System.toString);
     
     if (inc.Code.size :=:= 0 && inc.Filter.size :=:= 0) begin then 
       li.addText(type+' all codes defined in ');
@@ -967,30 +954,30 @@ end;
           ValueSetDefineConceptComponent cc := getConceptForCode(e, c.Value);
           if (cc <> nil) begin then
             td := tr.addTag('td');
-            if (!Utilities.noString(cc.DisplayST)) then
-              td.addText(cc.DisplayST);
+            if (!Utilities.noString(cc.Display)) then
+              td.addText(cc.Display);
             td := tr.addTag('td');
-            if (!Utilities.noString(cc.DefinitionST)) then
-              td.addText(cc.DefinitionST);
+            if (!Utilities.noString(cc.Definition)) then
+              td.addText(cc.Definition);
           end;
         end;
       end;
       for (ConceptSetFilterComponent f : inc.Filter) begin
         li.addText(type+' codes from ');
         addCsRef(inc, li, e);
-        li.addText(' where '+f.PropertyST+' '+describe(f.OpST)+' ');
-        if (e <> nil && codeExistsInValueSet(e, f.ValueST)) begin then
+        li.addText(' where '+f.PropertyST+' '+describe(f.Op)+' ');
+        if (e <> nil && codeExistsInValueSet(e, f.Value)) begin then
           TFhirXHtmlNode a := li.addTag('a');
-          a.addTag(f.ValueST);
-          a.setAttribute('href', getCsRef(e)+'#'+f.ValueST);
+          a.addTag(f.Value);
+          a.setAttribute('href', getCsRef(e)+'#'+f.Value);
         end; else
-          li.addText(f.ValueST);
+          li.addText(f.Value);
       end;
     end;
   end;
 
-  private String describe(FilterOperator opST) begin
-    switch (opST) begin
+  private String describe(FilterOperator op) begin
+    switch (op) begin
     case equal: return ' := ';
     case isA: return ' is-a ';
     case isNotA: return ' is-not-a ';
@@ -1017,7 +1004,7 @@ end;
   
   
   private ValueSetDefineConceptComponent getConceptForCode(ValueSetDefineConceptComponent c, String code) begin
-    if (code.equals(c.CodeST)) then
+    if (code.equals(c.Code)) then
       return c;
     for (ValueSetDefineConceptComponent cc : c.Concept) begin
       ValueSetDefineConceptComponent v := getConceptForCode(cc, code);
@@ -1031,9 +1018,9 @@ end;
     if (cs <> nil && cs.Links.('self') <> nil) begin then
       TFhirXHtmlNode a := li.addTag('a');
       a.setAttribute('href', cs.Links.('self').replace('\\', '/'));
-      a.addText(inc.SystemST.toString);
+      a.addText(inc.System.toString);
     end; else 
-      li.addText(inc.SystemST.toString);
+      li.addText(inc.System.toString);
   end;
 
   private String getCsRef(AtomEntry cs) begin
@@ -1050,7 +1037,7 @@ end;
   end;
 
   private boolean inConcept(String code, ValueSetDefineConceptComponent c) begin
-    if (c.CodeST <> nil && c.CodeST.equals(code)) then
+    if (c.Code <> nil && c.Code.equals(code)) then
       return true;
     for (ValueSetDefineConceptComponent g : c.Concept) begin
       if (inConcept(code, g)) then
@@ -1078,14 +1065,14 @@ begin
   begin
     issue := TFhirOperationOutcomeIssue.create;
     try
-      issue.severityST := IssueSeverityError;
+      issue.severity := IssueSeverityError;
       issue.type_ := TFhirCoding.create;
-      issue.type_.systemST := 'http://hl7.org/fhir/issue-type';
-      issue.type_.codeST := typeCode;
-      issue.detailsST := msg;
+      issue.type_.system := 'http://hl7.org/fhir/issue-type';
+      issue.type_.code := typeCode;
+      issue.details := msg;
       issue.locationList.Append.value := path;
       ex := issue.ExtensionList.Append;
-      ex.urlST := 'http://hl7.org/fhir/tools#issue-source';
+      ex.url := 'http://hl7.org/fhir/tools#issue-source';
       ex.value := TFhirCode.create;
       TFhirCode(ex.value).value := source;
       self.issueList.add(issue.link);
@@ -1102,7 +1089,7 @@ var
 begin
   result := false;
   for i := 0 to issueList.Count - 1 do
-    result := result or (issueList[i].severityST in [IssueSeverityFatal, IssueSeverityError]);
+    result := result or (issueList[i].severity in [IssueSeverityFatal, IssueSeverityError]);
 end;
 
 function TFHIROperationOutcomeHelper.hint(source, typeCode, path: string; test: boolean; msg: string): boolean;
@@ -1114,14 +1101,14 @@ begin
   begin
     issue := TFhirOperationOutcomeIssue.create;
     try
-      issue.severityST := IssueSeverityInformation;
+      issue.severity := IssueSeverityInformation;
       issue.type_ := TFhirCoding.create;
-      issue.type_.systemST := 'http://hl7.org/fhir/issue-type';
-      issue.type_.codeST := typeCode;
-      issue.detailsST := msg;
+      issue.type_.system := 'http://hl7.org/fhir/issue-type';
+      issue.type_.code := typeCode;
+      issue.details := msg;
       issue.locationList.Append.value := path;
       ex := issue.ExtensionList.Append;
-      ex.urlST := 'http://hl7.org/fhir/tools#issue-source';
+      ex.url := 'http://hl7.org/fhir/tools#issue-source';
       ex.value := TFhirCode.create;
       TFhirCode(ex.value).value := source;
       self.issueList.add(issue.link);
@@ -1141,14 +1128,14 @@ begin
   begin
     issue := TFhirOperationOutcomeIssue.create;
     try
-      issue.severityST := level;
+      issue.severity := level;
       issue.type_ := TFhirCoding.create;
-      issue.type_.systemST := 'http://hl7.org/fhir/issue-type';
-      issue.type_.codeST := typeCode;
-      issue.detailsST := msg;
+      issue.type_.system := 'http://hl7.org/fhir/issue-type';
+      issue.type_.code := typeCode;
+      issue.details := msg;
       issue.locationList.Append.value := path;
       ex := issue.ExtensionList.Append;
-      ex.urlST := 'http://hl7.org/fhir/tools#issue-source';
+      ex.url := 'http://hl7.org/fhir/tools#issue-source';
       ex.value := TFhirCode.create;
       TFhirCode(ex.value).value := source;
       self.issueList.add(issue.link);
@@ -1168,14 +1155,14 @@ begin
   begin
     issue := TFhirOperationOutcomeIssue.create;
     try
-      issue.severityST := IssueSeverityWarning;
+      issue.severity := IssueSeverityWarning;
       issue.type_ := TFhirCoding.create;
-      issue.type_.systemST := 'http://hl7.org/fhir/issue-type';
-      issue.type_.codeST := typeCode;
-      issue.detailsST := msg;
+      issue.type_.system := 'http://hl7.org/fhir/issue-type';
+      issue.type_.code := typeCode;
+      issue.details := msg;
       issue.locationList.Append.value := path;
       ex := issue.ExtensionList.Append;
-      ex.urlST := 'http://hl7.org/fhir/tools#issue-source';
+      ex.url := 'http://hl7.org/fhir/tools#issue-source';
       ex.value := TFhirCode.create;
       TFhirCode(ex.value).value := source;
       self.issueList.add(issue.link);
@@ -1193,7 +1180,7 @@ var
   ex : TFhirExtension;
 begin
   ex := self.ExtensionList.Append;
-  ex.urlST := url;
+  ex.url := url;
   ex.value := t; // nolink here (done outside)
 end;
 
@@ -1203,7 +1190,7 @@ var
 begin
   result := -1;
   for i := 0 to self.ExtensionList.Count -1 do
-    if self.ExtensionList[i].urlST = url then
+    if self.ExtensionList[i].url = url then
       result := i;
 end;
 
@@ -1248,7 +1235,7 @@ var
 begin
   removeExtension(url);
   ext := self.ExtensionList.Append;
-  ext.urlST := url;
+  ext.url := url;
   ext.value := TFhirString.Create(value);
 end;
 
@@ -1261,9 +1248,9 @@ var
 begin
   result := nil;
   for I := 0 to self.restlist.count - 1 do
-    if self.restlist[i].modeST = RestfulConformanceModeServer then
+    if self.restlist[i].mode = RestfulConformanceModeServer then
       for j := 0 to self.restlist[i].resourceList.count - 1 do
-        if self.restlist[i].resourceList[j].type_ST = CODES_TFhirResourceType[type_] then
+        if self.restlist[i].resourceList[j].type_ = CODES_TFhirResourceType[type_] then
         begin
           result := self.restlist[i].resourceList[j];
           exit;
@@ -1283,7 +1270,7 @@ var
 begin
   result := nil;
   for i := 0 to self.operationList.count - 1 do
-    if (self.operationList[i].codeST = type_) then
+    if (self.operationList[i].code = type_) then
       result := self.operationList[i];
 
 
@@ -1301,14 +1288,14 @@ var
   c : TFhirContact;
 begin
   for i := 0 to self.Count - 1 do
-    if Item(i).systemST = type_ then
+    if Item(i).system = type_ then
     begin
-      Item(i).valueST := value;
+      Item(i).value := value;
       exit;
     end;
   c := self.Append;
-  c.systemST := type_;
-  c.valueST := value;
+  c.system := type_;
+  c.value := value;
 end;
 
 function TFhirContactListHelper.system(type_: TFhirContactSystem): String;
@@ -1317,8 +1304,8 @@ var
 begin
   result := '';
   for i := 0 to self.Count - 1 do
-    if Item(i).systemST = type_ then
-      result := Item(i).valueST;
+    if Item(i).system = type_ then
+      result := Item(i).value;
 end;
 
 
@@ -1356,26 +1343,26 @@ end;
 {$IFNDEF FHIR-DSTU}
 { TFhirConceptMapElementHelper }
 
-function TFhirConceptMapElementHelper.system: TFhirUri;
+function TFhirConceptMapElementHelper.systemObject: TFhirUri;
 begin
-  result := codeSystem;
+  result := codeSystemObject;
 end;
 
-function TFhirConceptMapElementHelper.systemST: String;
+function TFhirConceptMapElementHelper.system: String;
 begin
-  result := codeSystemST;
+  result := codeSystem;
 end;
 
 { TFhirConceptMapElementMapHelper }
 
-function TFhirConceptMapElementMapHelper.system: TFhirUri;
+function TFhirConceptMapElementMapHelper.systemObject: TFhirUri;
 begin
-  result := codeSystem;
+  result := codeSystemObject;
 end;
 
-function TFhirConceptMapElementMapHelper.systemST: String;
+function TFhirConceptMapElementMapHelper.system: String;
 begin
-  result := codeSystemST;
+  result := codeSystem;
 end;
 
 { TFhirConceptMapHelper }
@@ -1387,14 +1374,14 @@ end;
 
 { TFhirConceptMapElementDependsOnHelper }
 
-function TFhirConceptMapElementDependsOnHelper.concept: TFhirUri;
+function TFhirConceptMapElementDependsOnHelper.conceptObject: TFhirUri;
 begin
-  result := element;
+  result := elementObject;
 end;
 
-function TFhirConceptMapElementDependsOnHelper.conceptST: String;
+function TFhirConceptMapElementDependsOnHelper.concept: String;
 begin
-  result := elementST;
+  result := element;
 end;
 {$ENDIF}
 
