@@ -29,7 +29,7 @@ package org.hl7.fhir.instance.model;
   
 */
 
-// Generated on Mon, Sep 15, 2014 01:54+1000 for FHIR v0.0.82
+// Generated on Sat, Sep 20, 2014 22:21+1000 for FHIR v0.0.82
 
 import java.util.*;
 
@@ -41,12 +41,14 @@ public class ResourceReference extends Type {
     /**
      * A reference to a location at which the other resource is found. The reference may a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.
      */
-    protected String_ reference;
+    protected StringType reference;
 
     /**
      * Plain text narrative that identifies the resource in addition to the resource reference.
      */
-    protected String_ display;
+    protected StringType display;
+
+    private static final long serialVersionUID = 22777321L;
 
     public ResourceReference() {
       super();
@@ -55,14 +57,14 @@ public class ResourceReference extends Type {
     /**
      * @return {@link #reference} (A reference to a location at which the other resource is found. The reference may a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.)
      */
-    public String_ getReference() { 
+    public StringType getReference() { 
       return this.reference;
     }
 
     /**
      * @param value {@link #reference} (A reference to a location at which the other resource is found. The reference may a relative reference, in which case it is relative to the service base URL, or an absolute URL that resolves to the location where the resource is found. The reference may be version specific or not. If the reference is not to a FHIR RESTful server, then it should be assumed to be version specific. Internal fragment references (start with '#') refer to contained resources.)
      */
-    public ResourceReference setReference(String_ value) { 
+    public ResourceReference setReference(StringType value) { 
       this.reference = value;
       return this;
     }
@@ -82,7 +84,7 @@ public class ResourceReference extends Type {
         this.reference = null;
       else {
         if (this.reference == null)
-          this.reference = new String_();
+          this.reference = new StringType();
         this.reference.setValue(value);
       }
       return this;
@@ -91,14 +93,14 @@ public class ResourceReference extends Type {
     /**
      * @return {@link #display} (Plain text narrative that identifies the resource in addition to the resource reference.)
      */
-    public String_ getDisplay() { 
+    public StringType getDisplay() { 
       return this.display;
     }
 
     /**
      * @param value {@link #display} (Plain text narrative that identifies the resource in addition to the resource reference.)
      */
-    public ResourceReference setDisplay(String_ value) { 
+    public ResourceReference setDisplay(StringType value) { 
       this.display = value;
       return this;
     }
@@ -118,7 +120,7 @@ public class ResourceReference extends Type {
         this.display = null;
       else {
         if (this.display == null)
-          this.display = new String_();
+          this.display = new StringType();
         this.display.setValue(value);
       }
       return this;
