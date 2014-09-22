@@ -31,25 +31,13 @@ POSSIBILITY OF SUCH DAMAGE.
 interface
 
 uses
-  SysUtils,
-  classes,
-  StringSupport,
-  GuidSupport,
-  DateSupport,
+  SysUtils, Classes,
+  StringSupport, GuidSupport, DateSupport,
+  AdvObjects,
 
-  IdSoapMime,
-  TextUtilities,
-  ZLib,
+  IdSoapMime, TextUtilities, ZLib,
 
-  FHIRSupport,
-  FHIRParserBase,
-  FHIRParser,
-  FHIRBase,
-  FHIRTypes,
-  FHIRAtomFeed,
-  FHIRComponents,
-  FHIRResources,
-  FHIRConstants;
+  FHIRSupport, FHIRParserBase, FHIRParser, FHIRBase, FHIRTypes, FHIRAtomFeed, FHIRComponents, FHIRResources, FHIRConstants;
 
 Type
   ETooCostly = class (Exception);
@@ -103,6 +91,20 @@ procedure BuildNarrative(vs : TFhirValueSet); overload;
 
 Function removeCaseAndAccents(s : String) : String;
 
+
+type
+  TResourceWithReference = class (TAdvObject)
+  private
+    FReference: String;
+    FResource: TFHIRResource;
+    procedure SetResource(const Value: TFHIRResource);
+  public
+    Constructor Create(reference : String; resource : TFHIRResource);
+    Destructor Destroy; override;
+    property Reference : String read FReference write FReference;
+    property Resource : TFHIRResource read FResource write SetResource;
+  end;
+
 {$IFDEF FHIR-DSTU}
 const
   TypeRestfulInteractionRead = TypeRestfulOperationRead;
@@ -120,7 +122,8 @@ const
 type
   TFHIRElementHelper = class helper for TFHIRElement
   public
-    procedure addExtension(url : String; t : TFhirType);
+    procedure addExtension(url : String; t : TFhirType); overload;
+    procedure addExtension(url : String; v : String); overload;
     function hasExtension(url : String) : boolean;
     function getExtension(url : String) : Integer;
     function getExtensionString(url : String) : String;
@@ -1184,6 +1187,11 @@ begin
   ex.value := t; // nolink here (done outside)
 end;
 
+procedure TFHIRElementHelper.addExtension(url, v: String);
+begin
+  addExtension(url, TFhirString.Create(v));
+end;
+
 function TFHIRElementHelper.getExtension(url: String): Integer;
 var
   i : integer;
@@ -1411,6 +1419,28 @@ begin
       result := containedList[i];
 end;
 
+
+{ TResourceWithReference }
+
+constructor TResourceWithReference.Create(reference: String; resource: TFHIRResource);
+begin
+  inherited Create;
+  self.Reference := reference;
+  self.Resource := resource;
+
+end;
+
+destructor TResourceWithReference.Destroy;
+begin
+  FResource.free;
+  inherited;
+end;
+
+procedure TResourceWithReference.SetResource(const Value: TFHIRResource);
+begin
+  FResource.free;
+  FResource := Value;
+end;
 
 end.
 
