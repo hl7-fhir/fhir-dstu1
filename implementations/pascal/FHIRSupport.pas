@@ -637,6 +637,12 @@ Type
     {!script nolink}
     function makeContact(system, value, use : String):TFhirContact;
 
+    {@member makeContactPoint
+      make a new Contact and use the provided parameters (same as makeContact, but has DSTU2 name)
+    }
+    {!script nolink}
+    function makeContactPoint(system, value, use : String):TFhirContact;
+
     {@member makeReference
       make a new resource reference and use the provided parameters
     }
@@ -978,6 +984,19 @@ begin
 end;
 
 function TFHIRFactory.makeContact(system, value, use: String): TFhirContact;
+begin
+  result := TFhirContact.create;
+  try
+    result.useObject := CheckEnum(CODES_TFhirContactUse, use);
+    result.systemObject := CheckEnum(CODES_TFhirContactSystem, system);
+    result.value := value;
+    result.link;
+  finally
+    result.free;
+  end;
+end;
+
+function TFHIRFactory.makeContactPoint(system, value, use: String): TFhirContact;
 begin
   result := TFhirContact.create;
   try

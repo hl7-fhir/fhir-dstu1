@@ -47,6 +47,26 @@ const
   MAX_DATE = DATETIME_MAX;
   ANY_CODE_VS = 'http://www.healthintersections.com.au/fhir/ValueSet/anything';
 
+{ aliasing for renamings between DSTU1 and DSTU2 }
+
+type
+  TFhirReference = TFhirResourceReference;
+  TFhirReferenceList = TFhirResourceReferenceList;
+  TFhirTiming = TFhirSchedule;
+  TFhirContactPoint = TFhirContact;
+
+const
+  TypeRestfulInteractionRead = TypeRestfulOperationRead;
+  TypeRestfulInteractionVread = TypeRestfulOperationVread;
+  TypeRestfulInteractionUpdate = TypeRestfulOperationUpdate;
+  TypeRestfulInteractionDelete = TypeRestfulOperationDelete;
+  TypeRestfulInteractionHistoryInstance = TypeRestfulOperationHistoryInstance;
+  TypeRestfulInteractionValidate = TypeRestfulOperationValidate;
+  TypeRestfulInteractionHistoryType = TypeRestfulOperationHistoryType;
+  TypeRestfulInteractionCreate = TypeRestfulOperationCreate;
+  TypeRestfulInteractionSearchType = TypeRestfulOperationSearchType;
+  ContactPointSystemUrl = ContactSystemUrl;
+
 
 function HumanNameAsText(name : TFhirHumanName):String;
 function GetEmailAddress(contacts : TFhirContactList):String;
@@ -105,20 +125,6 @@ type
     property Resource : TFHIRResource read FResource write SetResource;
   end;
 
-{$IFDEF FHIR-DSTU}
-const
-  TypeRestfulInteractionRead = TypeRestfulOperationRead;
-  TypeRestfulInteractionVread = TypeRestfulOperationVread;
-  TypeRestfulInteractionUpdate = TypeRestfulOperationUpdate;
-  TypeRestfulInteractionDelete = TypeRestfulOperationDelete;
-  TypeRestfulInteractionHistoryInstance = TypeRestfulOperationHistoryInstance;
-  TypeRestfulInteractionValidate = TypeRestfulOperationValidate;
-  TypeRestfulInteractionHistoryType = TypeRestfulOperationHistoryType;
-  TypeRestfulInteractionCreate = TypeRestfulOperationCreate;
-  TypeRestfulInteractionSearchType = TypeRestfulOperationSearchType;
-{$ENDIF}
-
-
 type
   TFHIRElementHelper = class helper for TFHIRElement
   public
@@ -143,6 +149,14 @@ type
     property Contained[id : String] : TFhirResource read GetContained; default;
     procedure collapseAllContained;
   end;
+
+  TFhirCarePlanActivitySimpleHelper = class helper (TFHIRElementHelper) for TFhirCarePlanActivitySimple
+  private
+    function GetScheduled: TFhirType;
+  public
+    property scheduled : TFhirType read GetScheduled;
+  end;
+
 
   TFhirConformanceRestResourceHelper = class helper (TFHIRElementHelper) for TFhirConformanceRestResource
   public
@@ -1332,9 +1346,11 @@ begin
 end;
 
 function ZDecompressBytes(const s: TBytes): TBytes;
+  {$IFNDEF WIN64}
 var
   buffer: Pointer;
   size  : Integer;
+  {$ENDIF}
 begin
   {$IFDEF WIN64}
   ZDecompress(s, result);
@@ -1440,6 +1456,13 @@ procedure TResourceWithReference.SetResource(const Value: TFHIRResource);
 begin
   FResource.free;
   FResource := Value;
+end;
+
+{ TFhirCarePlanActivitySimpleHelper }
+
+function TFhirCarePlanActivitySimpleHelper.GetScheduled: TFhirType;
+begin
+  result := timing;
 end;
 
 end.

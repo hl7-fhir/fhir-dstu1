@@ -986,6 +986,7 @@ function TFhirXHtmlNode.SetAttribute(name, value: String) : TFhirXHtmlNode;
 var
   i : integer;
 begin
+  result := self;
   for i := 0 to FAttributes.Count - 1 Do
     if FAttributes[i].Name = name then
     begin
@@ -993,7 +994,6 @@ begin
       exit;
     end;
   FAttributes.add(TFHIRAttribute.create(name, value));
-  result := self;
 end;
 
 procedure TFhirXHtmlNode.SetNodeType(const Value: TFHIRHtmlNodeType);

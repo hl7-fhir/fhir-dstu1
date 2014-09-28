@@ -649,7 +649,6 @@ end;
 function TFHIRJsonParserBase.ParseDT(rootName: String; type_: TFHIRTypeClass): TFHIRType;
 var
   obj : TJsonObject;
-  s : string;
 begin
   obj := TJSONParser.Parse(source);
   try
@@ -1293,7 +1292,6 @@ end;
 function TFHIRXmlParserBase.ParseEntry(element: IXmlDomElement): TFHIRAtomEntry;
 var
   child : IXMLDOMElement;
-  grandchild : IXMLDOMElement;
   s : String;
 begin
   result := TFHIRAtomEntry.create;
@@ -2479,6 +2477,7 @@ function TFHIRXmlParserBase.CheckHtmlElementOk(elem: IXMLDOMElement): boolean;
 var
   bOk : boolean;
 begin
+  result := true;
   bOk := StringArrayExistsInsensitive(['p', 'br', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'a', 'span', 'b', 'em', 'i', 'strong',
     'small', 'big', 'tt', 'small', 'dfn', 'q', 'var', 'abbr', 'acronym', 'cite', 'blockquote', 'hr', 'address', 'bdo', 'kbd', 'q', 'sub', 'sup',
     'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'pre', 'table', 'caption', 'colgroup', 'col', 'thead', 'tr', 'tfoot', 'tbody', 'th', 'td',
@@ -2497,6 +2496,7 @@ function TFHIRXmlParserBase.CheckHtmlAttributeOk(elem, attr, value : String): bo
 var
   bOk : boolean;
 begin
+  result := true;
   bOk := StringArrayExistsInsensitive(['title', 'style', 'class', 'id', 'lang', 'xml:lang', 'dir', 'accesskey', 'tabindex',
                     // tables
                    'span', 'width', 'align', 'valign', 'char', 'charoff', 'abbr', 'axis', 'headers', 'scope', 'rowspan', 'colspan'], attr) or
