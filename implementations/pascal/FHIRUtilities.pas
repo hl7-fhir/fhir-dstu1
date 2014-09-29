@@ -54,6 +54,8 @@ type
   TFhirReferenceList = TFhirResourceReferenceList;
   TFhirTiming = TFhirSchedule;
   TFhirContactPoint = TFhirContact;
+  TFhirValueSetComposeIncludeConcept = TFHIRCode;
+  TFhirValueSetComposeIncludeConceptList = TFHIRCodeList;
 
 const
   TypeRestfulInteractionRead = TypeRestfulOperationRead;
@@ -157,13 +159,26 @@ type
     property scheduled : TFhirType read GetScheduled;
   end;
 
+  TFhirValueSetComposeIncludeHelper = class helper (TFHIRElementHelper) for TFhirValueSetComposeInclude
+  private
+    function getConceptList: TFhirValueSetComposeIncludeConceptList;
+  public
+    Property ConceptList : TFhirValueSetComposeIncludeConceptList read getConceptList;
+  end;
+
+  TFhirValueSetComposeIncludeConceptHelper = class helper (TFHIRElementHelper) for TFhirValueSetComposeIncludeConcept
+  private
+    function GetCode : string;
+    procedure SetCode(const s: string);
+  public
+    Property code : string read GetCode write SetCode;
+    function display : string;
+  end;
 
   TFhirConformanceRestResourceHelper = class helper (TFHIRElementHelper) for TFhirConformanceRestResource
   public
-    {$IFDEF FHIR-DSTU}
     function operation(type_ : TFhirTypeRestfulOperation) : TFhirConformanceRestResourceOperation;
     function interactionList : TFhirConformanceRestResourceOperationList;
-    {$ENDIF}
   end;
 
   TFhirContactListHelper = class helper for TFhirContactList
@@ -182,30 +197,6 @@ type
     function hasErrors : boolean;
   end;
 
-  {$IFNDEF FHIR-DSTU}
-  TFhirConceptMapElementHelper = class helper (TFhirElementHelper) for TFhirConceptMapElement
-  public
-    function systemObject : TFhirUri;
-    function system : String;
-  end;
-
-  TFhirConceptMapElementDependsOnHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementDependsOn
-  public
-    function conceptObject : TFhirUri;
-    function concept : String;
-  end;
-
-  TFhirConceptMapHelper = class helper (TFhirElementHelper) for TFhirConceptMap
-  public
-    function conceptList : TFhirConceptMapElementList;
-  end;
-
-  TFhirConceptMapElementMapHelper = class helper (TFhirElementHelper) for TFhirConceptMapElementMap
-  public
-    function systemObject : TFhirUri;
-    function system : String;
-  end;
-  {$ENDIF}
 
 function ZCompressBytes(const s: TBytes): TBytes;
 function ZDecompressBytes(const s: TBytes): TBytes;
@@ -1364,52 +1355,6 @@ begin
   {$ENDIF}
 end;
 
-{$IFNDEF FHIR-DSTU}
-{ TFhirConceptMapElementHelper }
-
-function TFhirConceptMapElementHelper.systemObject: TFhirUri;
-begin
-  result := codeSystemObject;
-end;
-
-function TFhirConceptMapElementHelper.system: String;
-begin
-  result := codeSystem;
-end;
-
-{ TFhirConceptMapElementMapHelper }
-
-function TFhirConceptMapElementMapHelper.systemObject: TFhirUri;
-begin
-  result := codeSystemObject;
-end;
-
-function TFhirConceptMapElementMapHelper.system: String;
-begin
-  result := codeSystem;
-end;
-
-{ TFhirConceptMapHelper }
-
-function TFhirConceptMapHelper.conceptList: TFhirConceptMapElementList;
-begin
-  result := elementList;
-end;
-
-{ TFhirConceptMapElementDependsOnHelper }
-
-function TFhirConceptMapElementDependsOnHelper.conceptObject: TFhirUri;
-begin
-  result := elementObject;
-end;
-
-function TFhirConceptMapElementDependsOnHelper.concept: String;
-begin
-  result := element;
-end;
-{$ENDIF}
-
-
 { TFHIRResourceHelper }
 
 procedure TFHIRResourceHelper.collapseAllContained;
@@ -1463,6 +1408,30 @@ end;
 function TFhirCarePlanActivitySimpleHelper.GetScheduled: TFhirType;
 begin
   result := timing;
+end;
+
+{ TFhirValueSetComposeIncludeHelper }
+
+function TFhirValueSetComposeIncludeHelper.getConceptList: TFhirValueSetComposeIncludeConceptList;
+begin
+  result := codeList;
+end;
+
+{ TFhirValueSetComposeIncludeConceptHelper }
+
+function TFhirValueSetComposeIncludeConceptHelper.display: string;
+begin
+  result := GetExtensionString('http://hl7.org/fhir/Profile/tools-extensions#display');
+end;
+
+function TFhirValueSetComposeIncludeConceptHelper.GetCode: string;
+begin
+  result := value;
+end;
+
+procedure TFhirValueSetComposeIncludeConceptHelper.SetCode(const s: string);
+begin
+  value := s
 end;
 
 end.
