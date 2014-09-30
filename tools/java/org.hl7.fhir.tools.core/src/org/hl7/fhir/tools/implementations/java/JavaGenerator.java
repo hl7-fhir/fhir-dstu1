@@ -95,8 +95,10 @@ public class JavaGenerator extends BaseGenerator implements PlatformGenerator {
   }
 
   @Override
-  public String getDescription() {
-    return "Resource Definitions, XML & Json parsers, & various utilities. The java reference implementation depends on XmlPull ([[http://www.xmlpull.org/]]), the Java JSON library ([[http://json.org]]), the Apache Commons Codec library ([[http://commons.apache.org/codec/]]), and Saxon 9 (for validation). A Java client can be found at [[https://github.com/cnanjo/FhirJavaReferenceClient]]. This  code is also available via Maven [[http://mvnrepository.com/artifact/me.fhir/fhir-dstu1/0.0.81.2489]]";
+  public String getDescription(String version, String svnRevision) {
+    return "Resource Definitions, XML & Json parsers, & various utilities. This  code is also available via Maven [[http://mvnrepository.com/artifact/me.fhir/fhir-dstu1/"+version+"."+svnRevision+"]]. "+
+       "The Maven repository lists the dependencies for the code. "+
+       "A Java client can be found at [[https://github.com/cnanjo/FhirJavaReferenceClient]]. HAPI also publishes a java reference implementation at [[http://jamesagnew.github.io/hapi-fhir/]]";
   }
 
   @Override
@@ -193,9 +195,15 @@ public class JavaGenerator extends BaseGenerator implements PlatformGenerator {
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl, "org/hl7/fhir/utilities/", ".java", null);
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl+"xhtml"+sl, "org/hl7/fhir/utilities/xhtml/", ".java", null);
     zip.addFiles(implDir+"org.hl7.fhir.utilities"+sl+"src"+ sl+"org"+sl+"hl7"+sl+"fhir"+sl+"utilities"+sl+"xml"+sl, "org/hl7/fhir/utilities/xml/", ".java", null);
-    zip.addFileName("imports"+sl+"xpp3-1.1.3.4.O.jar", implDir+sl+"imports"+sl+"xpp3-1.1.3.4.O.jar", false);
-    zip.addFileName("imports"+sl+"gson-2.2.4.jar", implDir+sl+"imports"+sl+"gson-2.2.4.jar", false);
-    zip.addFileName("imports"+sl+"commons-codec-1.3.jar", implDir+sl+"imports"+sl+"commons-codec-1.3.jar", false);
+    String importsDir = folders.rootDir+sl+"tools"+sl+"java"+sl+"imports";
+    zip.addFileName("imports/xpp3-1.1.3.4.O.jar", importsDir+sl+"xpp3-1.1.3.4.O.jar", false);
+    zip.addFileName("imports/gson-2.2.4.jar", importsDir+sl+"gson-2.2.4.jar", false);
+    zip.addFileName("imports/commons-codec-1.3.jar", importsDir+sl+"commons-codec-1.3.jar", false);
+    zip.addFileName("imports/commons-lang3-3.1.jar", importsDir+sl+"commons-lang3-3.1.jar", false);
+    zip.addFileName("imports/commons-logging-1.1.jar", importsDir+sl+"commons-logging-1.1.jar", false);
+    zip.addFileName("imports/commons-logging-api-1.1.jar", importsDir+sl+"commons-logging-api-1.1.jar", false);
+    zip.addFileName("imports/httpclient-4.2.3.jar", importsDir+sl+"httpclient-4.2.3.jar", false);
+    zip.addFileName("imports/httpcore-4.2.2.jar", importsDir+sl+"httpcore-4.2.2.jar", false);
     
     zip.close();
     jjComposerGen.close();
@@ -343,6 +351,11 @@ public boolean compile(String rootDir, List<String> errors, Logger logger) throw
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-codec-1.3.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-io-1.2.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"saxon9.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-lang3-3.1.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-logging-1.1.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-logging-api-1.1.jar", names);    
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"httpclient-4.2.3.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"httpcore-4.2.2.jar", names);
     
     // by adding source first, we add all the newly built classes, and these are not updated when the older stuff is included
     AddToJar(jar, new File(rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"), (rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"+sc).length(), names);
@@ -364,6 +377,11 @@ public boolean compile(String rootDir, List<String> errors, Logger logger) throw
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-io-1.2.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-codec-1.3.jar", names);
     AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"saxon9.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-lang3-3.1.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-logging-1.1.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"commons-logging-api-1.1.jar", names);    
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"httpclient-4.2.3.jar", names);
+    AddJarToJar(jar, rootDir+"tools"+sc+"java"+sc+"imports"+sc+"httpcore-4.2.2.jar", names);
     
     // by adding source first, we add all the newly built classes, and these are not updated when the older stuff is included
     AddToJar(jar, new File(rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"), (rootDir+"implementations"+sc+"java"+sc+"org.hl7.fhir.instance"+sc+"src"+sc).length(), names);

@@ -2572,9 +2572,11 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
     impl2.append("  if (child_name = 'extension') Then\r\n     list.addAll(FExtensionList);\r\n");
     impl2.append("end;\r\n\r\n");
     impl2.append("procedure TFhirElement.ListProperties(oList: "+listForm("TFHIRProperty")+"; bInheritedProperties: Boolean);\r\n");
-    impl2.append("var\r\n");
-    impl2.append("  prop : TFHIRProperty;\r\n");
-    impl2.append("  o : TFHIRExtension;\r\n");
+    if (generics) {
+      impl2.append("var\r\n");
+      impl2.append("  prop : TFHIRProperty;\r\n");
+      impl2.append("  o : TFHIRExtension;\r\n");
+    }
     impl2.append("begin\r\n");
     impl2.append("  inherited;\r\n");
     impl2.append("  oList.add(TFHIRProperty.create(self, 'xml:id', 'string', FXmlId));\r\n");
@@ -2661,9 +2663,11 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
     impl2.append("  if (child_name = 'modifierExtension') Then\r\n     list.addAll(FModifierExtensionList);\r\n");
     impl2.append("end;\r\n\r\n");
     impl2.append("procedure TFHIRBackboneElement.ListProperties(oList: "+listForm("TFHIRProperty")+"; bInheritedProperties: Boolean);\r\n");
+    if (generics) {
     impl2.append("var\r\n");
     impl2.append("  prop : TFHIRProperty;\r\n");
     impl2.append("  o : TFHIRExtension;\r\n");
+    }
     impl2.append("begin\r\n");
     impl2.append("  inherited;\r\n");
     if (generics) {
@@ -3318,7 +3322,7 @@ public class DelphiGenerator extends BaseGenerator implements PlatformGenerator 
   }
 
   @Override
-  public String getDescription() {
+  public String getDescription(String version, String svnRevision) {
     return "Resource Definitions and XML & JSON parsers. Delphi 5+. Depends on IndySoap ([[http://sourceforge.net/projects/indysoap/]]). For a full server see [[http://github.com/grahamegrieve/fhirserver]]";
   }
 

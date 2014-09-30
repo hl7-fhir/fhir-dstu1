@@ -29,32 +29,26 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.text.ParseException;
 import java.util.Calendar;
 
 import org.hl7.fhir.instance.model.DateAndTime;
-import org.junit.Test;
 
 
 public class DateAndTimeTests {
 
-	@Test
 	public void testParsing() throws ParseException {
-		assertEquals("2013-02-02", new DateAndTime("2013-02-02").toString());
-		assertEquals("2013-02", new DateAndTime("2013-02").toString());
-		assertEquals("2013", new DateAndTime("2013").toString());
-		assertEquals("2013-02-02T20:13", new DateAndTime("2013-02-02T20:13").toString());
-		assertEquals("2013-02-02T20:13:03", new DateAndTime("2013-02-02T20:13:03").toString());
-		assertEquals("2013-02-02T20:13:03Z", new DateAndTime("2013-02-02T20:13:03Z").toString());
-		assertEquals("2013-02-02T20:13:03+05:00", new DateAndTime("2013-02-02T20:13:03+05:00").toString());
-		assertEquals("2013-02-02T20:13:03-05:00", new DateAndTime("2013-02-02T20:13:03-05:00").toString());
-		assertEquals("2013-02-02T20:13-05:00", new DateAndTime("2013-02-02T20:13-05:00").toString());
-		assertEquals("2013-02-02T20:13-00:00", new DateAndTime("2013-02-02T20:13-00:00").toString());
-		assertEquals("2013-02-02-05:00", new DateAndTime("2013-02-02-05:00").toString());
+		assert("2013-02-02".equals(new DateAndTime("2013-02-02").toString()));
+		assert("2013-02".equals(new DateAndTime("2013-02").toString()));
+		assert("2013".equals(new DateAndTime("2013").toString()));
+		assert("2013-02-02T20:13".equals(new DateAndTime("2013-02-02T20:13").toString()));
+		assert("2013-02-02T20:13:03".equals(new DateAndTime("2013-02-02T20:13:03").toString()));
+		assert("2013-02-02T20:13:03Z".equals(new DateAndTime("2013-02-02T20:13:03Z").toString()));
+		assert("2013-02-02T20:13:03+05:00".equals(new DateAndTime("2013-02-02T20:13:03+05:00").toString()));
+		assert("2013-02-02T20:13:03-05:00".equals(new DateAndTime("2013-02-02T20:13:03-05:00").toString()));
+		assert("2013-02-02T20:13-05:00".equals(new DateAndTime("2013-02-02T20:13-05:00").toString()));
+		assert("2013-02-02T20:13-00:00".equals(new DateAndTime("2013-02-02T20:13-00:00").toString()));
+		assert("2013-02-02-05:00".equals(new DateAndTime("2013-02-02-05:00").toString()));
 	}
 
 
@@ -66,7 +60,6 @@ public class DateAndTimeTests {
 //		assertEquals(dat.toString(), dat2.toString());
 //	}
 	
-	@Test
 	public void testCalendar() throws ParseException, InterruptedException {
 		DateAndTime dt = DateAndTime.now();
 		Thread.sleep(1200);
@@ -74,38 +67,35 @@ public class DateAndTimeTests {
 //		assertNotEquals(dt.toString(), dt2.toString());
 	}	
 	
-	@Test
 	public void testV3() throws ParseException {
-		assertEquals("2013-02-02", DateAndTime.parseV3("20130202").toString());
-		assertEquals("2013-02", DateAndTime.parseV3("201302").toString());
-		assertEquals("2013", DateAndTime.parseV3("2013").toString());
-		assertEquals("2013-02-02T20:13", DateAndTime.parseV3("201302022013").toString());
-		assertEquals("2013-02-02T20:13:03", DateAndTime.parseV3("20130202201303").toString());
-		assertEquals("2013-02-02T20:13:03Z", DateAndTime.parseV3("20130202201303Z").toString());
-		assertEquals("2013-02-02T20:13:03+05:00", DateAndTime.parseV3("20130202201303+0500").toString());
-		assertEquals("2013-02-02T20:13:03-05:00", DateAndTime.parseV3("20130202201303-0500").toString());
-		assertEquals("2013-02-02T20:13-05:00", DateAndTime.parseV3("201302022013-0500").toString());
-		assertEquals("2013-02-02T20:13-00:00", DateAndTime.parseV3("201302022013-0000").toString());
-		assertEquals("2013-02-02-05:00", DateAndTime.parseV3("20130202-0500").toString());
+		assert("2013-02-02".equals(DateAndTime.parseV3("20130202").toString()));
+		assert("2013-02".equals(DateAndTime.parseV3("201302").toString()));
+		assert("2013".equals(DateAndTime.parseV3("2013").toString()));
+		assert("2013-02-02T20:13".equals(DateAndTime.parseV3("201302022013").toString()));
+		assert("2013-02-02T20:13:03".equals(DateAndTime.parseV3("20130202201303").toString()));
+		assert("2013-02-02T20:13:03Z".equals(DateAndTime.parseV3("20130202201303Z").toString()));
+		assert("2013-02-02T20:13:03+05:00".equals(DateAndTime.parseV3("20130202201303+0500").toString()));
+		assert("2013-02-02T20:13:03-05:00".equals(DateAndTime.parseV3("20130202201303-0500").toString()));
+		assert("2013-02-02T20:13-05:00".equals(DateAndTime.parseV3("201302022013-0500").toString()));
+		assert("2013-02-02T20:13-00:00".equals(DateAndTime.parseV3("201302022013-0000").toString()));
+		assert("2013-02-02-05:00".equals(DateAndTime.parseV3("20130202-0500").toString()));
 	}
 
-	@Test
 	public void testBefore() throws ParseException {
-		assertFalse(new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-01")));
-		assertFalse(new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-02")));
-		assertTrue(new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-03")));
-		assertFalse(new DateAndTime("2013-02").before(new DateAndTime("2013-01")));
-		assertFalse(new DateAndTime("2013-02").before(new DateAndTime("2012-01")));
-		assertFalse(new DateAndTime("2013").before(new DateAndTime("2012")));
-		assertFalse(new DateAndTime("2013-02-02T20:13").before(new DateAndTime("2013-02-02T20:12")));
-		assertFalse(new DateAndTime("2013-02-02T20:13:03").before(new DateAndTime("2013-02-02T20:13:02")));
-		assertFalse(new DateAndTime("2013-02-02T20:13:03").before(new DateAndTime("2013-02-02T20:13:03")));
-		assertFalse(new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-02T20:13:02Z")));
-		assertFalse(new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-01T20:13:05Z")));
-		assertFalse(new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-02T20:13:02+01:00")));
+		assert(!new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-01")));
+		assert(!new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-02")));
+		assert(new DateAndTime("2013-02-02").before(new DateAndTime("2013-02-03")));
+		assert(!new DateAndTime("2013-02").before(new DateAndTime("2013-01")));
+		assert(!new DateAndTime("2013-02").before(new DateAndTime("2012-01")));
+		assert(!new DateAndTime("2013").before(new DateAndTime("2012")));
+		assert(!new DateAndTime("2013-02-02T20:13").before(new DateAndTime("2013-02-02T20:12")));
+		assert(!new DateAndTime("2013-02-02T20:13:03").before(new DateAndTime("2013-02-02T20:13:02")));
+		assert(!new DateAndTime("2013-02-02T20:13:03").before(new DateAndTime("2013-02-02T20:13:03")));
+		assert(!new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-02T20:13:02Z")));
+		assert(!new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-01T20:13:05Z")));
+		assert(!new DateAndTime("2013-02-02T20:13:03Z").before(new DateAndTime("2013-02-02T20:13:02+01:00")));
 	}
 
-	@Test
 	public void testAdd() throws Exception {
     // simple addition
 		checkAdd("2013-02-02T20:13:15", Calendar.DAY_OF_YEAR, 1, "2013-02-03T20:13:15");
@@ -165,7 +155,7 @@ public class DateAndTimeTests {
 	private void checkAdd(String base, int field, int value, String outcome) throws Exception {
 		DateAndTime dt = new DateAndTime(base);
 		dt.add(field, value);
-		assertEquals(outcome, dt.toString());
+		assert(outcome.equals(dt.toString()));
   }
 
 	

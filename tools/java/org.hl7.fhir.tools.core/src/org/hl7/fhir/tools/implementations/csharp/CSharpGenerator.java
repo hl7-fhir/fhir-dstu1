@@ -65,7 +65,7 @@ public class CSharpGenerator extends BaseGenerator implements PlatformGenerator 
 
 	  
 	@Override
-	public String getDescription() {
+	public String getDescription(String version, String svnRevision) {
 		return "Object models, Parsers/Serialisers, Validators, and a Client. The source code for that compiled .NET library can be found on GitHub at " +
 				"[[http://github.com/ewoutkramer/fhir-net-api]]";
 	}

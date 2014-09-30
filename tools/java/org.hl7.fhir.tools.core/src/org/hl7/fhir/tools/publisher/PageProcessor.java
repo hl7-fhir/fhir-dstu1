@@ -1944,7 +1944,7 @@ public class PageProcessor implements Logger  {
   private String genReferenceImplList() {
     StringBuilder s = new StringBuilder();
     for (PlatformGenerator gen : referenceImplementations) {
-      s.append("<tr><td><a href=\""+gen.getReference(version)+"\">"+gen.getTitle()+"</a></td><td>"+Utilities.genMarkdown(gen.getDescription())+"</td></tr>\r\n");
+      s.append("<tr><td><a href=\""+gen.getReference(version)+"\">"+gen.getTitle()+"</a></td><td>"+Utilities.genMarkdown(gen.getDescription(version, svnRevision))+"</td></tr>\r\n");
     }
     return s.toString();
   }
