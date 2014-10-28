@@ -41,7 +41,8 @@ namespace Hl7.Fhir.Model
     // Resource is not a subclass of Composite, since it
     // cannot be used in places where you can use composites.
     [InvokeIValidatableObject]
-    public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, IDeepCopyable
+    public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, 
+                IDeepCopyable, IDeepComparable
     {
         public abstract IDeepCopyable DeepCopy();
 
@@ -58,10 +59,10 @@ namespace Hl7.Fhir.Model
                 foreach (var contained in Contained)
                 {
                     if (contained.Contained != null && contained.Contained.Any())
-                        result.Add(FhirValidator.BuildResult(validationContext, "Contained resources cannot contain nested contained resources"));
+                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources cannot contain nested contained resources"));
 
                     if (contained.Text != null)
-                        result.Add(FhirValidator.BuildResult(validationContext, "Contained resources should not contain narrative"));
+                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources should not contain narrative"));
                 }
             }
 

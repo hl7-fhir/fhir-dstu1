@@ -28,27 +28,21 @@
 
 */
 
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Xml;
+using Hl7.Fhir.Model;
+
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Date
+    public partial class FhirString
     {
-        public static Date Today()
-        {
-            return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
-        }
-
         public static bool IsValidValue(string value)
         {
-            return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);
+            return value.Length <= 1024 * 1024;    // Note that strings SHALL NOT exceed 1MB in size
         }
-
     }
 }

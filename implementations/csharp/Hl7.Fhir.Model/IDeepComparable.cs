@@ -25,30 +25,62 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
   
-
 */
-
-
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Date
+    public interface IDeepComparable
     {
-        public static Date Today()
+        bool IsExactly(IDeepComparable other);
+        bool Matches(IDeepComparable pattern);
+    }
+
+    public static class DeepComparable
+    {
+        public static bool IsExactly(IDeepComparable a, IDeepComparable b)
         {
-            return new Date(DateTime.Now.ToString("yyyy-MM-dd"));
+            if (a == null && b == null) return true;
+
+            if (a != null && b != null)
+            {
+                return a.IsExactly(b);
+            }
+            else
+                return false;
         }
 
-        public static bool IsValidValue(string value)
+        public static bool Matches(IDeepComparable a, IDeepComparable pattern)
         {
-            return Regex.IsMatch(value, "^" + Date.PATTERN + "$", RegexOptions.Singleline);
+            if (a == null && pattern == null) return true;
+
+            if (a != null && pattern != null)
+            {
+                return a.Matches(pattern);
+            }
+            else
+                return false;
         }
 
+        public static bool IsExactly<T>(this IEnumerable<T> source, IEnumerable<T> other) 
+                where T : IDeepComparable 
+        {
+            if (other == null) return false;
+            if (source.Count() != other.Count()) return false;
+
+            return  source.Zip(other, (a,b) => IsExactly(a,b)).All(r => r==true);
+        }
+
+        public static bool Matches<T>(this IEnumerable<T> source, IEnumerable<T> pattern)
+        where T : IDeepComparable
+        {
+            if (pattern == null) return false;
+
+            return source.All(src => pattern.Any(patt => Matches(src, patt)));
+        }
     }
 }
